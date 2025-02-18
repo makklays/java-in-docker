@@ -1,4 +1,4 @@
-package org.techmatrix18;
+package com.techmatrix18;
 
 public class Main {
     public static void main(String[] args) {
