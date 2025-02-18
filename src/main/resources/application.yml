@@ -13,13 +13,25 @@ spring:
     username: admin
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    database: default
+    generate-ddl: false
+    properties:
+      connection:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        ddl-auto: none
+        show-sql: true
+        format-sql: true
   messages:
     basename: messages
     encoding: UTF-8
-
   server:
     error:
       include-message: always
+      include-binding-errors: always
       whitelabel:
         enabled: false
 
