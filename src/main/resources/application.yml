@@ -1,0 +1,25 @@
+
+spring:
+  application:
+    name: java-in-docker
+  liquibase:
+    enabled: true
+    change-log: classpath:/liquibase/changelog.yaml
+    parameters:
+      spring.datasource.password: ${spring.datasource.password}
+  datasource:
+    generate-unique-name: false
+    url: jdbc:mysql://localhost:3306/aton
+    username: admin
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  messages:
+    basename: messages
+    encoding: UTF-8
+
+  server:
+    error:
+      include-message: always
+      whitelabel:
+        enabled: false
+
