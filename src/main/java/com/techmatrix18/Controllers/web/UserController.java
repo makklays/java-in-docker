@@ -5,6 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
+/**
+ * @author Alexander Kuziv
+ * @since 18-02-2025
+ * @version 0.0.1
+ */
+
 @Controller
 @RequestMapping("/")
 public class UserController {
