@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .formLogin(httpForm -> {
-                    httpForm.loginPage("/login").permitAll();
+                    httpForm.loginPage("/req/login").permitAll();
                 })
 
                 .authorizeHttpRequests(registry -> {
