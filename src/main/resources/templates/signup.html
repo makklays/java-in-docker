@@ -13,7 +13,22 @@
         <h1>SIGN UP</h1>
 
         <div>
-            SIGN UP
+            <form action="/req/registration" method="post">
+                <div>
+                    <label>Username</label>
+                    <input name="username" placeholder="" value="" />
+                </div>
+
+                <div>
+                    <label>Password</label>
+                    <input name="password" placeholder="" value="" />
+                </div>
+
+                <button id="submit" type="submit">Sign Up</button>
+
+                <br/>
+                Already have an account <a href="">Log In</a>
+            </form>
         </div>
     </body>
 </html>
