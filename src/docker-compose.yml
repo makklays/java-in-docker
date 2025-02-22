@@ -1,0 +1,96 @@
+#версия парсера файла, влияет на доступность некоторых фич, более подробное описание на официальном сайта
+version: "3.9"
+#контейнеры, которые буду запускаться в docker-compose, их принято называть сервисами
+services:
+  #сервис базы данных, будем использовать mariadb
+  mysql:
+    image: mariadb
+    restart: always
+    environment:
+      #рут пароль
+      MYSQL_ROOT_PASSWORD: root
+      #при необходимости при запуске конейтенра сразу будет создана база
+      MYSQL_DATABASE: aton
+      #при необходимости при запуске контейнера сразу будет создан допонительный пользователь
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - 3306:3306
+    #внешняя дериктория для сохранения данных
+    volumes:
+      - D:\docker\mysql:/var/lib/mysql
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 10s
+      timeout: 20s
+      retries: 10
+  #инсталятор базы данных
+  db-install:
+    container_name: db-install
+    image: db-install
+    #сборка образа инсталятора из докерфайла
+    build:
+      context: .
+      dockerfile: ./install/Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
+    profiles:
+      - db-install
+  #сервис логинсервера
+  authserver:
+    container_name: authserver
+    image: loginserver
+    restart: on-failure
+    #сборка образа логинсервера из докерфайла
+    build:
+      context: .
+      dockerfile: ./loginserver/Dockerfile
+    ports:
+      - 2106:2106
+    environment:
+      #переменная окружения в которую передаем память выделяему для процесса логинсервера
+      JAVA_MAX_MEMORY: 256m
+      #переменная окружения для обновления конфига адреса биндинга для логинсервера
+      LOGINSERVER_HOST: "*"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: "netstat -an | grep 9014 > /dev/null; if [ 0 == $$? ]; then echo 1; fi;"
+      interval: 10s
+      timeout: 1s
+      retries: 10
+    #внешняя дериктория для сохранения данных
+    volumes:
+      - D:\docker\logs:/server/logs
+    profiles:
+      - server
+  #сервис геймсервера
+  gameserver:
+    container_name: gameserver
+    image: gameserver
+    restart: on-failure
+    #сборка образа геймсервера из докерфайла
+    build:
+      context: .
+      dockerfile: ./gameserver/Dockerfile
+    ports:
+      - 7777:7777
+    environment:
+      #переменная окружения в которую передаем память выделяему для процесса логинсервера
+      JAVA_MAX_MEMORY: 5G
+      #переменная окружения для обновления конфига внешнего хоста геймсервера
+      GAMESERVER_EXTERNAL_HOST: "ВАШ ВНЕШНИЙ ИП ТУТ"
+      #переменная окружения для обновления конфига внутренего хоста геймсервера
+      GAMESERVER_INTERNAL_HOST: "127.0.0.1"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      authserver:
+        condition: service_healthy
+    #внешняя дериктория для сохранения данных
+    volumes:
+      - D:\docker\logs:/server/logs
+    profiles:
+      - server
