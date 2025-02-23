@@ -25,6 +25,10 @@ spring:
         ddl-auto: none
         show-sql: true
         format-sql: true
+#  security:
+#    user:
+#      name: Alexander
+#      password: mypassword
   messages:
     basename: messages
     encoding: UTF-8
