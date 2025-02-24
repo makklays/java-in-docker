@@ -11,10 +11,19 @@
     </head>
     <body>
         <h1>LOGIN</h1>
-
-        <div>
-            LOGIN
-        </div>
+        <section>
+            <form action="/req/login" method="post">
+                <div class="mb-3">
+                    <label for="id_login" class="form-label">Login</label>
+                    <input type="text" class="form-control" id="id_login">
+                </div>
+                <div class="mb-3">
+                    <label for="id_password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="id_password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </section>
     </body>
 </html>
 

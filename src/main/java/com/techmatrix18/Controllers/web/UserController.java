@@ -30,5 +30,10 @@ public class UserController {
     public String reqistr() {
         return "signup";
     }
+
+    @GetMapping("/req/index")
+    public String index() {
+        return "index";
+    }
 }
 

@@ -1,7 +1,9 @@
 
 This is some notices for this project
+This is Alfa-version of project
 
 1/ registration, login
 2/ list of users
 3/ java in docker
 4/ update project
+5/ list of bases

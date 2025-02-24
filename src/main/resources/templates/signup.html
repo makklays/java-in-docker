@@ -11,25 +11,55 @@
     </head>
     <body>
         <h1>SIGN UP</h1>
-
-        <div>
+        <section>
             <form action="/req/registration" method="post">
-                <div>
-                    <label>Username</label>
-                    <input name="username" placeholder="" value="" />
+                <div class="mb-3">
+                    <label for="id_username">Username</label>
+                    <input name="username" class="form-control" id="id_username" placeholder="" value="" />
                 </div>
 
-                <div>
-                    <label>Password</label>
-                    <input name="password" placeholder="" value="" />
+                <div class="mb-3 form-check">
+                    <label for="id_email" class="form-label">Email</label>
+                    <input name="email" class="form-control" id="id_email" placeholder="" value="" />
                 </div>
 
-                <button id="submit" type="submit">Sign Up</button>
+                <div class="mb-3 form-check">
+                    <label for="id_password" class="form-label">Password</label>
+                    <input name="password" class="form-control" id="id_password" placeholder="" value="" />
+                </div>
+
+                <button type="submit" id="submit" class="btn btn-primary">Sign Up</button>
 
                 <br/>
-                Already have an account <a href="">Log In</a>
+                Already have an account? <a href="/req/login">Log In</a>
             </form>
-        </div>
+        </section>
     </body>
 </html>
+<script>
+    const butonchick = document.getElementById('submit');
+    butonchick.addEventListener('click', () => {
+        const username = document.getElementById('id_username').value;
+        const password = document.getElementById('id_password').value;
+        const email = document.getElementById('id_email').value;
+        const data = {
+            username,
+            password,
+            email
+        };
+
+        const jsonData = JSON.stringify(data);
+        fetch('/req/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: jsonData
+        })
+        .then(response => {
+            // Handling response
+
+        })
+    });
+</script>
 

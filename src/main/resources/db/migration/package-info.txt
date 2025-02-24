@@ -1,0 +1,12 @@
+
+Если Spring Boot
+- Flyway автоматически выполняет миграции при запуске приложения.
+
+Если через Maven
+- Запустить вручную:
+    mvn flyway:migrate
+- Проверить статус миграций:
+    mvn flyway:info
+- Откатить последнее изменение:
+    mvn flyway:undo -Dflyway.target=V1
+

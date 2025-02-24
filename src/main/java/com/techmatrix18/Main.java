@@ -9,14 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 0.0.1
  */
 
-//@SpringBootApplication
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        //SpringApplication.run(primarySource:Main.class, args);
-
-        // idi na huy - proklyal tebya
+        SpringApplication.run(Main.class, args);
     }
 }
 

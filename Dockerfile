@@ -5,11 +5,11 @@ FROM openjdk:11
 WORKDIR /
 
 # Copy the application jar to the container
-COPY target/javaindocker-0.0.1-SNAPSHOT.war .
+COPY out/artifacts/JavaInDocker_jar/JavaInDocker.jar .
 EXPOSE 8080
 # Set the environment variables
 ENV JAVA_OPTS=""
 
 # Define the command to run the application
-CMD ["java", "-jar", "javaindocker-0.0.1-SNAPSHOT.war"]
+CMD ["java", "-jar", "JavaInDocker.jar"]
 
