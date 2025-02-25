@@ -12,13 +12,18 @@ import org.springframework.ui.Model;
  */
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 public class UserController {
 
     @GetMapping("/welcome")
     public String welcome(Model model) {
         model.addAttribute("vv", "V-V-V");
         return "index";
+    }
+
+    @GetMapping("/info")
+    public String info() {
+        return "info";
     }
 
     @GetMapping("/req/login")

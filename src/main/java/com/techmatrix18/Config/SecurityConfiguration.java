@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,12 +27,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  */
 
 @Configuration
-@AllArgsConstructor
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Autowired
     private final UserService userService;
+
+    public SecurityConfiguration(UserService userService) {
+        this.userService = userService;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -51,18 +54,20 @@ public class SecurityConfiguration {
     {
         return http
                 .csrf(csrf -> csrf.disable())
-                /*.authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/req/login", "/css/**", "/js/**").permitAll() // Разрешаем доступ к логину и статике
-                    .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
-                )*/
+                .cors(Customizer.withDefaults())
+                //.authorizeHttpRequests(auth -> auth
+                //    .requestMatchers("/req/login", "/css/**", "/js/**").permitAll() // Разрешаем доступ к логину и статике
+                //    .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
+                //)
                 .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/info").permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/uploads/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/imgs/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/*.{css,js}")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()
-                    .requestMatchers("/req/login", "/req/index", "/api/v1/auth").permitAll()
+                    .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
                     .requestMatchers("/req/signup").permitAll()
                     .requestMatchers("/users/**").authenticated()
                 )
@@ -76,7 +81,15 @@ public class SecurityConfiguration {
                     .logoutSuccessUrl("/login?logout")
                     .permitAll()
                 )
+                //.httpBasic(Customizer.withDefaults()) - окно авторизации
                 .build();
+
+        /*return http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().permitAll()
+                .and()
+                .logout().permitAll();*/
 
         /*return http
                 .csrf(AbstractHttpConfigurer::disable)
