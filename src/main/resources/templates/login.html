@@ -9,21 +9,33 @@
         <script src="http://localhost:8080/js/bootstrap.min.js"></script>
         <script src="http://localhost:8080/js/signup.js"></script>
     </head>
-    <body>
-        <h1>LOGIN</h1>
-        <section>
-            <form action="/req/login" method="post">
-                <div class="mb-3">
-                    <label for="id_login" class="form-label">Login</label>
-                    <input type="text" class="form-control" id="id_login">
+    <body style="background-color:#e7e7e7;">
+        <main>
+            <div class="container py-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h1>LOGIN</h1>
+                        <section>
+                            <form action="/req/login" method="post">
+                                <div class="mb-3">
+                                    <label for="id_login" class="form-label">Login</label>
+                                    <input type="text" class="form-control" id="id_login">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="id_password">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                                <br/><br/>
+                                Yet have not an account? <a href="/req/signup">Sign Up</a>
+                            </form>
+                        </section>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="id_password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="id_password">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </section>
+                <footer class="pt-3 mt-4 text-muted border-top">© 2021</footer>
+            </div>
+        </main>
     </body>
 </html>
 
