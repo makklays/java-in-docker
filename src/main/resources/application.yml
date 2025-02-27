@@ -50,6 +50,8 @@ spring:
     throw-no-handler-found: true
   main:
     allow-bean-definition-overriding: true
+  cxf:
+    path: /Service
   server:
     error:
       include-message: always
