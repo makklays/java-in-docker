@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WSConfig {
 
-    /*@Autowired(required=true)
+    @Autowired(required=true)
     private Bus bus;
 
     @Bean
@@ -20,6 +20,6 @@ public class WSConfig {
         endpoint.publish("ServiceHello");
 
         return endpoint;
-    }*/
+    }
 }
 

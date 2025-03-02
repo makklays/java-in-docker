@@ -1,9 +1,7 @@
 package com.techmatrix18.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
 /**
@@ -13,6 +11,7 @@ import java.util.Objects;
  */
 
 @Entity
+@Table(name = "users")
 public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
