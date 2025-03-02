@@ -11,8 +11,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WSConfig {
 
-    @Autowired(required=true)
-    private Bus bus;
+    private final Bus bus;
+
+    public WSConfig (Bus bus) {
+        this.bus = bus;
+    }
 
     @Bean
     public Endpoint HelloEndpoint() {
