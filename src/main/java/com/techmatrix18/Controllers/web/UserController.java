@@ -37,7 +37,8 @@ public class UserController {
     }
 
     @GetMapping("/req/index")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("vv", "V-V-V");
         return "index";
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +15,14 @@
         }
         .menu {
             display: grid;
-            grid-template-columns: repeat(2, 150px);
+            grid-template-columns: repeat(2, 250px);
             gap: 20px;
         }
         .menu a {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 150px;
+            width: 250px;
             height: 150px;
             background-color: #3498db;
             color: white;
@@ -38,12 +38,35 @@
         }
     </style>
 </head>
-<body>
-<div class="menu">
-    <a href="#">Пользователи</a>
-    <a href="#">Услуги</a>
-    <a href="#">Инфо</a>
-    <a href="#">Контакты</a>
-</div>
+<body style="background-color:#e7e7e7;">
+    <main>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><i class="fa-solid fa-flag-checkered"></i> Welcome!</h1>
+                </div>
+                <div class="col-md-6 align-self-center" style="text-align:right;">
+                    <div sec:authorize="isAuthenticated()">
+                        <p><i class="fa-solid fa-user"></i> Hello, <span th:text="${#authentication.principal.username}"></span>!</p>
+                        <a href="/logout">Logout</a> <br/><br/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="menu">
+                        <a href="#">Пользователи</a>
+                        <a href="#">Услуги</a>
+                        <a href="#">Инфо</a>
+                        <a href="#">Контакты</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
 </body>
 </html>
+

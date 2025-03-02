@@ -14,7 +14,7 @@ import java.util.Objects;
 @Table(name = "users")
 public class MyUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String email;

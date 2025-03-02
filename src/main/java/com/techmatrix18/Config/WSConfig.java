@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WSConfig {
 
-    private final Bus bus;
+    /*private final Bus bus;
 
     public WSConfig (Bus bus) {
         this.bus = bus;
@@ -23,6 +23,6 @@ public class WSConfig {
         endpoint.publish("ServiceHello");
 
         return endpoint;
-    }
+    }*/
 }
 

@@ -54,7 +54,7 @@ public class SecurityConfiguration {
     {
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
+                //.cors(Customizer.withDefaults())
                 //.authorizeHttpRequests(auth -> auth
                 //    .requestMatchers("/req/login", "/css/**", "/js/**").permitAll() // Разрешаем доступ к логину и статике
                 //    .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
@@ -74,7 +74,7 @@ public class SecurityConfiguration {
                 .formLogin(form -> form
                     .loginPage("/req/login") // Указываем страницу логина
                     .permitAll()
-                    .defaultSuccessUrl("/", true) // После успешного входа перенаправляем на главную
+                    .defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
                 )
                 .logout(logout -> logout
                     .logoutUrl("/logout")
