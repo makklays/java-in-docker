@@ -1,7 +1,10 @@
 package com.techmatrix18.Model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -19,6 +22,16 @@ public class MyUser {
     private String username;
     private String email;
     private String password;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
     public Long getId() {
         return id;
@@ -55,22 +68,24 @@ public class MyUser {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MyUser user)) return false;
-        return getId().equals(user.getId()) && getUsername().equals(user.getUsername()) && getEmail().equals(user.getEmail()) && getPassword().equals(user.getPassword());
+        if (!(o instanceof MyUser myUser)) return false;
+        return getId().equals(myUser.getId()) && getUsername().equals(myUser.getUsername()) && getEmail().equals(myUser.getEmail()) && getPassword().equals(myUser.getPassword()) && createdAt.equals(myUser.createdAt) && updatedAt.equals(myUser.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getEmail(), getPassword());
+        return Objects.hash(getId(), getUsername(), getEmail(), getPassword(), createdAt, updatedAt);
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "User {" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
