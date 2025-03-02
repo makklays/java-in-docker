@@ -19,6 +19,7 @@ public class RegistrationController {
 
     @PostMapping(value = "/req/signup", consumes = "application/json")
     public MyUser createUser(@RequestBody MyUser user) {
+        System.out.println(user.toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
