@@ -1,0 +1,60 @@
+
+spring:
+  application:
+    name: java-in-docker
+  datasource:
+    generate-unique-name: false
+    url: jdbc:mysql://localhost:3306/aton
+    username: admin
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    database: default
+    generate-ddl: false
+    properties:
+      connection:
+        charSet: utf-8
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        ddl-auto: none
+        show_sql: true
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baselineOnMigrate: true
+    validateOnMigrate: true
+    url: jdbc:mysql://localhost:3306/aton
+    user: admin
+    password: admin
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/  #this is the main
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+#  security:
+#    user:
+#      name: Alexander
+#      password: mypassword
+  messages:
+    basename: messages
+    encoding: UTF-8
+  mvc:
+    throw-exception-if-no-handler-found: true
+    throw-no-handler-found: true
+  main:
+    allow-bean-definition-overriding: true
+  cxf:
+    path: /Service
+  server:
+    error:
+      include-message: always
+      include-binding-errors: always
+      whitelabel:
+        enabled: false

@@ -1,0 +1,54 @@
+#версия парсера файла, влияет на доступность некоторых фич, более подробное описание на официальном сайта
+version: "3.9"
+#контейнеры, которые буду запускаться в docker-compose, их принято называть сервисами
+services:
+  #сервис базы данных, будем использовать mariadb
+  mysql:
+    image: mariadb
+    restart: always
+    environment:
+      #при необходимости при запуске конейтенра сразу будет создана база
+      MYSQL_DATABASE: aton
+      #при необходимости при запуске контейнера сразу будет создан допонительный пользователь
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      #рут пароль
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    #внешняя дериктория для сохранения данных
+    volumes:
+      - D:\docker\mysql:/var/lib/mysql
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 10s
+      timeout: 20s
+      retries: 10
+  javaindoc:
+    container_name: javaindoc
+    image: javaindocker
+    restart: always #on-failure
+    #сборка образа javaindocker из докерфайла
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8080
+    environment:
+      #переменная окружения в которую передаем память выделяему для процесса javaindocker
+      JAVA_MAX_MEMORY: 256m
+      #переменная окружения для обновления конфига адреса биндинга для javaindocker
+      JAVAINDOCKER_HOST: "*"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: "netstat -an | grep 9014 > /dev/null; if [ 0 == $$? ]; then echo 1; fi;"
+      interval: 10s
+      timeout: 1s
+      retries: 10
+    #внешняя дериктория для сохранения данных
+    volumes:
+      - D:\docker\logs:/server/logs
+    profiles:
+      - server
