@@ -1,6 +1,9 @@
 package com.techmatrix18.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,8 +22,17 @@ public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull
+    @Size(min=2, max=30)
     private String username;
+
+    @NotNull
+    @Email(message = "{Email.MyUser.email}") // in src/main/resources/ValidationMessages.properties
     private String email;
+
+    @NotNull
+    @Size(min=6, max=15)
     private String password;
 
     @CreationTimestamp

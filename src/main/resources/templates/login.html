@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <title>Login</title>
 
@@ -16,14 +16,16 @@
                     <div class="col-md-3">
                         <h1>LOGIN</h1>
                         <section>
-                            <form action="/req/login" method="post">
+                            <form action="/req/login" th:object="${myUser}" method="post">
                                 <div class="mb-3">
                                     <label for="id_login" class="form-label">Login</label>
-                                    <input type="text" name="username" class="form-control" id="id_login">
+                                    <input type="text" name="username" class="form-control" id="id_login" />
+                                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="id_password" class="form-label">Password</label>
                                     <input type="password" name="password" class="form-control" id="id_password">
+                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Username Error</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
 
