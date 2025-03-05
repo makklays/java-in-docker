@@ -69,6 +69,8 @@ public class SecurityConfiguration {
                     .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()
                     .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
                     .requestMatchers("/req/signup").permitAll()
+                    // authenticated
+                    .requestMatchers("/contact").authenticated()
                     .requestMatchers("/users/**").authenticated()
                 )
                 .formLogin(form -> form

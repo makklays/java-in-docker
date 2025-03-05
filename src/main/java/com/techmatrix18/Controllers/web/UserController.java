@@ -1,8 +1,12 @@
 package com.techmatrix18.Controllers.web;
 
 import com.techmatrix18.Model.MyUser;
+import com.techmatrix18.Model.Contact;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
@@ -29,18 +33,53 @@ public class UserController {
 
     @GetMapping("/req/login")
     public String login(MyUser myUser) {
-        return "login";
+        return "auth/login";
     }
 
     @GetMapping("/req/signup")
     public String reqistr() {
-        return "signup";
+        return "auth/signup";
     }
 
     @GetMapping("/req/index")
     public String index(Model model) {
         model.addAttribute("vv", "V-V-V");
         return "index";
+    }
+
+    /*@GetMapping("/contact")
+    public String contact(BlackForm blackForm) {
+        return "contact";
+    }
+
+    @PostMapping("/contact")
+    public String contactPost(@Valid BlackForm blackForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "form";
+        }
+
+        return "redirect:/results";
+    }*/
+
+    @GetMapping("/users")
+    public String users() {
+        return "users/index";
+    }
+
+    @GetMapping("/contact")
+    public String contact(Contact contact, Model model) {
+        model.addAttribute("contact", contact);
+
+        return "contact";
+    }
+
+    @PostMapping("/contact")
+    public String contactPost(@Valid Contact contact, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "form";
+        }
+
+        return "redirect:/results";
     }
 }
 
