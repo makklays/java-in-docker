@@ -47,20 +47,6 @@ public class UserController {
         return "index";
     }
 
-    /*@GetMapping("/contact")
-    public String contact(BlackForm blackForm) {
-        return "contact";
-    }
-
-    @PostMapping("/contact")
-    public String contactPost(@Valid BlackForm blackForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "form";
-        }
-
-        return "redirect:/results";
-    }*/
-
     @GetMapping("/users")
     public String users() {
         return "users/index";
@@ -76,10 +62,10 @@ public class UserController {
     @PostMapping("/contact")
     public String contactPost(@Valid Contact contact, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "form";
+            return "contact";
         }
 
-        return "redirect:/results";
+        return "redirect:/contact";
     }
 }
 
