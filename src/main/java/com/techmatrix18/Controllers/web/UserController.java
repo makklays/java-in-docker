@@ -75,6 +75,8 @@ public class UserController {
 
         contactService.addContact(contact);
 
+        System.out.println("Contact --> " + contact.toString());
+
         return "redirect:/contact";
     }
 }

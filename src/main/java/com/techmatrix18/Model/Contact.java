@@ -5,11 +5,13 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "contacts")
+@Table(name = "contact")
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
