@@ -2,6 +2,8 @@ package com.techmatrix18.Controllers.web;
 
 import com.techmatrix18.Model.MyUser;
 import com.techmatrix18.Model.Contact;
+import com.techmatrix18.Repositories.ContactRepository;
+import com.techmatrix18.Services.ContactService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,13 +14,19 @@ import org.springframework.ui.Model;
 
 /**
  * @author Alexander Kuziv
- * @since 18-02-2025
+ * @since 18.02.2025
  * @version 0.0.1
  */
 
 @Controller
 //@RequestMapping("/")
 public class UserController {
+
+    private final ContactService contactService;
+
+    public UserController(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     @GetMapping("/welcome")
     public String welcome(Model model) {
@@ -64,6 +72,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "contact";
         }
+
+        contactService.addContact(contact);
 
         return "redirect:/contact";
     }

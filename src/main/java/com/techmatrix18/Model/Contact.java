@@ -3,10 +3,8 @@ package com.techmatrix18.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.Instant;
 import java.util.Objects;
 
@@ -21,8 +19,6 @@ public class Contact {
     @Size(min=2, max=30)
     private String name;
 
-    @Null
-    @Size(min=2, max=30)
     private String surname;
 
     @NotNull

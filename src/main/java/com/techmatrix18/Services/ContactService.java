@@ -1,7 +1,7 @@
 package com.techmatrix18.Services;
 
 import com.techmatrix18.Model.Contact;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
@@ -16,5 +16,10 @@ public interface ContactService {
     Contact getConactByEmail(String email);
     List<Contact> getAll();
 
+    boolean addContact(Contact contact);
+    boolean updateContact(Contact contact);
+    boolean deleteContact(Long id);
+
+    Page<Contact> findPaginated(int pageNo, int pageSize);
 }
 

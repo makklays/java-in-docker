@@ -4,6 +4,9 @@ import com.techmatrix18.Model.Contact;
 import com.techmatrix18.Repositories.ContactRepository;
 import com.techmatrix18.Services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,4 +40,42 @@ public class ContactServiceImpl implements ContactService {
     public Contact getConactByEmail(String email) {
         return contactRepository.findByEmail(email).get();
     }
+
+    @Override
+    public boolean addContact(Contact contact) {
+        Contact b = contactRepository.save(contact);
+        if (!b.getName().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateContact(Contact contact) {
+        Contact b = contactRepository.save(contact);
+        if (!b.getName().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteContact(Long id) {
+        Contact contact = contactRepository.getById(id);
+        if (!contact.getName().isEmpty()) {
+            contactRepository.delete(contact);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public Page<Contact> findPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return contactRepository.findAll(pageable);
+    }
 }
+
