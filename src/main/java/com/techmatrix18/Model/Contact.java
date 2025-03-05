@@ -28,7 +28,7 @@ public class Contact {
     private String email;
 
     @NotNull
-    @Size(min=6, max=800)
+    @Size(min=6, max=700)
     private String description;
 
     @CreationTimestamp
