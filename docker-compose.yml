@@ -5,6 +5,7 @@ services:
   #сервис базы данных, будем использовать mariadb
   mysql:
     image: mariadb
+    container_name: mariadb_aton
     restart: always
     environment:
       #при необходимости при запуске конейтенра сразу будет создана база
@@ -13,14 +14,17 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
       #рут пароль
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: admin
+    #network_mode: "host"
     ports:
-      - 3306:3306
+      - "3308:3306"
     #внешняя дериктория для сохранения данных
     volumes:
-      - D:\docker\mysql:/var/lib/mysql
+    #  - /opt/test/mariacnf:/etc/mysql/conf.d
+      - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
     healthcheck:
-      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      test: "/usr/bin/mysql --user=admin --password=admin --execute \"SHOW DATABASES;\""
       interval: 10s
       timeout: 20s
       retries: 10
@@ -32,8 +36,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    #network_mode: "host"
     ports:
-      - 8081:8080
+      - "8081:8080"
     environment:
       #переменная окружения в которую передаем память выделяему для процесса javaindocker
       JAVA_MAX_MEMORY: 256m
@@ -49,6 +54,6 @@ services:
       retries: 10
     #внешняя дериктория для сохранения данных
     volumes:
-      - D:\docker\logs:/server/logs
+      - /var/logs:/server/logs
     profiles:
       - server

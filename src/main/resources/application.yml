@@ -4,7 +4,7 @@ spring:
     name: java-in-docker
   datasource:
     generate-unique-name: false
-    url: jdbc:mysql://localhost:3306/aton
+    url: jdbc:mysql://host.docker.internal:3306/aton
     username: admin
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,7 +26,7 @@ spring:
     locations: classpath:db/migration
     baselineOnMigrate: true
     validateOnMigrate: true
-    url: jdbc:mysql://localhost:3306/aton
+    url: jdbc:mysql://host.docker.internal:3306/aton
     user: admin
     password: admin
   thymeleaf:

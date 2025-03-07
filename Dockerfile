@@ -1,5 +1,5 @@
 # Use a Java base image
-FROM openjdk:11
+FROM openjdk:17
 
 # Set the working directory
 WORKDIR /
