@@ -5,11 +5,11 @@ FROM openjdk:17
 WORKDIR /
 
 # Copy the application jar to the container
-COPY out/artifacts/JavaInDocker_jar/JavaInDocker.jar .
+COPY ./target/*.jar /usr/share/kuziv/java-in-docker.jar
+
 EXPOSE 8080
 # Set the environment variables
 ENV JAVA_OPTS=""
 
 # Define the command to run the application
-CMD ["java", "-jar", "JavaInDocker.jar"]
-
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar /usr/share/kuziv/java-in-docker.jar" ]

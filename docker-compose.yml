@@ -4,9 +4,9 @@ version: "3.9"
 services:
   #сервис базы данных, будем использовать mariadb
   mysql:
-    image: mariadb
+    image: mariadb:latest
     container_name: mariadb_aton
-    restart: always
+    restart: on-failure
     environment:
       #при необходимости при запуске конейтенра сразу будет создана база
       MYSQL_DATABASE: aton
@@ -15,7 +15,7 @@ services:
       MYSQL_PASSWORD: admin
       #рут пароль
       MYSQL_ROOT_PASSWORD: admin
-    #network_mode: "host"
+    network_mode: "host"
     ports:
       - "3308:3306"
     #внешняя дериктория для сохранения данных
@@ -24,19 +24,19 @@ services:
       - ./data/mysql:/var/lib/mysql
       - ./logs/mysql:/var/log/mysql
     healthcheck:
-      test: "/usr/bin/mysql --user=admin --password=admin --execute \"SHOW DATABASES;\""
-      interval: 10s
+      test: ["CMD", "mariadb-admin" ,"ping", "-h", "localhost", "-padmin"]
+      interval: 1s
       timeout: 20s
       retries: 10
-  javaindoc:
-    container_name: javaindoc
-    image: javaindocker
-    restart: always #on-failure
+  javaindocer:
+    container_name: javaindocker
+    image: javaindocker:latest
+    restart: on-failure
     #сборка образа javaindocker из докерфайла
     build:
       context: .
       dockerfile: Dockerfile
-    #network_mode: "host"
+    network_mode: "host"
     ports:
       - "8081:8080"
     environment:
@@ -49,7 +49,7 @@ services:
         condition: service_healthy
     healthcheck:
       test: "netstat -an | grep 9014 > /dev/null; if [ 0 == $$? ]; then echo 1; fi;"
-      interval: 10s
+      interval: 1s
       timeout: 1s
       retries: 10
     #внешняя дериктория для сохранения данных
