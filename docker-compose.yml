@@ -8,23 +8,30 @@ services:
     container_name: mariadb_aton
     restart: on-failure
     environment:
+      #MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       #при необходимости при запуске конейтенра сразу будет создана база
       MYSQL_DATABASE: aton
       #при необходимости при запуске контейнера сразу будет создан допонительный пользователь
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
       #рут пароль
-      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: "admin"
+      MYSQL_TCP_PORT: 3308
+      MARIADB_AUTO_UPGRADE: false
     network_mode: "host"
     ports:
-      - "3308:3306"
+      - "3308:3308"
+    #networks:
+    #  - "my_network"
     #внешняя дериктория для сохранения данных
     volumes:
     #  - /opt/test/mariacnf:/etc/mysql/conf.d
       - ./data/mysql:/var/lib/mysql
       - ./logs/mysql:/var/log/mysql
     healthcheck:
-      test: ["CMD", "mariadb-admin" ,"ping", "-h", "localhost", "-padmin"]
+      #test: ["CMD", "echo 'SELECT version();'| mysql"]
+      #test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      test: ["CMD", "mariadb-admin" ,"ping", "-h", "localhost", "-uadmin", "-padmin"]
       interval: 1s
       timeout: 20s
       retries: 10
@@ -38,7 +45,9 @@ services:
       dockerfile: Dockerfile
     network_mode: "host"
     ports:
-      - "8081:8080"
+      - "8080:8081"
+    #networks:
+    #  - "my_network"
     environment:
       #переменная окружения в которую передаем память выделяему для процесса javaindocker
       JAVA_MAX_MEMORY: 256m
@@ -55,5 +64,10 @@ services:
     #внешняя дериктория для сохранения данных
     volumes:
       - /var/logs:/server/logs
-    profiles:
-      - server
+#    profiles:
+#      - server
+#networks:
+#  my_network:
+#    driver: bridge
+    #internal: true
+    #external: false
