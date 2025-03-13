@@ -1,4 +1,4 @@
-package com.techmatrix18.Config;
+package com.techmatrix18.config;
 
 import com.techmatrix18.services.UserService;
 import org.springframework.context.annotation.Bean;
