@@ -35,6 +35,17 @@ services:
       interval: 1s
       timeout: 20s
       retries: 10
+#  postgresql:
+#    container_name: postgresql
+#    image: postgresql:latest
+#    ports:
+#      - "6432:5432"
+#    environment:
+#      POSTGRES_PASSWORD: "admin"
+#      POSTGRES_DB: "aton"
+#      POSTGRES_USER: "admin"
+#    networks:
+#      - backend
   javaindocer:
     container_name: javaindocker
     image: javaindocker:latest
