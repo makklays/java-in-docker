@@ -1,6 +1,6 @@
-package com.techmatrix18.Services;
+package com.techmatrix18.services;
 
-import com.techmatrix18.Model.Contact;
+import com.techmatrix18.model.Contact;
 import org.springframework.data.domain.Page;
 import java.util.List;
 

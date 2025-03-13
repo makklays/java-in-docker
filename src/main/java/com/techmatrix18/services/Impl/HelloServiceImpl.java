@@ -1,6 +1,6 @@
-package com.techmatrix18.Services.Impl;
+package com.techmatrix18.services.Impl;
 
-import com.techmatrix18.Services.HelloService;
+import com.techmatrix18.services.HelloService;
 import jakarta.jws.WebService;
 
 @WebService(

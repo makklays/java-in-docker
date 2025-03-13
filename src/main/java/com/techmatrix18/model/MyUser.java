@@ -1,4 +1,4 @@
-package com.techmatrix18.Model;
+package com.techmatrix18.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

@@ -1,6 +1,4 @@
-package com.techmatrix18.Model;
-
-import org.junit.jupiter.api.Test;
+package com.techmatrix18.model;
 
 /**
  * @author Alexander Kuziv

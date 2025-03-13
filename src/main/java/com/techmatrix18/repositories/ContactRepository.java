@@ -1,7 +1,6 @@
-package com.techmatrix18.Repositories;
+package com.techmatrix18.repositories;
 
-import com.techmatrix18.Model.Contact;
-import com.techmatrix18.Model.MyUser;
+import com.techmatrix18.model.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

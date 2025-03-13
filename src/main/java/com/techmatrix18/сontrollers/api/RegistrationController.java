@@ -1,7 +1,7 @@
-package com.techmatrix18.Controllers.api;
+package com.techmatrix18.сontrollers.api;
 
-import com.techmatrix18.Model.MyUser;
-import com.techmatrix18.Repositories.UserRepository;
+import com.techmatrix18.model.MyUser;
+import com.techmatrix18.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;

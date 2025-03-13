@@ -1,11 +1,10 @@
-package com.techmatrix18.Model;
+package com.techmatrix18.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.Instant;
 import java.util.Objects;

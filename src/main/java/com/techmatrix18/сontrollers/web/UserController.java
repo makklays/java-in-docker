@@ -1,15 +1,13 @@
-package com.techmatrix18.Controllers.web;
+package com.techmatrix18.сontrollers.web;
 
-import com.techmatrix18.Model.MyUser;
-import com.techmatrix18.Model.Contact;
-import com.techmatrix18.Repositories.ContactRepository;
-import com.techmatrix18.Services.ContactService;
+import com.techmatrix18.model.MyUser;
+import com.techmatrix18.model.Contact;
+import com.techmatrix18.services.ContactService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 
 /**

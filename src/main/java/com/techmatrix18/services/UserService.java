@@ -1,9 +1,8 @@
-package com.techmatrix18.Services;
+package com.techmatrix18.services;
 
 
-import com.techmatrix18.Model.MyUser;
-import com.techmatrix18.Repositories.UserRepository;
-import jakarta.validation.Valid;
+import com.techmatrix18.model.MyUser;
+import com.techmatrix18.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -11,8 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import java.util.Optional;
 
 /**

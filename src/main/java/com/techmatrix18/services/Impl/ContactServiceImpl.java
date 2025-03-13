@@ -1,8 +1,8 @@
-package com.techmatrix18.Services.Impl;
+package com.techmatrix18.services.Impl;
 
-import com.techmatrix18.Model.Contact;
-import com.techmatrix18.Repositories.ContactRepository;
-import com.techmatrix18.Services.ContactService;
+import com.techmatrix18.model.Contact;
+import com.techmatrix18.repositories.ContactRepository;
+import com.techmatrix18.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

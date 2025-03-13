@@ -1,4 +1,4 @@
-package com.techmatrix18.Services;
+package com.techmatrix18.services;
 
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;

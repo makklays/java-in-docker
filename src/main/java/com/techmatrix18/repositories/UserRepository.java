@@ -1,8 +1,7 @@
-package com.techmatrix18.Repositories;
+package com.techmatrix18.repositories;
 
-import com.techmatrix18.Model.MyUser;
+import com.techmatrix18.model.MyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
