@@ -13,7 +13,7 @@ import org.springframework.xml.xsd.XsdSchema;
 @EnableWs
 public class SoapWebServiceConfig extends WsConfigurerAdapter {
 
-    @Bean
+    @Bean("calculator")
     public DefaultWsdl11Definition calculatorServiceDefinition() {
         DefaultWsdl11Definition wsdlDefinition = new DefaultWsdl11Definition();
         wsdlDefinition.setPortTypeName("CalculatorServicePort");
@@ -23,9 +23,24 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         return wsdlDefinition;
     }
 
+    @Bean("contact")
+    public DefaultWsdl11Definition contactServiceDefinition() {
+        DefaultWsdl11Definition wsdlDefinition = new DefaultWsdl11Definition();
+        wsdlDefinition.setPortTypeName("ContactServicePort");
+        wsdlDefinition.setLocationUri("/ws");
+        wsdlDefinition.setTargetNamespace("http://your-namespace.com");
+        wsdlDefinition.setSchema(contactSchema());
+        return wsdlDefinition;
+    }
+
     @Bean
     public XsdSchema calculatorServiceSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("calculator.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource("/xsd/calculator.xsd"));
+    }
+
+    @Bean
+    public XsdSchema contactSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("/xsd/contact.xsd"));
     }
 }
 

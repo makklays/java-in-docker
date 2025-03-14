@@ -1,5 +1,9 @@
 package com.techmatrix18.services.endpoints;
 
+import com.techmatrix18.jaxb.AddRequest;
+import com.techmatrix18.jaxb.AddResponse;
+import com.techmatrix18.jaxb.SubtractRequest;
+import com.techmatrix18.jaxb.SubtractResponse;
 import com.techmatrix18.services.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
