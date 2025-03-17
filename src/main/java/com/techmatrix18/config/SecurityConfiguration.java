@@ -50,6 +50,11 @@ public class SecurityConfiguration {
     {
         return http
                 .csrf(csrf -> csrf.disable())
+                .securityMatcher("/ws", "/ws/**")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/ws").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                )
                 //.cors(Customizer.withDefaults())
                 //.authorizeHttpRequests(auth -> auth
                 //    .requestMatchers("/req/login", "/css/**", "/js/**").permitAll() // Разрешаем доступ к логину и статике
@@ -65,7 +70,7 @@ public class SecurityConfiguration {
                     .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()
                     .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
                     .requestMatchers("/req/signup").permitAll()
-                        .requestMatchers("/ws/**").permitAll()
+                    .requestMatchers("/ws/**").permitAll()
                     // authenticated
                     .requestMatchers("/contact").authenticated()
                     .requestMatchers("/users/**").authenticated()

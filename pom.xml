@@ -193,7 +193,7 @@
                             </sources>
 
                             <packageName>com.techmatrix18.jaxb</packageName>
-                            <outputDirectory>${project.build.directory}/generated-sources/jaxb</outputDirectory>
+                            <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
                             <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>

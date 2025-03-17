@@ -74,3 +74,25 @@
 # docker stop <name>
 
 jdbc:mysql://host.docker.internal:3306/aton
+
+----------------------------------------------------------------------------------------------------------------------
+Postman
+метод POST http://localhost:8080/ws
+Postman Вкладка Header -> Content-Type: text/xml
+Postman Вкладка raw -> XML
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:ns="http://your-namespace.com">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <!--ns:addRequest>
+        <ns:a>2</ns:a>
+        <ns:b>3</ns:b>
+    </ns:addRequest-->
+    <ns:getContactRequest>
+        <ns:name>Alexander2</ns:name>
+    </ns:getContactRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+
