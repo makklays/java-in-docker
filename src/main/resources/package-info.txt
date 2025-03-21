@@ -7,3 +7,6 @@ This is Alfa-version of project
 3/ java in docker
 4/ update project
 5/ list of bases
+
+Теперь RabbitMQ доступен на localhost:15672 (логин: user, пароль: password).
+

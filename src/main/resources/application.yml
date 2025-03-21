@@ -38,6 +38,20 @@ spring:
     servlet:
       content-type: text/html
     cache: false
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: my-group
 #  security:
 #    user:
 #      name: Alexander
