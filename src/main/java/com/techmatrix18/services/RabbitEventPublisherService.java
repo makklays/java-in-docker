@@ -15,6 +15,9 @@ public class RabbitEventPublisherService {
 
     public void publishEvent(String event) {
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, event);
+    }
 
+    public void sendMessage(String queue, Object message) {
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY_REQ, message);
     }
 }

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class MyUser {
+public class MyUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,7 +33,6 @@ public class MyUser {
     private String email;
 
     @NotNull
-    @Size(min=6, max=15)
     private String password;
 
     @CreationTimestamp
