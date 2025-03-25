@@ -1,0 +1,25 @@
+
+CREATE TABLE cards
+(
+    id                bigint auto_increment primary key,
+    card_number       VARCHAR(19) null,
+    cardholder_name   VARCHAR(255) null,
+    expiration_date   DATE null,
+    cvv               VARCHAR(4) null,
+    pin               VARCHAR(6) null,
+    balance           DECIMAL(15,2) NOT NULL,
+    credit_limit      DECIMAL(15,2) NOT NULL,
+    currency          VARCHAR(3) null, # например, USD, EUR
+    status            ENUM('ACTIVE', 'BLOCKED', 'EXPIRED') NOT NULL DEFAULT 'EXPIRED',
+
+    bank_name         VARCHAR(255) null,
+    type              ENUM('VISA', 'MASTERCARD', 'AMEX', 'MIR') NOT NULL DEFAULT 'VISA',
+    issue_date        DATE null, # дата выпуска карты
+    reward_points     bigint null, # бонусные баллы (если есть программа лояльности)
+    interest_rate     DECIMAL(15,2) NOT NULL, # процентная ставка
+    contactless       bit null, # поддержка бесконтактной оплаты
+
+    created_at        datetime(6)  null,
+    updated_at        datetime(6)  null
+);
+

@@ -3,3 +3,28 @@
     text-decoration: underline;
     color: #a8a8a8;
 }
+
+.menu a {
+    background-color: #bfcc58;
+    color: #464c54;
+}
+.menu a:hover {
+    background-color: #bfcc58;
+}
+
+button.btn-primary, a.btn-primary {
+    background-color: #bfcc58;
+    border-color: #464c54;
+    color: #464c54;
+}
+
+button.btn-primary:hover, a.btn-primary:hover {
+    background-color: #464c54;
+    border-color: #bfcc58;
+    color: #bfcc58;
+}
+
+a, a:hover {
+    color: #464c54;
+}
+

@@ -4,36 +4,67 @@ version: "3.9"
 services:
   #сервис базы данных, будем использовать mariadb
   mysql:
-    image: mariadb
-    restart: always
+    image: mariadb:latest
+    container_name: mariadb_aton
+    restart: on-failure
+    profiles:
+      - "mariadb"
+      - "all"
     environment:
+      #MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       #при необходимости при запуске конейтенра сразу будет создана база
       MYSQL_DATABASE: aton
       #при необходимости при запуске контейнера сразу будет создан допонительный пользователь
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
       #рут пароль
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: "admin"
+      MYSQL_TCP_PORT: 3308
+      MARIADB_AUTO_UPGRADE: false
+    network_mode: "host"
     ports:
-      - 3306:3306
+      - "3308:3308"
+    #networks:
+    #  - "my_network"
     #внешняя дериктория для сохранения данных
     volumes:
-      - D:\docker\mysql:/var/lib/mysql
+      #  - /opt/test/mariacnf:/etc/mysql/conf.d
+      - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
     healthcheck:
-      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
-      interval: 10s
+      #test: ["CMD", "echo 'SELECT version();'| mysql"]
+      #test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      test: [ "CMD", "mariadb-admin" ,"ping", "-h", "localhost", "-uadmin", "-padmin" ]
+      interval: 1s
       timeout: 20s
       retries: 10
-  javaindoc:
-    container_name: javaindoc
-    image: javaindocker
-    restart: always #on-failure
+  #  postgresql:
+  #    container_name: postgresql
+  #    image: postgresql:latest
+  #    ports:
+  #      - "6432:5432"
+  #    environment:
+  #      POSTGRES_PASSWORD: "admin"
+  #      POSTGRES_DB: "aton"
+  #      POSTGRES_USER: "admin"
+  #    networks:
+  #      - backend
+  javaindocer:
+    container_name: javaindocker
+    image: javaindocker:latest
+    restart: on-failure
+    profiles:
+      - "javaindocker"
+      - "all"
     #сборка образа javaindocker из докерфайла
     build:
       context: .
       dockerfile: Dockerfile
+    network_mode: "host"
     ports:
-      - 8081:8080
+      - "8080:8081"
+    #networks:
+    #  - "my_network"
     environment:
       #переменная окружения в которую передаем память выделяему для процесса javaindocker
       JAVA_MAX_MEMORY: 256m
@@ -44,11 +75,72 @@ services:
         condition: service_healthy
     healthcheck:
       test: "netstat -an | grep 9014 > /dev/null; if [ 0 == $$? ]; then echo 1; fi;"
-      interval: 10s
+      interval: 1s
       timeout: 1s
       retries: 10
     #внешняя дериктория для сохранения данных
     volumes:
-      - D:\docker\logs:/server/logs
+      - /var/logs:/server/logs
+  #    profiles:
+  #      - server
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
     profiles:
-      - server
+      - "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    restart: always
+
+  kafka:
+    image: apache/kafka:latest
+    container_name: kafka
+    restart: always
+    profiles: ["kafka", "all"]
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+      - "29092:29092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,EXTERNAL://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:29092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 2
+    networks:
+      - kafka_net
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop
+    profiles: ["kafdrop", "all"]
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092
+    depends_on:
+      - kafka
+    networks:
+      - kafka_net
+
+networks:
+  kafka_net:
+    driver: bridge
+
+    #networks:
+    #  my_network:
+    #    driver: bridge
+    #internal: true
+    #external: false

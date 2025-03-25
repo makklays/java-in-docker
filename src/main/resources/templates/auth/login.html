@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Nato: Login</title>
+
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+
+        <script src="http://localhost:8080/js/bootstrap.min.js"></script>
+        <script src="http://localhost:8080/js/signup.js"></script>
+    </head>
+    <body style="background-color:#e7e7e7;">
+        <main>
+            <div class="container py-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h1>LOGIN</h1>
+                        <section>
+                            <form action="/req/login" th:object="${myUser}" method="post">
+                                <div class="mb-3">
+                                    <label for="id_login" class="form-label">Login</label>
+                                    <input type="text" name="username" class="form-control" id="id_login" />
+                                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_password" class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" id="id_password">
+                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Username Error</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                                <br/><br/>
+                                Yet have not an account? <a href="/req/signup">Sign Up</a>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+                <footer class="pt-3 mt-4 text-muted border-top">© 2021</footer>
+            </div>
+        </main>
+    </body>
+</html>
+
