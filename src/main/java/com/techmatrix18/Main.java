@@ -1,9 +1,7 @@
 package com.techmatrix18;
 
-import com.techmatrix18.сontrollers.api.RegistrationController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import java.util.logging.Logger;
 
 /**
  * @author Alexander Kuziv

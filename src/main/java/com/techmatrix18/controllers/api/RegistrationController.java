@@ -1,10 +1,9 @@
-package com.techmatrix18.сontrollers.api;
+package com.techmatrix18.controllers.api;
 
 import com.techmatrix18.config.RabbitMQConfig;
 import com.techmatrix18.model.MyUser;
 import com.techmatrix18.repositories.UserRepository;
 import com.techmatrix18.services.RabbitEventPublisherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
