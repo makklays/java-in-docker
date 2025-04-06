@@ -1,6 +1,6 @@
 package com.techmatrix18.controllers;
 
-import com.techmatrix18.UserController;
+import com.techmatrix18.controllers.web.UserController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
