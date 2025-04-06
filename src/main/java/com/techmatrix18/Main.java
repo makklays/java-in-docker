@@ -1,7 +1,9 @@
 package com.techmatrix18;
 
+import com.techmatrix18.сontrollers.api.RegistrationController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.logging.Logger;
 
 /**
  * @author Alexander Kuziv
@@ -11,8 +13,26 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Main {
+
     public static void main(String[] args) {
+
+        // static or instance
+        Example obj1 = new Example();
+        Example obj2 = new Example();
+
+        obj1.variable = 20;
+        obj1.statVariable = 22;
+
+        System.out.println("== log variable =>" + obj2.variable);
+        System.out.println("== log variable =>" + obj2.statVariable);
+
+        //
         SpringApplication.run(Main.class, args);
     }
+}
+
+class Example {
+    int variable = 10;
+    static int statVariable = 11;
 }
 

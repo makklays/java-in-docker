@@ -1,4 +1,4 @@
-package com.techmatrix18.сontrollers.web;
+package com.techmatrix18.controllers.web;
 
 import com.techmatrix18.model.MyUser;
 import com.techmatrix18.model.Contact;
@@ -29,7 +29,7 @@ public class UserController {
     @GetMapping("/welcome")
     public String welcome(Model model) {
         model.addAttribute("vv", "V-V-V");
-        return "index";
+        return "welcome";
     }
 
     @GetMapping("/info")

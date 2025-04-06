@@ -1,4 +1,4 @@
-package com.techmatrix18.сontrollers.web;
+package com.techmatrix18.controllers.web;
 
 import com.techmatrix18.services.KafkaProducer;
 import com.techmatrix18.services.RabbitEventPublisherService;
