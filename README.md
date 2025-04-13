@@ -1,4 +1,4 @@
-# Proyecto: java-in-docker
+# El proyecto: java-in-docker
 
 Yo como Arquitectador =) pinté estas eschemas para mejor entender el proyecto con sus tablas
 
