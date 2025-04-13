@@ -4,65 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nato: Home</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            margin: 0;
-        }
-        .menu {
-            display: grid;
-            grid-template-columns: repeat(2, 250px);
-            gap: 20px;
-        }
-        .menu a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 250px;
-            height: 150px;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            border-radius: 10px;
-            transition: background 0.3s;
-        }
-    </style>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 </head>
 <body style="background-color:#e7e7e7;">
-    <main>
-        <div class="container">
 
-            <div class="row">
-                <div class="col-md-6">
-                    <h1><i class="fa-solid fa-flag-checkered"></i> Welcome!</h1>
-                </div>
-                <div class="col-md-6 align-self-center" style="text-align:right;">
-                    <div sec:authorize="isAuthenticated()">
-                        <p><i class="fa-solid fa-user"></i> Hello, <span th:text="${#authentication.principal.username}"></span>!</p>
-                        <a href="/logout">Logout</a> <br/><br/>
-                    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h1><i class="fa-solid fa-flag-checkered"></i> Bienvenido!</h1>
+                <br/>
+            </div>
+            <div class="col-md-6 align-self-center" style="text-align:right;">
+                <div sec:authorize="isAuthenticated()">
+                    <p><i class="fa-solid fa-user"></i> Hola, <span th:text="${#authentication.principal.username}"></span>!</p>
+                    <a href="/logout">Cerrar sesión</a> <br/><br/>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="menu">
-                        <a href="/users">Пользователи</a>
-                        <a href="#">Услуги</a>
-                        <a href="/info">Инфо</a>
-                        <a href="/contact">Контакты</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </main>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="menu">
+                    <a href="/users">Usuarios</a>
+                    <a href="/map">Mi mundo</a>
+                    <a href="/info">Información</a>
+                    <a href="/contact">Contactos</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>
 

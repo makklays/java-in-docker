@@ -71,6 +71,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
                     .requestMatchers("/req/signup").permitAll()
                     .requestMatchers("/ws/**").permitAll()
+                    .requestMatchers("/div/**", "build/**").permitAll()
                     // authenticated
                     .requestMatchers("/contact").authenticated()
                     .requestMatchers("/users/**").authenticated()

@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
@@ -76,6 +77,28 @@ public class UserController {
         System.out.println("Contact --> " + contact.toString());
 
         return "redirect:/contact";
+    }
+
+    @GetMapping("/map")
+    public String getDiv(Model model) {
+        model.addAttribute("title", "V-V-V");
+
+        return "map";
+    }
+
+    @GetMapping("/builds")
+    public String getBuilds(Model model) {
+        model.addAttribute("title", "V-V-V");
+
+        return "builds";
+    }
+
+    @GetMapping("/build/{id}")
+    public String getBuild(@PathVariable Long id, Model model) {
+        model.addAttribute("title", "V-V-V");
+        model.addAttribute("id", id);
+
+        return "build";
     }
 }
 
