@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nato: Contact</title>
+    <title>Nato: Contacto</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
@@ -12,11 +12,12 @@
     <script src="http://localhost:8080/js/signup.js"></script>
 </head>
 <body style="background-color:#e7e7e7;">
-<main>
-    <div class="container py-4">
+    <div class="container">
+
         <div class="row">
             <div class="col-md-12">
-                <h1>Contact</h1>
+                <h1>Contacto</h1>
+                <br/>
 
                 <section>
                     <form th:action="@{/contact}" th:object="${contact}" method="post" enctype="multipart/form-data">
@@ -44,13 +45,12 @@
                             <small>Физкульт привет! </small>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                         <a href="#" th:href="@{/welcome}" class="btn btn-secondary" style="margin-left:20px;"> Back</a>
                     </form>
                 </section>
             </div>
         </div>
     </div>
-</main>
 </body>
 </html>
