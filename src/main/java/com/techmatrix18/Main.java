@@ -2,6 +2,7 @@ package com.techmatrix18;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Alexander Kuziv
@@ -29,6 +30,7 @@ public class Main {
     }
 }
 
+@Component
 class Example {
     int variable = 10;
     static int statVariable = 11;
