@@ -11,15 +11,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
+import java.util.logging.Logger;
+
 /**
+ * User controller with endpoints for user pages
+ *
  * @author Alexander Kuziv
  * @since 18.02.2025
  * @version 0.0.1
  */
 
 @Controller
-//@RequestMapping("/")
 public class UserController {
+
+    Logger log = Logger.getLogger(UserController.class.getName());
 
     private final ContactService contactService;
 
@@ -73,8 +78,7 @@ public class UserController {
         }
 
         contactService.addContact(contact);
-
-        System.out.println("Contact --> " + contact.toString());
+        log.info("Contact --> " + contact.toString());
 
         return "redirect:/contact";
     }

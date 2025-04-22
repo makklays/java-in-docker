@@ -1,7 +1,14 @@
 package com.techmatrix18.mappers;
 
-
 import com.techmatrix18.model.Contact;
+
+/**
+ * Class Contact Mapper
+ *
+ * @author alexander
+ * @since 14-03-2025
+ * @version 0.0.1
+ */
 
 public class ContactMapper {
 
@@ -31,3 +38,4 @@ public class ContactMapper {
         return modelContact;
     }
 }
+

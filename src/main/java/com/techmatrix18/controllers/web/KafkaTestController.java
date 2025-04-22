@@ -7,9 +7,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Test of Kafka Controller
+ *
+ * @author alexander
+ * @since 24-03-2025
+ * @version 0.0.1
+ */
+
 @RestController
 public class KafkaTestController {
-
 
     private final KafkaProducer kafkaProducer;
 
@@ -22,7 +29,5 @@ public class KafkaTestController {
         kafkaProducer.sendMessage(message);
         return "Message sent to Kafka topic";
     }
-
-
-
 }
+

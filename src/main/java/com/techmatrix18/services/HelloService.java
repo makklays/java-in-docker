@@ -7,6 +7,14 @@ import jakarta.jws.WebService;
 import jakarta.xml.ws.RequestWrapper;
 import jakarta.xml.ws.ResponseWrapper;
 
+/**
+ * SOAP Service for managing datas.
+ *
+ * @author Alexander Kuziv
+ * @since 05.03.2025
+ * @version 0.0.1
+ */
+
 @WebService(targetNamespace = "service.ws.sample", name = "HelloService")
 public interface HelloService {
 
