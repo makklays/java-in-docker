@@ -10,6 +10,16 @@ import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
+/**
+ * Configuration class for configuring a web service.
+ *
+ * Used to configure CORS, serialization, formatting, and other aspects of Spring MVC.
+ *
+ * @author Alexander Kuziv
+ * @since 13-03-2025
+ * @version 0.0.1
+ */
+
 @EnableWs
 @Configuration
 public class WebServiceConfig {
@@ -21,6 +31,5 @@ public class WebServiceConfig {
         servlet.setTransformWsdlLocations(true);
         return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
-
-
 }
+

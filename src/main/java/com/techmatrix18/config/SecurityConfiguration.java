@@ -16,8 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
+ * Application security configuration.
+ *
+ * Configures access rules for HTTP endpoints, as well as session policy, CORS, CSRF, and
+ * other security settings for a REST application.
+ *
  * @author Alexander Kuziv
- * @since 18-02-2025
+ * @since 18.02.2025
  * @version 0.0.1
  */
 
@@ -44,22 +49,29 @@ public class SecurityConfiguration {
         return provider;
     }
 
-
+    /**
+     * Configures the Spring Security security filter chain.
+     *
+     * @param http HTTP Security Configuration Object
+     * @return chain of security filters (SecurityFilterChain)
+     * @throws Exception in case of configuration errors
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
         return http
+                // We disable CSRF, because we work with REST API
                 .csrf(csrf -> csrf.disable())
+
+                // Configure CORS if necessary (you can additionally specify the CORS source)
+                //.cors(Customizer.withDefaults())
+
+                // Setting up access to endpoints
                 .securityMatcher("/ws", "/ws/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ws").permitAll()
                         .requestMatchers("/ws/**").permitAll()
                 )
-                //.cors(Customizer.withDefaults())
-                //.authorizeHttpRequests(auth -> auth
-                //    .requestMatchers("/req/login", "/css/**", "/js/**").permitAll() // Разрешаем доступ к логину и статике
-                //    .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
-                //)
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/info").permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/uploads/**")).permitAll()
@@ -77,7 +89,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/users/**").authenticated()
                 )
                 .formLogin(form -> form
-                    .loginPage("/req/login") // Указываем страницу логина
+                    .loginPage("/req/login") // Specify the login page
                     .permitAll()
                     .defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
                 )
@@ -86,27 +98,7 @@ public class SecurityConfiguration {
                     .logoutSuccessUrl("/login?logout")
                     .permitAll()
                 )
-                //.httpBasic(Customizer.withDefaults()) - окно авторизации
                 .build();
-
-        /*return http.authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll()
-                .and()
-                .logout().permitAll();*/
-
-        /*return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(httpForm -> {
-                    httpForm.loginPage("/req/login").permitAll();
-                    httpForm.defaultSuccessUrl("index");
-                })
-                .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/req/signup", "/css/**", "/js/**");
-                    registry.anyRequest().authenticated();
-                })
-                .build();*/
     }
 
     @Bean
