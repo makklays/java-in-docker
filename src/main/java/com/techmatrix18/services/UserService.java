@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * @author Alexander Kuziv
+ * Service for managing users.
+ * Provides methods for load user by username.
+ *
+ * @author alexander
  * @since 19-02-2025
  * @version 0.0.1
  */

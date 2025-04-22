@@ -5,6 +5,10 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
+ * Service for managing users.
+ * Provides methods for get a contact by id and by email. Method for get all contacts.
+ * Methods for add, update, delete contact. Method for find paginated.
+ *
  * @author Alexander Kuziv
  * @since 05.03.2025
  * @version 0.0.1
