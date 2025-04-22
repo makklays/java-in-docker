@@ -1,4 +1,8 @@
 
+-- V4__create_cards_table.sql
+-- Migration #4: create table cards
+
+-- Creating table 'cards' for saving main data of cards of users
 CREATE TABLE cards
 (
     id                bigint auto_increment primary key,

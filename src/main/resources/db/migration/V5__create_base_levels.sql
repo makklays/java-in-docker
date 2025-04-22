@@ -1,4 +1,8 @@
 
+-- V5__create_base_levels_table.sql
+-- Migration #5: create table base_levels
+
+-- Creating table 'base_levels' for saving main data of levels of bases
 CREATE TABLE base_levels
 (
     id                 bigint auto_increment primary key,

@@ -1,4 +1,8 @@
 
+-- V1__create_users_table.sql
+-- Migration #1: create table users
+
+-- Creating table 'users' for saving main data of users
 CREATE TABLE users
 (
     id          bigint auto_increment primary key,
@@ -12,3 +16,5 @@ CREATE TABLE users
     constraint UK_username unique (username)
 );
 
+-- Adding index for fast searching by email
+CREATE INDEX idx_users_email ON users(email);

@@ -1,4 +1,8 @@
 
+-- V2__create_bases_table.sql
+-- Migration #2: create table bases
+
+-- Creating table 'bases' for saving main data of bases
 CREATE TABLE bases
 (
     id             bigint auto_increment primary key,

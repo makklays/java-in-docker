@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Implementation of the Contact for managing contacts of service Contact.
+ *
  * @author Alexander Kuziv
  * @since 05.03.2025
  * @version 0.0.1
