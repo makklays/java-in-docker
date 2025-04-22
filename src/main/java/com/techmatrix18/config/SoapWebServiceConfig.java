@@ -9,10 +9,27 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
+/**
+ * Configuration class for configuring a SOAP web service.
+ *
+ * Enables SOAP support, registers the message dispatcher servlet,
+ * configures the WSDL and loads the XML schema.
+ *
+ * @author Alexander Kuziv
+ * @since 14-03-2025
+ * @version 0.0.1
+ */
+
 @Configuration
 @EnableWs
 public class SoapWebServiceConfig extends WsConfigurerAdapter {
 
+    /**
+     * Configures a WSDL 1.1 description for a web service.
+     *
+     * @param schema XML Schema (XSD) describing the structure of data
+     * @return WSDL definition object
+     */
     @Bean("calculator")
     public DefaultWsdl11Definition calculatorServiceDefinition() {
         DefaultWsdl11Definition wsdlDefinition = new DefaultWsdl11Definition();
@@ -23,6 +40,12 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         return wsdlDefinition;
     }
 
+    /**
+     * Configures a WSDL 1.1 description for a web service.
+     *
+     * @param schema XML Schema (XSD) describing the structure of data
+     * @return WSDL definition object
+     */
     @Bean("contact")
     public DefaultWsdl11Definition contactServiceDefinition() {
         DefaultWsdl11Definition wsdlDefinition = new DefaultWsdl11Definition();
@@ -38,6 +61,11 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("/xsd/calculator.xsd"));
     }
 
+    /**
+     * Loads an XML schema (XSD) from the classpath.
+     *
+     * @return XSD schema object
+     */
     @Bean
     public XsdSchema contactSchema() {
         return new SimpleXsdSchema(new ClassPathResource("/xsd/contact.xsd"));

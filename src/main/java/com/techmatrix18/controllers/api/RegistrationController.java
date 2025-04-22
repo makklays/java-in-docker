@@ -11,6 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Logger;
 
+/**
+ * Controller for registering users in the system.
+ * Processes HTTP-requests, related to user registration.
+ *
+ * @author alexander
+ * @since 19-02-2025
+ * @version 0.0.1
+ */
+
 @RestController
 public class RegistrationController {
 
@@ -20,13 +29,25 @@ public class RegistrationController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder, RabbitEventPublisherService rabbitPublisherService)
-    {
+    /**
+     * Controller constructor with user service dependency injection.
+     *
+     * @param userRepository
+     * @param passwordEncoder
+     * @param rabbitPublisherService
+     */
+    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder, RabbitEventPublisherService rabbitPublisherService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.rabbitPublisherService = rabbitPublisherService;
     }
 
+    /**
+     * Registering a new user.
+     *
+     * @param user MyUser with user data
+     * @return MyUser response with registered user
+     */
     @PostMapping(value = "/req/signup", consumes = "application/json")
     public MyUser createUser(@RequestBody MyUser user) {
         System.out.println(user.toString());
