@@ -11,6 +11,14 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+/**
+ * Controller for counting numbers.
+ *
+ * @author Alexander Kuziv
+ * @since 13.03.2025
+ * @version 0.0.1
+ */
+
 @Endpoint
 public class CalculatorServiceEndpoint {
 

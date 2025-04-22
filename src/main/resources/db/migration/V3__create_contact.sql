@@ -1,4 +1,8 @@
 
+-- V3__create_bases_table.sql
+-- Migration #3: create table contact
+
+-- Creating table 'contact' for saving main data of contact from users
 CREATE TABLE contact
 (
     id            bigint auto_increment primary key,

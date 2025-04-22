@@ -10,7 +10,14 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-// http://localhost:8080/ws/countries.wsdl
+/**
+ * Controller for managing contact.
+ * Available at URL: http://localhost:8080/ws/countries.wsdl
+ *
+ * @author Alexander Kuziv
+ * @since 13.03.2025
+ * @version 0.0.1
+ */
 
 @Endpoint
 public class ContactEndpoint {
@@ -30,6 +37,5 @@ public class ContactEndpoint {
         response.setContact(ContactMapper.toJaxbContact(contact));
         return response;
     }
-
-
 }
+
