@@ -9,26 +9,43 @@ import java.util.Objects;
 @Entity
 @Table(name = "bases")
 public class Base {
+
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * title of a base
+     */
     @Column(name = "title", length = 255)
     private String title;
 
+    /**
+     * description of a base
+     */
     @Column(name = "description", length = 700)
     private String description;
 
+    /**
+     * Date and time of base creation
+     */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Instant createdAt;
 
+    /**
+     * Date and time of base update
+     */
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }

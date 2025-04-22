@@ -2,24 +2,46 @@ package com.techmatrix18.model;
 
 import jakarta.persistence.*;
 
+/**
+ * An entity representing a country in the system.
+ *
+ * Corresponds to the 'countries' table in the database.
+ *
+ * @author Alexander Kuziv
+ * @since 19-02-2025
+ * @version 0.0.1
+ */
+
 @Entity
 @Table(name = "countries")
 public class Country {
 
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * name of a country
+     */
     @Column(nullable = false, unique = true)
     private String name;
 
+    /**
+     * capital of a country
+     */
     @Column(nullable = false)
     private String capital;
 
+    /**
+     * population of a country
+     */
     @Column(nullable = false)
     private int population;
 
-    // Конструкторы
+    // Constructors
     public Country() {
     }
 
@@ -29,7 +51,7 @@ public class Country {
         this.population = population;
     }
 
-    // Геттеры и сеттеры
+    // Getters and Setters
     public Long getId() {
         return id;
     }

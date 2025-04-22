@@ -12,6 +12,9 @@ import java.util.Objects;
 @Table(name = "cards")
 public class Card {
 
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -87,6 +90,7 @@ public class Card {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
