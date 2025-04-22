@@ -12,6 +12,10 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
+ * An entity representing a user in the system.
+ *
+ * Corresponds to the 'users' table in the database.
+ *
  * @author Alexander Kuziv
  * @since 19-02-2025
  * @version 0.0.1
@@ -20,31 +24,52 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 public class MyUser implements Serializable {
+
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //(strategy = GenerationType.AUTO)
     private Long id;
 
+    /**
+     * username of a user
+     */
     @NotNull
     @Size(min=2, max=30)
     private String username;
 
+    /**
+     * User email. Must be unique.
+     */
     @NotNull
     @Email(message = "{Email.MyUser.email}") // in src/main/resources/ValidationMessages.properties
     private String email;
 
+    /**
+     * The user's hashed password.
+     */
     @NotNull
+    @Column(name = "password", nullable = false)
     private String password;
 
+    /**
+     * Date and time of user creation.
+     */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Instant createdAt;
 
+    /**
+     * Date and time of user update.
+     */
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    // getters/setters and constructors
     public Long getId() {
         return id;
     }

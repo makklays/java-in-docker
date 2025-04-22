@@ -9,62 +9,115 @@ import java.util.Objects;
 @Entity
 @Table(name = "base_levels")
 public class BaseLevel {
+
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * base_id of a base
+     */
     @Column(name = "base_id")
     private Long baseId;
 
+    /**
+     * level of a base
+     */
     @Column(name = "level")
     private int level;
 
+    /**
+     * title of a base
+     */
     @Column(name = "title", length = 255)
     private String title;
 
+    /**
+     * description of a base
+     */
     @Column(name = "description", length = 700)
     private String description;
 
+    /**
+     * have resource 'agua'
+     */
     @Column(name = "res_agua")
     private int resAgua = 100;
 
+    /**
+     * have resource 'plastic'
+     */
     @Column(name = "res_plastic")
     private int resPlastic = 10;
 
+    /**
+     * have resource 'food'
+     */
     @Column(name = "res_food")
     private int resFood = 100;
 
+    /**
+     * have resource 'iron'
+     */
     @Column(name = "res_iron")
     private int resIron = 10;
 
+    /**
+     * adding resource 'agua' by time
+     */
     @Column(name = "plus_res_agua")
     private int plusResAgua;
 
+    /**
+     * adding resource 'plastic' by time
+     */
     @Column(name = "plus_res_plastic")
     private int plusResPlastic;
 
+    /**
+     * adding resource 'food' by time
+     */
     @Column(name = "plus_res_food")
     private int plusResFood;
 
+    /**
+     * adding resource 'iron' by time
+     */
     @Column(name = "plus_res_iron")
     private int plusResIron;
 
+    /**
+     * build time in seconds
+     */
     @Column(name = "build_seconds")
     private int buildSeconds = 36000;
 
+    /**
+     * image of a base level
+     */
     @Column(name = "img", length = 255)
     private String img;
 
+    /**
+     * Date and time of base creation
+     */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Instant createdAt;
 
+    /**
+     * Date and time of base update
+     */
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
