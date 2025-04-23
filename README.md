@@ -1,6 +1,6 @@
 # El proyecto: java-in-docker
 
-Yo como Arquitectador =) pinté estas eschemas para mejor entender el proyecto con sus tablas
+Yo como Arquitectador =) pinté esta eschema UML para mejor entender el proyecto con sus tablas
 
 en base de datos. 
 
@@ -13,4 +13,6 @@ Varios pantillas del proyecto bajo
 <img src="./src/main/resources/static/images/bases/cero_level.png" />
 <img src="./src/main/resources/static/images/bases/one_level.png" />
 <img src="./src/main/resources/static/images/bases/two_level.png" />
+
+Pronto será más... 
 
