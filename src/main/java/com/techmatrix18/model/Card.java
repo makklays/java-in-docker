@@ -3,7 +3,6 @@ package com.techmatrix18.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
@@ -19,9 +18,15 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Number of card
+     */
     @Column(name = "card_number", length = 19, unique = true, nullable = false)
     private String cardNumber;
 
+    /**
+     * Name of holder
+     */
     @Column(name = "cardholder_name", nullable = false)
     private String cardholderName;
 
@@ -29,21 +34,39 @@ public class Card {
     @Temporal(TemporalType.TIMESTAMP)
     private Instant expirationDate;
 
+    /**
+     * CVV of card
+     */
     @Column(name = "cvv", length = 4, nullable = false)
     private String cvv;
 
+    /**
+     * PIN of card
+     */
     @Column(name = "pin", length = 6, nullable = false)
     private String pin;
 
+    /**
+     * Balance of card
+     */
     @Column(name = "balance", precision = 15, scale = 2, nullable = false)
     private BigDecimal balance;
 
+    /**
+     * Credit limit of card
+     */
     @Column(name = "credit_limit", precision = 15, scale = 2, nullable = false)
     private BigDecimal creditLimit;
 
+    /**
+     * Currency of card
+     */
     @Column(name = "currency", length = 3, nullable = false)
     private String currency;
 
+    /**
+     * Status of card
+     */
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private CardStatus status = CardStatus.EXPIRED; // by default EXPIRED
@@ -53,9 +76,15 @@ public class Card {
     }
     //-------------------------
 
+    /**
+     * Name bank of card
+     */
     @Column(name = "bank_name", length = 255, nullable = true)
     private String bankName;
 
+    /**
+     * Type of card
+     */
     @Enumerated(EnumType.STRING)
     @Column(name = "type", length = 15, nullable = false)
     private CardType type = CardType.VISA; // by default VISA
@@ -64,19 +93,31 @@ public class Card {
         VISA, MASTERCARD, AMEX, MIR
     }
 
-    // дата выпуска карты
+    /**
+     * Date of create of card
+     * дата выпуска карты
+     */
     @Column(name = "issue_date")
     private Instant issueDate;
 
-    // бонусные баллы (если есть программа лояльности)
+    /**
+     * Bonuses of card
+     * бонусные баллы (если есть программа лояльности)
+     */
     @Column(name = "reward_points")
     private Integer rewardPoints;
 
-    // процентная ставка
+    /**
+     * % deposit of card
+     * процентная ставка
+     */
     @Column(name = "interest_rate", precision = 5, scale = 2, nullable = false)
     private BigDecimal interestRate;
 
-    // поддержка бесконтактной оплаты
+    /**
+     * Is a card contactless ?
+     * поддержка бесконтактной оплаты
+     */
     @Column(name = "contactless")
     private Boolean contactless; // 0 or 1
 
@@ -91,6 +132,7 @@ public class Card {
     private Instant updatedAt;
 
     // Getters and Setters
+
     public Long getId() {
         return id;
     }

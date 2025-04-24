@@ -3,7 +3,7 @@
 -- Migration #3: create table contact
 
 -- Creating table 'contact' for saving main data of contact from users
-CREATE TABLE contact
+CREATE TABLE contacts
 (
     id            bigint auto_increment primary key,
     name          varchar(255) null,
@@ -15,4 +15,7 @@ CREATE TABLE contact
     constraint    UK_email unique (email),
     constraint    UK_username unique (name)
 );
+
+-- Adding index for fast searching by email
+CREATE INDEX idx_contacts_email ON contacts(email);
 

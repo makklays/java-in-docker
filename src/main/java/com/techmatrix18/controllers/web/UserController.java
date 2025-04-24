@@ -1,6 +1,6 @@
 package com.techmatrix18.controllers.web;
 
-import com.techmatrix18.model.MyUser;
+import com.techmatrix18.model.User;
 import com.techmatrix18.model.Contact;
 import com.techmatrix18.services.ContactService;
 import jakarta.validation.Valid;
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/req/login")
-    public String login(MyUser myUser) {
+    public String login(User myUser) {
         return "auth/login";
     }
 
