@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "contact")
+@Table(name = "contacts")
 public class Contact {
 
     /**
@@ -56,12 +57,20 @@ public class Contact {
     private String description;
 
     /**
-     * Date and time of user creation.
+     * Date and time of contact creation.
      */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Instant createdAt;
+
+    /**
+     * Date and time of contact update.
+     */
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
     // Getters and Setters
     public Long getId() {
@@ -112,27 +121,36 @@ public class Contact {
         this.createdAt = createdAt;
     }
 
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Contact contact)) return false;
-        return getId().equals(contact.getId()) && name.equals(contact.name) && getSurname().equals(contact.getSurname()) && getEmail().equals(contact.getEmail()) && getDescription().equals(contact.getDescription()) && getCreatedAt().equals(contact.getCreatedAt());
+        return getId().equals(contact.getId()) && getName().equals(contact.getName()) && getSurname().equals(contact.getSurname()) && getEmail().equals(contact.getEmail()) && getDescription().equals(contact.getDescription()) && getCreatedAt().equals(contact.getCreatedAt()) && getUpdatedAt().equals(contact.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), name, getSurname(), getEmail(), getDescription(), getCreatedAt());
+        return Objects.hash(getId(), getName(), getSurname(), getEmail(), getDescription(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
     public String toString() {
-        return "Contact {" +
+        return "Contact{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

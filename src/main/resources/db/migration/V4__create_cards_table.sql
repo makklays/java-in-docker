@@ -27,3 +27,6 @@ CREATE TABLE cards
     updated_at        datetime(6)  null
 );
 
+-- Adding index for fast searching by card_number
+CREATE INDEX idx_cards_card_number ON cards(card_number);
+

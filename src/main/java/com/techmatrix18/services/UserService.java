@@ -1,16 +1,15 @@
 package com.techmatrix18.services;
 
 
-import com.techmatrix18.model.MyUser;
+import com.techmatrix18.model.User;
 import com.techmatrix18.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 /**
@@ -32,12 +31,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<MyUser> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
 
         if (user.isPresent()) {
             var userObject = user.get();
 
-            return User.builder()
+            return org.springframework.security.core.userdetails.User.builder()
                     .username(userObject.getUsername())
                     .password(userObject.getPassword())
                     .build();
