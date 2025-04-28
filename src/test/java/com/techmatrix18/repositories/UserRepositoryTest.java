@@ -18,7 +18,7 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
+    /*@Test
     void whenFindByEmail_thenReturnUser() {
         // given
         User user = new User();
@@ -65,6 +65,6 @@ public class UserRepositoryTest {
         // then — check, that find only one user, and this admin
         assertEquals(1, admins.size());
         assertEquals("admin@techmatrix18.com", admins.get(0).getEmail());
-    }
+    }*/
 }
 

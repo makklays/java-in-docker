@@ -29,10 +29,12 @@ public class BaseController {
      *
      * @return json response all bases
      */
-    @PostMapping(value = "/all", consumes = "application/json")
+    @PostMapping(value = "/all")
     public List<Base> getAllBases() {
 
         List<Base> bases = baseService.getAll();
+
+        log.info(bases.toString());
 
         return bases;
     }
