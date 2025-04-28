@@ -1,6 +1,6 @@
 package com.techmatrix18.controllers;
 
-import com.techmatrix18.controllers.web.UserController;
+import com.techmatrix18.controllers.web.UserViewController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -10,8 +10,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(UserController.class)
-public class UserControllerTest {
+@WebMvcTest(UserViewController.class)
+public class UserViewControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

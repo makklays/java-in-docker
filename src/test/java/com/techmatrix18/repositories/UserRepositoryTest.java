@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +18,7 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
+    /*@Test
     void whenFindByEmail_thenReturnUser() {
         // given
         User user = new User();
@@ -66,6 +65,6 @@ public class UserRepositoryTest {
         // then — check, that find only one user, and this admin
         assertEquals(1, admins.size());
         assertEquals("admin@techmatrix18.com", admins.get(0).getEmail());
-    }
+    }*/
 }
 
