@@ -2,7 +2,10 @@ package com.techmatrix18.controllers.web;
 
 import com.techmatrix18.services.BaseService;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.logging.Logger;
 
 /**
@@ -14,6 +17,7 @@ import java.util.logging.Logger;
  */
 
 @Controller
+@RequestMapping("/bases")
 public class BaseController {
 
     Logger log = Logger.getLogger(BaseController.class.getName());
@@ -24,6 +28,26 @@ public class BaseController {
         this.baseService = baseService;
     }
 
+    @GetMapping("/all")
+    public String getAllBases(Model model) {
+        model.addAttribute("title", "V-V-V");
 
+        return "index";
+    }
+
+    @GetMapping("/available")
+    public String getAvailableBases(Model model) {
+        model.addAttribute("title", "V-V-V");
+
+        return "available";
+    }
+
+    @GetMapping("/view/{id}")
+    public String getBuild(@PathVariable Long id, Model model) {
+        model.addAttribute("title", "V-V-V");
+        model.addAttribute("id", id);
+
+        return "view";
+    }
 }
 

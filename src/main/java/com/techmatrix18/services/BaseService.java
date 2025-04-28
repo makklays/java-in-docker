@@ -29,6 +29,15 @@ public class BaseService {
     }
 
     /**
+     * Finds all bases
+     *
+     * @return found all bases
+     */
+    public List<Base> getAll() {
+        return baseRepository.findAll();
+    }
+
+    /**
      * Finds a base by title.
      *
      * @param title Base title

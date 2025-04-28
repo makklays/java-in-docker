@@ -89,20 +89,5 @@ public class UserController {
 
         return "map";
     }
-
-    @GetMapping("/builds")
-    public String getBuilds(Model model) {
-        model.addAttribute("title", "V-V-V");
-
-        return "builds";
-    }
-
-    @GetMapping("/build/{id}")
-    public String getBuild(@PathVariable Long id, Model model) {
-        model.addAttribute("title", "V-V-V");
-        model.addAttribute("id", id);
-
-        return "build";
-    }
 }
 

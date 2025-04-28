@@ -20,6 +20,12 @@ public interface BaseRepository extends JpaRepository<Base, Long> {
     Optional<Base> findById(Long id);
 
     /**
+     * Search all bases
+     * @return all bases
+     */
+    List<Base> findAll();
+
+    /**
      * Search base by title
      * @param title Base title
      * @return base, wrapped in Optional
