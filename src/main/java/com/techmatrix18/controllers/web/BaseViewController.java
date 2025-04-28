@@ -18,13 +18,13 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/bases")
-public class BaseController {
+public class BaseViewController {
 
-    Logger log = Logger.getLogger(BaseController.class.getName());
+    Logger log = Logger.getLogger(BaseViewController.class.getName());
 
     private final BaseService baseService;
 
-    public BaseController(BaseService baseService) {
+    public BaseViewController(BaseService baseService) {
         this.baseService = baseService;
     }
 

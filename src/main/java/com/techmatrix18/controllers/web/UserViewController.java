@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
@@ -22,13 +21,13 @@ import java.util.logging.Logger;
  */
 
 @Controller
-public class UserController {
+public class UserViewController {
 
-    Logger log = Logger.getLogger(UserController.class.getName());
+    Logger log = Logger.getLogger(UserViewController.class.getName());
 
     private final ContactService contactService;
 
-    public UserController(ContactService contactService) {
+    public UserViewController(ContactService contactService) {
         this.contactService = contactService;
     }
 
