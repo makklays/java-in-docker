@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
+
+<section layout:fragment="custom-content">
+
+    <h2><i class="fa-solid fa-warehouse"></i> Bases</h2>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/bases/">Bases</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="'Ver el base - ' + ${base.title}">Ver el base</li>
+        </ol>
+    </nav>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-12" style="text-align:right;" >
+            <a th:href="@{'/admin/bases/edit/' + ${base.id}}" class="btn btn-primary">Editar el base</a>
+        </div>
+    </div>
+
+    <div class="card" >
+        <div class="card-body" style="background-color:#FFF;">
+
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>ID</th>
+                    <td th:text="${base.Id}"></td>
+                </tr>
+                <tr>
+                    <th>Titulo</th>
+                    <td th:text="${base.title}"></td>
+                </tr>
+                <tr>
+                    <th>Descripcion</th>
+                    <td th:text="${base.description}"></td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td th:text="${base.createdAt} ? ${#dates.format(base.createdAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td th:text="${base.updatedAt} ? ${#dates.format(base.updatedAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <br/><br/>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-6">
+            <h3><i class="fa-solid fa-landmark-flag"></i> Niveles</h3>
+        </div>
+        <div class="col-md-6" style="text-align:right;" >
+            <a th:href="@{'/admin/base-levels/add/' + ${base.id}}" class="btn btn-primary">Añadir el nivel</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width:50px;">ID</th>
+                    <th>Titulo</th>
+                    <th class="text-center">Nivel</th>
+
+                    <th class="text-center">Agua</th>
+                    <th class="text-center">Plastic</th>
+                    <th class="text-center">Food</th>
+                    <th class="text-center">Iron</th>
+
+                    <th class="text-center">Imagene</th>
+
+                    <th class="text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="baseLevel : ${baseLevels}">
+                    <td class="text-center" style="width:30px;" th:text="${baseLevel.Id}">Id</td>
+                    <td>
+                        <a href="#" th:href="@{'/admin/base-levels/view/' + ${baseLevel.id}}" th:text="${baseLevel.title}">Title</a>
+                    </td>
+                    <td class="text-center" th:text="${baseLevel.level}">nivel</td>
+
+                    <td class="text-center" th:text="${baseLevel.resAgua}">agua</td>
+                    <td class="text-center" th:text="${baseLevel.resPlastic}">plastic</td>
+                    <td class="text-center" th:text="${baseLevel.resFood}">food</td>
+                    <td class="text-center" th:text="${baseLevel.resIron}">iron</td>
+
+                    <td class="text-center" th:text="${baseLevel.getImg() != null ? 'yes' : 'not'}">img</td>
+
+                    <td class="text-center" style="width:250px;">
+                        <a href="#" th:href="@{'/admin/base-levels/view/'   + ${base.id} + '/' + ${baseLevel.id} }">most</a> |
+                        <a href="#" th:href="@{'/admin/base-levels/edit/'   + ${base.id} + '/' + ${baseLevel.id} }">editar</a> |
+                        <a href="#" th:href="@{'/admin/base-levels/delete/' + ${base.id} + '/' + ${baseLevel.id} }">borrar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</section>
+
+</html>

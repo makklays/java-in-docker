@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
+
+<section layout:fragment="custom-content">
+
+    <h2><i class="fa-solid fa-warehouse"></i> Bases</h2>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/bases/">Bases</a></li>
+            <li class="breadcrumb-item"><a th:href="@{'/admin/bases/view/' + ${base.id}}" th:text="'Ver el base - ' + ${base.title}">Ver el base</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Añadir nuevo nivel</li>
+        </ol>
+    </nav>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-12" style="text-align:right;" >
+            <a th:href="@{'/admin/bases/edit/' + ${base.id}}" class="btn btn-primary">Editar el base</a>
+        </div>
+    </div>
+
+    <div class="card" >
+        <div class="card-body" style="background-color:#FFF;">
+
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>ID</th>
+                    <td th:text="${base.Id}"></td>
+                </tr>
+                <tr>
+                    <th>Titulo</th>
+                    <td th:text="${base.title}"></td>
+                </tr>
+                <tr>
+                    <th>Descripcion</th>
+                    <td th:text="${base.description}"></td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td th:text="${base.createdAt} ? ${#dates.format(base.createdAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td th:text="${base.updatedAt} ? ${#dates.format(base.updatedAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <br/><br/>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-12" style="text-align:right;" >
+            <!--a href="/admin/bases/add" class="btn btn-primary">Añadir el base</a-->
+        </div>
+    </div>
+
+    <h3><i class="fa-solid fa-landmark-flag"></i> Añadir nivel</h3>
+
+    <div class="card" >
+        <div class="card-body" style="background-color:#FFF;">
+
+            <form th:action="@{/admin/base-levels/add/{baseId}(baseId=${base.id})}" th:object="${baseLevelDto}" method="post" enctype="multipart/form-data">
+
+                <!-- title -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Título</label>
+                            <input type="text" id="title" th:field="*{title}" class="form-control" />
+                            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- descripcion -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="id_descr" class="form-label">La descripcion</label>
+                            <textarea id="id_descr" th:field="*{description}" class="form-control" rows="3"></textarea>
+                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- select nivel -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <!-- Select -->
+                            <label class="form-label required">Nivel:</label>
+                            <select th:field="*{level}" class="form-control">
+                                <option value="">-- Elije nivel --</option>
+                                <option th:each="level : ${niveles}"
+                                        th:value="${level}"
+                                        th:text="${level}"></option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('level')}" th:errors="*{level}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- agua -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_agua" class="form-label required">Agua</label>
+                            <input id="id_res_agua" th:field="*{resAgua}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('resAgua')}" th:errors="*{resAgua}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_plus_res_agua" class="form-label required">Plus Agua</label>
+                            <input id="id_plus_res_agua" th:field="*{plusResAgua}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('plusResAgua')}" th:errors="*{plusResAgua}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- plastico -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_plastic" class="form-label required">Plastic</label>
+                            <input id="id_res_plastic" th:field="*{resPlastic}" type="number" class="form-control" placeholder="100" />
+                            <div th:if="${#fields.hasErrors('resPlastic')}" th:errors="*{resPlastic}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_plus_res_plastic" class="form-label required">Plus Plastic</label>
+                            <input id="id_plus_res_plastic" th:field="*{plusResPlastic}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('plusResPlastic')}" th:errors="*{plusResPlastic}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- food -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_food" class="form-label required">Food</label>
+                            <input id="id_res_food" th:field="*{resFood}" type="number" class="form-control" placeholder="110" />
+                            <div th:if="${#fields.hasErrors('resFood')}" th:errors="*{resFood}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_plus_res_food" class="form-label required">Plus Food</label>
+                            <input id="id_plus_res_food" th:field="*{plusResFood}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('plusResFood')}" th:errors="*{plusResFood}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iron -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_iron" class="form-label required">Iron</label>
+                            <input id="id_res_iron" th:field="*{resIron}" type="number" class="form-control" placeholder="21" />
+                            <div th:if="${#fields.hasErrors('resIron')}" th:errors="*{resIron}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_plus_res_iron" class="form-label required">Plus Iron</label>
+                            <input id="id_plus_res_iron" th:field="*{plusResIron}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('plusResIron')}" th:errors="*{plusResIron}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- secundos -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_build_seconds" class="form-label required">Building (secundos)</label>
+                            <input id="id_build_seconds" th:field="*{buildSeconds}" type="number" class="form-control" placeholder="1000" />
+                            <div th:if="${#fields.hasErrors('buildSeconds')}" th:errors="*{buildSeconds}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- img -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="id_img" class="form-label required">Image (jpg/png):</label>
+                            <input id="id_img" th:field="*{img}" type="file" class="form-control" />
+                            <div th:if="${#fields.hasErrors('img')}" th:errors="*{img}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Añadir</button>
+                <a href="#" th:href="@{/admin/bases/view/{baseId}(baseId=${base.id})}" class="btn btn-secondary" style="margin-left:20px;"> Back</a>
+            </form>
+
+        </div>
+    </div>
+
+    <br/><br/><br/>
+
+</section>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
+
+    <section layout:fragment="custom-content">
+
+        <h2><i class="fa-solid fa-warehouse"></i> Bases</h2>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bases</li>
+            </ol>
+        </nav>
+
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-12" style="text-align:right;" >
+                <a href="/admin/base-levels/add" class="btn btn-primary">Añadir el base</a>
+            </div>
+        </div>
+
+        <div class="card" >
+            <div class="card-body" style="background-color:#FFF;">
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:50px;">ID</th>
+                            <th>Titulo</th>
+                            <th class="text-center">Niveles</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="baseLevel : ${baseLevels}">
+                            <td class="text-center" style="width:30px;" th:text="${baseLevel.Id}">Id</td>
+                            <td>
+                                <a href="#" th:href="@{'/admin/bases/view/' + ${baseLevel.id}}" th:text="${baseLevel.title}">Title</a>
+                            </td>
+                            <td class="text-center">
+                                <a th:href="@{'/admin/base-levels/' + ${baseLevel.id}}">0</a>
+                            </td>
+                            <td class="text-center" style="width:250px;">
+                                <a href="#" th:href="@{'/admin/base-levels/view/' + ${baseLevel.id}}">most</a> |
+                                <a href="#" th:href="@{'/admin/base-levels/edit/' + ${baseLevel.id}}">editar</a> |
+                                <a href="#" th:href="@{'/admin/base-levels/delete/' + ${baseLevel.id}}">borrar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </section>
+
+</html>
+

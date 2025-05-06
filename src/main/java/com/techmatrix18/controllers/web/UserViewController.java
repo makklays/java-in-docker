@@ -3,13 +3,14 @@ package com.techmatrix18.controllers.web;
 import com.techmatrix18.model.User;
 import com.techmatrix18.model.Contact;
 import com.techmatrix18.services.ContactService;
+import com.techmatrix18.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
-
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -26,9 +27,11 @@ public class UserViewController {
     Logger log = Logger.getLogger(UserViewController.class.getName());
 
     private final ContactService contactService;
+    private final UserService userService;
 
-    public UserViewController(ContactService contactService) {
+    public UserViewController(ContactService contactService, UserService userService) {
         this.contactService = contactService;
+        this.userService = userService;
     }
 
     @GetMapping("/welcome")
@@ -87,6 +90,31 @@ public class UserViewController {
         model.addAttribute("title", "V-V-V");
 
         return "map";
+    }
+
+    @GetMapping("/admin/")
+    public String getAdmin() {
+        return "admin/index";
+    }
+
+    @GetMapping("/admin/users/")
+    public String getAdminUsers(Model model) {
+        List<User> users = userService.getAll();
+        model.addAttribute("users", users);
+
+        log.info("Users: " + users.toString());
+
+        return "admin/users/index";
+    }
+
+    @GetMapping("/admin/home/")
+    public String getAdminHome() {
+        return "admin/home";
+    }
+
+    @GetMapping("/admin/settings/")
+    public String getAdminSettings() {
+        return "admin/settings";
     }
 }
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <title>Мой сайт</title>
+</head>
+<body>
+    <header>
+        <h1>Главный заголовок</h1>
+    </header>
+
+    <div th:fragment="content">
+        <!-- Здесь будет подставляться содержимое -->
+        111
+    </div>
+
+    <section layout:fragment="custom-content">
+        <p>Your page content goes here</p>
+    </section>
+
+    <footer>
+        <p>Подвал сайта</p>
+    </footer>
+</body>
+</html>

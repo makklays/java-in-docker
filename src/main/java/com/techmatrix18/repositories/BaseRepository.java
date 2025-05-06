@@ -45,3 +45,4 @@ public interface BaseRepository extends JpaRepository<Base, Long> {
     @Query("SELECT a FROM Base a WHERE LOWER(a.title) LIKE LOWER(CONCAT('%', :titlePart, '%'))")
     List<Base> searchByTitleContaining(@Param("titlePart") String titlePart);
 }
+

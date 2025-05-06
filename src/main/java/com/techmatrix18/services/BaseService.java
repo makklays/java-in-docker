@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class BaseService {
@@ -67,6 +68,49 @@ public class BaseService {
      */
     public List<Base> searchBasesByTitle(String titlePart) {
         return baseRepository.searchByTitleContaining(titlePart);
+    }
+
+    /**
+     * Add Base
+     *
+     * @return boolean
+     */
+    public boolean addBase(Base base) {
+        Base b = baseRepository.save(base);
+        if (!b.getTitle().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Edit Base
+     *
+     * @return boolean
+     */
+    public boolean updateBase(Base base) {
+        Base b = baseRepository.save(base);
+        if (!b.getTitle().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Delete Base by BaseID
+     *
+     * @return boolean
+     */
+    public boolean deleteBase(Long id) {
+        Optional<Base> base = baseRepository.findById(id);
+        if (base.get().getId() != null) {
+            baseRepository.delete(base.get());
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
