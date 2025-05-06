@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
+
+<section layout:fragment="custom-content">
+
+    <h2><i class="fa-solid fa-warehouse"></i> Bases</h2>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/bases/">Bases</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Añadir nuevo base</li>
+        </ol>
+    </nav>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-12" style="text-align:right;" >
+            <!--a href="/admin/bases/add" class="btn btn-primary">Añadir el base</a-->
+        </div>
+    </div>
+
+    <div class="card" >
+        <div class="card-body" style="background-color:#FFF;">
+
+            <form action="/admin/bases/add-post" th:action="@{/admin/bases/add-post}" th:object="${base}" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="id_title" class="form-label required">Titulo</label>
+                    <input id="id_title" th:field="*{title}" name="title" type="text" class="form-control" placeholder="title" />
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;">Titulo errore</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_descr" class="form-label">Descripcion</label>
+                    <textarea id="id_descr" name="description" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Añadir</button>
+                <a href="#" th:href="@{/admin/bases/}" class="btn btn-secondary" style="margin-left:20px;"> Back</a>
+            </form>
+
+        </div>
+    </div>
+
+</section>
+
+</html>

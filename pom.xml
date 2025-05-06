@@ -96,6 +96,11 @@
             <artifactId>thymeleaf-spring5</artifactId>
             <version>3.1.2.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
         <!-- end thymeleaf -->
 
         <!-- for thymeleaf -->

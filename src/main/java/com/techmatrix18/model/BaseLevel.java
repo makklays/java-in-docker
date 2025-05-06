@@ -98,7 +98,7 @@ public class BaseLevel {
     /**
      * image of a base level
      */
-    @Column(name = "img", length = 255)
+    @Column(name = "img", length = 500)
     private String img;
 
     /**
