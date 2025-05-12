@@ -3,6 +3,8 @@ package com.techmatrix18.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.Instant;
 import java.util.Objects;
 

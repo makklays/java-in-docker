@@ -63,39 +63,38 @@
     <div class="card" >
         <div class="card-body" style="background-color:#FFF;">
 
-            <form action="/admin/base-levels/add-post" th:action="@{/admin/base-levels/edit-post/{baseId}(baseId=${base.id})}" th:object="${baseLevel}" method="post" enctype="multipart/form-data">
+            <form th:action="'/admin/base-levels/edit/'+${baseId}+'/'+${baseLevelId}" th:object="${baseLevelEditDto}" method="post" enctype="multipart/form-data" >
 
-                <input type="hidden" name="baseId" th:value="${base.Id}" />
-                <input type="hidden" name="baseLevelId" th:value="${baseLevel.Id}" />
+                <input type="hidden" name="baseId" th:value="${baseId}" />
+                <input type="hidden" name="baseLevelId" th:value="${baseLevelId}" />
 
                 <div class="mb-3">
                     <label for="id_title" class="form-label required">Titulo</label>
                     <input id="id_title" th:field="*{title}" name="title" type="text" class="form-control" placeholder="title" />
-                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;">Titulo errore</div>
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;">Ошибка</div>
+
+                    <input th:field="*{id}" type="hidden" />
+                    <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" style="color:green;">Ошибка</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="id_descr" class="form-label">Descripcion</label>
-                    <textarea id="id_descr" name="description" class="form-control" rows="3"></textarea>
+                    <textarea id="id_descr" th:field="*{description}" class="form-control" rows="3"></textarea>
+                    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color:red;">Ошибка</div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-2">
                         <div class="mb-3">
-                            <label for="id_level" class="form-label required">Nivel</label>
-                            <select id="id_level" name="level" class="form-control" >
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
+                            <!-- Select -->
+                            <label class="form-label required">Nivel:</label>
+                            <select th:field="*{level}" class="form-control">
+                                <option value="">-- Elije nivel --</option>
+                                <option th:each="level : ${niveles}"
+                                        th:value="${level}"
+                                        th:text="${level}"></option>
                             </select>
+                            <div th:if="${#fields.hasErrors('level')}" th:errors="*{level}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
                 </div>
@@ -181,7 +180,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <img th:if="${baseLevel.img}" th:src="'/uploads/base-levels/'+${baseLevel.img}" alt="img base level" style="width:300px;" />
+                            <img th:if="${img}" th:src="'/base-levels/'+${img}" alt="img base level" style="width:300px;" />
                             <br/><br/>
                             <label for="id_img" class="form-label required">Image</label>
                             <input id="id_img" th:field="*{img}" type="file" class="form-control" />
@@ -190,8 +189,8 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Añadir</button>
-                <a href="#" th:href="@{/admin/base-levels/}" class="btn btn-secondary" style="margin-left:20px;"> Back</a>
+                <button type="submit" class="btn btn-primary">Editar</button>
+                <a href="#" th:href="'/admin/bases/view/'+${baseId}" class="btn btn-secondary" style="margin-left:20px;"> Back</a>
             </form>
 
         </div>

@@ -3,7 +3,10 @@ package com.techmatrix18.dto;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
-public class BaseLevelDto {
+public class BaseLevelEditDto {
+
+    @NotNull(message = "ID requerido")
+    private Long id;
 
     @NotBlank(message = "Titulo requerido")
     private String title;
@@ -66,6 +69,14 @@ public class BaseLevelDto {
     private MultipartFile img;
 
     // Getters y setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Integer getLevel() {
         return level;
@@ -173,8 +184,9 @@ public class BaseLevelDto {
 
     @Override
     public String toString() {
-        return "BaseLevelDto{" +
-                "title='" + title + '\'' +
+        return "BaseLevelEditDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", level=" + level +
                 ", resAgua=" + resAgua +

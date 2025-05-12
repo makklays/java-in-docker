@@ -74,7 +74,9 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/info").permitAll()
+                    .requestMatchers(new AntPathRequestMatcher("/resources/uploads/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/uploads/**")).permitAll()
+                    .requestMatchers(new AntPathRequestMatcher("/uploads/base-levels/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/imgs/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
@@ -84,6 +86,8 @@ public class SecurityConfiguration {
                     .requestMatchers("/req/signup").permitAll()
                     .requestMatchers("/ws/**").permitAll()
                     .requestMatchers("/div/**", "build/**").permitAll()
+                    .requestMatchers("/resources/uploads/**", "/uploads/**").permitAll()
+                    .requestMatchers("/base-levels/**", "/uploads/base-levels/**").permitAll()
                     // authenticated
                     .requestMatchers("/contact").authenticated()
                     .requestMatchers("/users/**").authenticated()
