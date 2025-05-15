@@ -10,13 +10,14 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
             <li class="breadcrumb-item"><a href="/admin/bases/">Bases</a></li>
-            <li class="breadcrumb-item active" aria-current="page" th:text="'Ver el base - ' + ${baseLevel.title}">Ver el base</li>
+            <li class="breadcrumb-item"><a th:href="@{'/admin/bases/view/' + ${base.getId()}}" th:text="'Ver el base - ' + ${base.title}">Ver el base</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Editar nuevo nivel</li>
         </ol>
     </nav>
 
     <div class="row" style="margin-bottom:20px;">
         <div class="col-md-12" style="text-align:right;" >
-            <a th:href="@{'/admin/base-levels/edit/' + ${baseLevel.id}}" class="btn btn-primary">Editar el nivel</a>
+            <a th:href="@{'/admin/bases/edit/' + ${base.id}}" class="btn btn-primary">Editar el base</a>
         </div>
     </div>
 
@@ -26,7 +27,46 @@
             <table class="table table-striped table-hover">
                 <tr>
                     <th>ID</th>
-                    <td th:text="${baseLevel.Id}"></td>
+                    <td th:text="${base.Id}"></td>
+                </tr>
+                <tr>
+                    <th>Titulo</th>
+                    <td th:text="${base.title}"></td>
+                </tr>
+                <tr>
+                    <th>Descripcion</th>
+                    <td th:text="${base.description}"></td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td th:text="${base.createdAt} ? ${#dates.format(base.createdAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td th:text="${base.updatedAt} ? ${#dates.format(base.updatedAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <br/><br/>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-12" style="text-align:right;" >
+            <!--a href="/admin/bases/add" class="btn btn-primary">Añadir el base</a-->
+        </div>
+    </div>
+
+    <h3><i class="fa-solid fa-landmark-flag"></i> Ver nivel <span th:text="${baseLevel.level}"></span></h3>
+
+    <div class="card" >
+        <div class="card-body" style="background-color:#FFF;">
+
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>ID</th>
+                    <td th:text="${baseLevel.id}"></td>
                 </tr>
                 <tr>
                     <th>Titulo</th>
@@ -36,6 +76,39 @@
                     <th>Descripcion</th>
                     <td th:text="${baseLevel.description}"></td>
                 </tr>
+                <tr>
+                    <th>Nivel</th>
+                    <td th:text="${baseLevel.level}"></td>
+                </tr>
+
+                <!-- res + plus res -->
+                <tr>
+                    <th>Agua + plus Agua</th>
+                    <td th:text="${baseLevel.resAgua + ' + ' + baseLevel.plusResAgua}"></td>
+                </tr>
+                <tr>
+                    <th>Plastic + plus Plastic</th>
+                    <td th:text="${baseLevel.resPlastic + ' + ' + baseLevel.plusResPlastic}"></td>
+                </tr>
+                <tr>
+                    <th>Food + plus Food</th>
+                    <td th:text="${baseLevel.resFood + ' + ' + baseLevel.plusResFood}"></td>
+                </tr>
+                <tr>
+                    <th>Iron + plus Iron</th>
+                    <td th:text="${baseLevel.resIron + ' + ' + baseLevel.plusResIron}"></td>
+                </tr>
+
+                <tr>
+                    <th>Foto</th>
+                    <td><img th:if="${img != null}" th:src="'/uploads/base-levels/'+${img}" alt="img base level" style="width:300px;" /></td>
+                </tr>
+
+                <tr>
+                    <th>Seconds</th>
+                    <td th:text="${baseLevel.buildSeconds}"></td>
+                </tr>
+
                 <tr>
                     <th>Created</th>
                     <td th:text="${baseLevel.createdAt} ? ${#dates.format(baseLevel.createdAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
@@ -49,13 +122,9 @@
         </div>
     </div>
 
-    <br/><br/>
+    <a href="#" th:href="'/admin/bases/view/'+${baseId}" class="btn btn-secondary" style="margin-top:20px;"> Back</a>
 
-    <div class="card">
-        <div class="card-body">
-            <h3><i class="fa-solid fa-landmark-flag"></i> Niveles</h3>
-        </div>
-    </div>
+    <br/><br/><br/><br/><br/>
 
 </section>
 

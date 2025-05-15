@@ -6,6 +6,7 @@ import com.techmatrix18.model.Base;
 import com.techmatrix18.model.BaseLevel;
 import com.techmatrix18.services.BaseLevelService;
 import com.techmatrix18.services.BaseService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,21 +77,25 @@ public class BaseLevelViewController {
                                         Model model,
                                         HttpServletRequest request,
                                         @PathVariable Long baseId) throws ServletException, IOException {
-        //
+        // Validación el archivo
+        if (baseLevelDto.getImg() == null || baseLevelDto.getImg().isEmpty()) {
+            result.rejectValue("img", "NotEmpty.baseLevelEditDto.img", "Es necesario cargar el archivo.");
+        }
+
+        // Validación el baseLevelDTO
+        Base base = null;
         if (result.hasErrors()) {
-            Base base = baseService.getById(baseId);
+            base = baseService.getById(baseId);
             model.addAttribute("base", base);
             model.addAttribute("baseId", baseId);
-
             model.addAttribute("niveles", this.niveles);
-
             model.addAttribute("baseLevelDto", baseLevelDto);
 
             return "admin/base-levels/add";
         }
 
         BaseLevel baseLevel = new BaseLevel();
-        baseLevel.setBaseId(baseId);
+        baseLevel.setBase(base);
         baseLevel.setTitle(baseLevelDto.getTitle());
         baseLevel.setDescription(baseLevelDto.getDescription());
         baseLevel.setLevel(baseLevelDto.getLevel());
@@ -108,12 +113,12 @@ public class BaseLevelViewController {
         //-----------------------------
         // upload file
         Part part = request.getPart("img");
-        if (part != null) {
+        if (part != null && part.getSize() > 0) {
             logger.info("--------------> Entr'e en part for 'img' ---------->");
             //get the InputStream to store the file somewhere
             InputStream fileInputStream = part.getInputStream();
             String fileName = part.getSubmittedFileName();
-            File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/uploads/base-levels/" + fileName);
+            File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/uploads/base-levels/" + fileName);
             Files.copy(fileInputStream, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             baseLevel.setImg(fileName);
@@ -136,15 +141,10 @@ public class BaseLevelViewController {
             model.addAttribute("base", base);
             model.addAttribute("baseId", baseId);
             model.addAttribute("baseLevelId", baseLevelId);
-
             model.addAttribute("niveles", this.niveles);
 
             BaseLevelEditDto baseLevelEditDto = new BaseLevelEditDto();
-
-            logger.info("=-=-=> " + baseLevel.toString());
-
             baseLevelEditDto.setId(baseLevel.getId());
-            //baseLevelEditDto.setBaseId(baseLevel.getBaseId());
             baseLevelEditDto.setTitle(baseLevel.getTitle());
             baseLevelEditDto.setDescription(baseLevel.getDescription());
             baseLevelEditDto.setLevel(baseLevel.getLevel());
@@ -180,9 +180,15 @@ public class BaseLevelViewController {
                                      HttpServletRequest request,
                                      @PathVariable Long baseId,
                                      @PathVariable Long baseLevelId) throws IOException, ServletException {
-        //
+        // Validación el archivo
+        /*if (baseLevelEditDto.getImg() == null || baseLevelEditDto.getImg().isEmpty()) {
+            result.rejectValue("img", "NotEmpty.baseLevelEditDto.img", "Es necesario cargar el archivo.");
+        }*/
+
+        // Validación otros campos
+        Base base = null;
         if (result.hasErrors()) {
-            Base base = baseService.getById(baseId);
+            base = baseService.getById(baseId);
             model.addAttribute("base", base);
             model.addAttribute("baseId", baseId);
             model.addAttribute("baseLevelId", baseLevelId);
@@ -190,34 +196,13 @@ public class BaseLevelViewController {
             model.addAttribute("niveles", this.niveles);
             model.addAttribute("baseLevelEditDto", baseLevelEditDto);
 
-            logger.info("=========> aaaaaaaaaaaaaa1111111111");
             return "admin/base-levels/edit";
         }
 
-        MultipartFile file = baseLevelEditDto.getImg();
-        if (file.isEmpty()) {
-            model.addAttribute("error", "Файл не может быть пустым");
-
-            logger.info("=========> aaaaaaaaaaaaaa222222222222");
-            return "admin/base-levels/edit";
-        }
-        /*if (!file.getContentType().equals("image/png")) {
-            model.addAttribute("error", "Можно загружать только PNG-файлы");
-
-            logger.info("=========> aaaaa5555555555555");
-
-            return "admin/base-levels/edit";
-        }*/
-
-        logger.info("=========> aaaaaaaaaaaaaa33333333333");
-
+        // Competamos el modelo BaseLevel
         BaseLevel baseLevel = baseLevelService.getById(baseLevelId);
         if (baseLevel.getId() != null) {
-
-            logger.info("=========> aaaaaaaaaaaaaa44444444444444");
-
-            //Base base = baseService.getById(baseId);
-            baseLevel.setBaseId(baseId);
+            baseLevel.setBase(base);
             baseLevel.setTitle(baseLevelEditDto.getTitle());
             baseLevel.setDescription(baseLevelEditDto.getDescription());
             baseLevel.setLevel(baseLevelEditDto.getLevel());
@@ -237,12 +222,12 @@ public class BaseLevelViewController {
             //-----------------------------
             // upload file
             Part part = request.getPart("img");
-            if (part != null) {
+            if (part != null && part.getSize() > 0) {
                 logger.info("--------------> Entr'e en part for 'img' ---------->");
                 //get the InputStream to store the file somewhere
                 InputStream fileInputStream = part.getInputStream();
                 String fileName = part.getSubmittedFileName();
-                File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/uploads/base-levels/" + fileName);
+                File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/uploads/base-levels/" + fileName);
                 Files.copy(fileInputStream, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 baseLevel.setImg(fileName);
@@ -252,7 +237,6 @@ public class BaseLevelViewController {
             baseLevelService.updateBaseLevel(baseLevel);
 
             return "redirect:/admin/bases/view/" + baseId;
-            //return "redirect:/admin/base-levels/edit/" + baseId;
 
         } else {
             model.addAttribute("Base", null);
@@ -262,6 +246,51 @@ public class BaseLevelViewController {
         }
 
         return "admin/base-levels/edit";
+    }
+
+    @GetMapping("/admin/base-levels/delete/{baseId}/{baseLevelId}")
+    public String deleteBaseLevel(@PathVariable Long baseId,
+                                  @PathVariable Long baseLevelId,
+                                  RedirectAttributes redirectAttributes) {
+        // base
+        try {
+            Base base = baseService.getById(baseId);
+        } catch (EntityNotFoundException ex) {
+            redirectAttributes.addFlashAttribute("error", "Este base no existe!");
+            return "redirect:/admin/bases/";
+        }
+
+        // baseLevel
+        try {
+            baseLevelService.deleteBaseLevel(baseLevelId);
+            redirectAttributes.addFlashAttribute("message", "BaseLevel eliminado exitosamente");
+        } catch (EntityNotFoundException ex) {
+            redirectAttributes.addFlashAttribute("error", "BaseLevel con ID " + baseLevelId + " extraviado.");
+        }
+
+        return "redirect:/admin/bases/view/" + baseId;
+    }
+
+    @GetMapping("/admin/base-levels/view/{baseId}/{baseLevelId}")
+    public String viewAdminBaseLevel(Model model,
+                                     @PathVariable Long baseId,
+                                     @PathVariable Long baseLevelId) throws IOException, ServletException {
+        //
+        BaseLevel baseLevel = baseLevelService.getById(baseLevelId);
+        if (baseLevel.getId() != null) {
+
+            Base base = baseService.getById(baseId);
+            model.addAttribute("base", base);
+            model.addAttribute("baseId", baseId);
+            model.addAttribute("baseLevelId", baseLevelId);
+            model.addAttribute("niveles", this.niveles);
+            model.addAttribute("baseLevel", baseLevel);
+            model.addAttribute("img", baseLevel.getImg());
+
+            return "admin/base-levels/view";
+        } else {
+            return "redirect:/admin/bases/view/" + baseId;
+        }
     }
 }
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nato: Mi mundo</title>
+
+  <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+</head>
+<body style="background-color:#e7e7e7;">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="'Mi mundo - sector ' + ${sector}"></h1>
+            <div>En este sector tu tienes este base</div>
+            <br/>
+        </div>
+
+        <div class="col-md-12">
+
+            <div style="margin-bottom:20px; padding:10px; background-color:#FFF;" >
+                <div class="row">
+                    <div class="col-md-2">
+                        <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" class="img img-fluid" alt="img base level"  />
+                    </div>
+                    <div class="col-md-10">
+                        <a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" th:text="${base.title}">Title</a>
+                        <br/>
+                        <div th:text="${base.description}"></div>
+
+                        <th:block th:if="${map != null}">
+                            <th:block th:if="${map.baseLevel != null}">
+                                <div th:text="'Tiene nivel: ' + ${map.baseLevel.level}" style="margin-top:20px;">Tiene el nivel: 1</div>
+                            </th:block>
+                        </th:block>
+                        <th:block th:if="${map == null}">
+                            <div style="margin-top:20px;">Tiene el nivel: 0</div>
+                        </th:block>
+
+                        <th:block th:if="${nextLevel != null}">
+                            <div style="margin-top:20px;">
+                                <div th:text="'El nivel siguiente: ' + ${nextLevel.level}" style="margin-top:20px;">El nivel siguiente: 1</div>
+                                <div>Para el nivel siguiente necesita:</div>
+                                <span style="margin-right:20px;" th:text="'Agua: ' + ${nextLevel.resAgua}">Agua: 1</span>
+                                <span style="margin-right:20px;" th:text="'Plastico: ' + ${nextLevel.resPlastic}">Plastico: 1</span>
+                                <span style="margin-right:20px;" th:text="'Food: ' + ${nextLevel.resFood}">Food: 1</span>
+                                <span style="margin-right:20px;" th:text="'Iron: ' + ${nextLevel.resIron}">Iron: 1</span>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${nextLevel == null}">
+                            <div style="margin-top:20px;">
+                                <div>No tiene el nivel siguiente</div>
+                            </div>
+                        </th:block>
+
+                        <br/>
+
+                        <form th:action="@{'/map/' + ${sector} + '/bases/' + ${baseId}}" method="post">
+                            <th:block th:if="${nextLevel != null}">
+                                <input type="submit" class="btn btn-primary" value="Nivel siguiente" style="margin-right:30px;" />
+                            </th:block>
+                            <a th:href="@{'/map/' + ${sector} + '/bases/'}" >todos los bases</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div th:each="baseLevel : ${baseLevels}" style="margin-bottom:20px; margin-left:50px; padding:10px; background-color:#FFF;" >
+                <div class="row">
+                    <div class="col-md-1">
+                        <img th:if="${baseLevel.img != null}" th:src="'/uploads/base-levels/'+${baseLevel.img}" alt="img base level" style="width:100px;" />
+                    </div>
+                    <div class="col-md-11">
+                        <h4 th:text="${baseLevel.title}"></h4>
+                        <div th:text="${baseLevel.description}"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

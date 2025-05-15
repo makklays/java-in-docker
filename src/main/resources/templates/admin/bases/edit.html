@@ -23,7 +23,7 @@
     <div class="card" >
         <div class="card-body" style="background-color:#FFF;">
 
-            <form th:action="@{/admin/bases/edit-post/{baseId}(baseId=${base.id})}" method="post" th:object="${base}" enctype="multipart/form-data">
+            <form th:action="@{/admin/bases/edit/{baseId}(baseId=${base.id})}" method="post" th:object="${base}" enctype="multipart/form-data">
 
                 <input type="hidden" name="id" th:value="${base.Id}" />
 
@@ -36,6 +36,19 @@
                 <div class="mb-3">
                     <label for="id_descr" class="form-label">Descripcion</label>
                     <textarea id="id_descr" name="description" th:field="*{description}" class="form-control" rows="3"></textarea>
+                </div>
+
+                <!-- img -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" alt="img base level" style="width:300px;" />
+                            <br/><br/>
+                            <label for="id_img" class="form-label">Image</label>
+                            <input id="id_img" th:field="*{img}" type="file" class="form-control" />
+                            <div th:if="${#fields.hasErrors('img')}" th:errors="*{img}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Editar</button>

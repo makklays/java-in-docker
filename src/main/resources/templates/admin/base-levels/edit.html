@@ -10,7 +10,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
             <li class="breadcrumb-item"><a href="/admin/bases/">Bases</a></li>
-            <li class="breadcrumb-item"><a th:href="@{'/admin/bases/view/' + ${base.id}}" th:text="'Ver el base - ' + ${base.title}">Ver el base</a></li>
+            <li class="breadcrumb-item"><a th:href="@{'/admin/bases/view/' + ${base.getId()}}" th:text="'Ver el base - ' + ${base.title}">Ver el base</a></li>
             <li class="breadcrumb-item active" aria-current="page">Editar nuevo nivel</li>
         </ol>
     </nav>
@@ -172,7 +172,7 @@
                         <div class="mb-3">
                             <label for="id_build_seconds" class="form-label required">Build Seconds</label>
                             <input id="id_build_seconds" th:field="*{buildSeconds}" name="res_iron" type="text" class="form-control" placeholder="1000" />
-                            <div th:if="${#fields.hasErrors('buildSeconds')}" th:errors="*{buildSeconds}" style="color:red;">build seconds errore</div>
+                            <div th:if="${#fields.hasErrors('buildSeconds')}" th:errors="*{buildSeconds}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
                 </div>
@@ -180,11 +180,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <img th:if="${img}" th:src="'/base-levels/'+${img}" alt="img base level" style="width:300px;" />
+                            <img th:if="${img != null}" th:src="'/uploads/base-levels/'+${img}" alt="img base level" style="width:300px;" />
                             <br/><br/>
-                            <label for="id_img" class="form-label required">Image</label>
+                            <label for="id_img" class="form-label">Image</label>
                             <input id="id_img" th:field="*{img}" type="file" class="form-control" />
-                            <div th:if="${#fields.hasErrors('img')}" th:errors="*{img}" style="color:red;">img errore</div>
+                            <div th:if="${#fields.hasErrors('img')}" th:errors="*{img}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
                 </div>

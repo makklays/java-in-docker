@@ -65,7 +65,8 @@ public class BaseLevelEditDto {
     @Max(value = 99999999, message = "Max secundos — 999999999")
     private Long buildSeconds;
 
-    @NotNull(message = "Файл обязателен")
+    //@NotNull(message = "Файл обязателен")
+    // Это поле не поддерживает @NotNull — будет валидироваться вручную
     private MultipartFile img;
 
     // Getters y setters

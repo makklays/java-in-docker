@@ -12,13 +12,13 @@
     background-color: #bfcc58;
 }
 
-button.btn-primary, a.btn-primary {
+button.btn-primary, input.btn.btn-primary, a.btn-primary, .btn.btn-primary {
     background-color: #bfcc58;
     border-color: #464c54;
     color: #464c54;
 }
 
-button.btn-primary:hover, a.btn-primary:hover {
+button.btn-primary:hover, input.btn-primary, a.btn-primary:hover {
     background-color: #464c54;
     border-color: #bfcc58;
     color: #bfcc58;
@@ -27,6 +27,11 @@ button.btn-primary:hover, a.btn-primary:hover {
 a, a:hover {
     color: #464c54;
 }
+.required:after {
+    content:" *";
+    color: red;
+}
+
 
 /*body {
     display: flex;

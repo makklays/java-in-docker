@@ -23,7 +23,7 @@
     <div class="card" >
         <div class="card-body" style="background-color:#FFF;">
 
-            <form action="/admin/bases/add-post" th:action="@{/admin/bases/add-post}" th:object="${base}" method="post" enctype="multipart/form-data">
+            <form action="/admin/bases/add" th:action="@{/admin/bases/add-post}" th:object="${base}" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="id_title" class="form-label required">Titulo</label>
                     <input id="id_title" th:field="*{title}" name="title" type="text" class="form-control" placeholder="title" />
@@ -33,6 +33,17 @@
                 <div class="mb-3">
                     <label for="id_descr" class="form-label">Descripcion</label>
                     <textarea id="id_descr" name="description" class="form-control" rows="3"></textarea>
+                </div>
+
+                <!-- img -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="id_img" class="form-label required">Image (jpg/png):</label>
+                            <input id="id_img" th:field="*{img}" type="file" class="form-control" />
+                            <div th:if="${#fields.hasErrors('img')}" th:errors="*{img}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Añadir</button>

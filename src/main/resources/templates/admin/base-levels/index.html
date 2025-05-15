@@ -19,6 +19,12 @@
             </div>
         </div>
 
+        <!-- Сообщение об успехе -->
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <!-- Сообщение об ошибке -->
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
         <div class="card" >
             <div class="card-body" style="background-color:#FFF;">
 
@@ -41,7 +47,7 @@
                                 <a th:href="@{'/admin/base-levels/' + ${baseLevel.id}}">0</a>
                             </td>
                             <td class="text-center" style="width:250px;">
-                                <a href="#" th:href="@{'/admin/base-levels/view/' + ${baseLevel.id}}">most</a> |
+                                <a href="#" th:href="@{'/admin/base-levels/view/' + ${baseLevel.id}}">vista</a> |
                                 <a href="#" th:href="@{'/admin/base-levels/edit/' + ${baseLevel.id}}">editar</a> |
                                 <a href="#" th:href="@{'/admin/base-levels/delete/' + ${baseLevel.id}}">borrar</a>
                             </td>
