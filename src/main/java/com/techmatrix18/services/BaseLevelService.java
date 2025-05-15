@@ -1,5 +1,7 @@
 package com.techmatrix18.services;
 
+import com.techmatrix18.controllers.web.UserViewController;
+import com.techmatrix18.model.Base;
 import com.techmatrix18.model.BaseLevel;
 import com.techmatrix18.repositories.BaseLevelRepository;
 import com.techmatrix18.repositories.BaseRepository;
@@ -7,15 +9,18 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class BaseLevelService {
 
-    private BaseRepository baseRepository;
+    Logger log = Logger.getLogger(BaseLevelService.class.getName());
+
+    private BaseService baseService;
     private BaseLevelRepository baseLevelRepository;
 
-    public BaseLevelService(BaseRepository baseRepository, BaseLevelRepository baseLevelRepository) {
-        this.baseRepository = baseRepository;
+    public BaseLevelService(BaseService baseService, BaseLevelRepository baseLevelRepository) {
+        this.baseService = baseService;
         this.baseLevelRepository = baseLevelRepository;
     }
 
@@ -40,9 +45,41 @@ public class BaseLevelService {
         return baseLevelRepository.findAll();
     }
 
+
     public List<BaseLevel> getAllByBaseId(Long baseId) {
         return baseLevelRepository.findByBaseId(baseId);
     }
+
+    /**
+     *
+     */
+    public long getCountBaseLevels(Long baseId) {
+        return baseLevelRepository.countByBaseId(baseId);
+    }
+
+    /**
+     *
+     */
+    public BaseLevel getNext(Long baseId, Integer level) {
+        Base base = baseService.getById(baseId);
+
+        List<BaseLevel> list = base.getBaseLevels();
+        BaseLevel nextBaseLevel = null;
+
+        log.info("=== list.size() ====> " + list.size());
+
+        if ((level + 1) <= list.size()) {
+            for (BaseLevel baseLevel : list) {
+                if (baseLevel.getLevel() == (level + 1)) {
+                    nextBaseLevel = baseLevel;
+                    break;
+                }
+            }
+        }
+
+        return nextBaseLevel;
+    }
+
     /**
      * Add BaseLevel
      *
@@ -77,13 +114,27 @@ public class BaseLevelService {
      * @return boolean
      */
     public boolean deleteBaseLevel(Long id) {
-        Optional<BaseLevel> baseLevel = baseLevelRepository.findById(id);
-        if (baseLevel.get().getId() != null) {
-            baseLevelRepository.delete(baseLevel.get());
-            return true;
-        } else {
+        /*Optional<BaseLevel> baseLevel = baseLevelRepository.findById(id);
+        try {
+            if (baseLevel.get() != null && baseLevel.get().getId() != null) {
+                baseLevelRepository.delete(baseLevel.get());
+                return true;
+            } else {
+                return false;
+            }
+        } catch (EntityNotFoundException ex) {
             return false;
-        }
+        }*/
+
+        BaseLevel baseLevel = baseLevelRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("BaseLevel with id " + id + " not found"));
+        baseLevelRepository.delete(baseLevel);
+
+        return true;
+    }
+
+    public List<BaseLevel> getAllByBaseIdOrderByLevelAsc(Long baseId) {
+        return baseLevelRepository.findByBaseIdOrderByLevelAsc(baseId);
     }
 }
 

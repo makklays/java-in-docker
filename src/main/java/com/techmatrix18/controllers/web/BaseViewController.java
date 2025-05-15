@@ -4,18 +4,22 @@ import com.techmatrix18.model.Base;
 import com.techmatrix18.model.BaseLevel;
 import com.techmatrix18.services.BaseLevelService;
 import com.techmatrix18.services.BaseService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -79,11 +83,27 @@ public class BaseViewController {
         return "admin/bases/add";
     }
 
-    @PostMapping("/admin/bases/add-post")
-    public String addAdminAddBase(Model model, @Valid Base base, BindingResult bindingResult) throws Exception {
+    @PostMapping("/admin/bases/add")
+    public String addAdminAddBase(Model model, @Valid Base base, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         if (bindingResult.hasErrors()) {
             return "bases/add";
         }
+
+        //-----------------------------
+        // upload file
+        Part part = request.getPart("img");
+        if (part != null && part.getSize() > 0) {
+            logger.info("--------------> Entr'e en part for 'img' ---------->");
+            //get the InputStream to store the file somewhere
+            InputStream fileInputStream = part.getInputStream();
+            String fileName = part.getSubmittedFileName();
+            File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/uploads/bases/" + fileName);
+            Files.copy(fileInputStream, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            base.setImg(fileName);
+        }
+        //-----------------------------
+
         baseService.addBase(base);
 
         return "redirect:/admin/bases/";
@@ -95,7 +115,7 @@ public class BaseViewController {
         if (base.getId() != null) {
             model.addAttribute("base", base);
 
-            List<BaseLevel> baseLevels = baseLevelService.getAllByBaseId(baseId);
+            List<BaseLevel> baseLevels = baseLevelService.getAllByBaseIdOrderByLevelAsc(baseId);
             model.addAttribute("baseLevels", baseLevels);
 
             logger.info("Base found..");
@@ -121,14 +141,38 @@ public class BaseViewController {
         return "admin/bases/edit";
     }
 
-    @PostMapping("/admin/bases/edit-post/{baseId}")
-    public String editPostAdminBase(@PathVariable("baseId") Long baseId, @Valid Base base, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+    @PostMapping("/admin/bases/edit/{baseId}")
+    public String editPostAdminBase(@PathVariable("baseId") Long baseId,
+                                    @Valid @ModelAttribute("base") Base base,
+                                    BindingResult bindingResult,
+                                    Model model,
+                                    @RequestParam("img") MultipartFile img) throws IOException, ServletException {
+        // validacion el archivo
+        if (img.isEmpty()) {
+            bindingResult.rejectValue("img", "NotEmpty.base.img", "Es necesario cargar el archivo.");
+            return "admin/bases/edit";
+        }
+
+        // Validacion los campos
+        /*if (bindingResult.hasErrors()) {
             base.setId(baseId);
             model.addAttribute("base", base);
 
             return "admin/bases/edit";
+        }*/
+
+        //-----------------------------
+        // upload file
+        if (!img.isEmpty()) {
+            // Ejemplo: gurdar el archivo, recibir un nombre
+            String fileName = img.getOriginalFilename();
+            // Guarda cuando necesite
+            File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/uploads/bases/", fileName);
+            img.transferTo(fileToSave);
+
+            base.setImg(fileName);
         }
+        //-----------------------------
 
         logger.info("Base: " + base.toString());
 

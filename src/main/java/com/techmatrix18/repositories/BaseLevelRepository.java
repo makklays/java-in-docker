@@ -22,9 +22,13 @@ public interface BaseLevelRepository extends JpaRepository<BaseLevel, Long> {
      * Search all BaseLevels
      * @return all BaseLevels
      */
-    List<BaseLevel> findAll();
+    List<BaseLevel> findAllByOrderByLevelAsc();
 
     List<BaseLevel> findByBaseId(Long id);
+    List<BaseLevel> findByBaseIdOrderByLevelAsc(Long id);
+
+    @Query("SELECT COUNT(bl) FROM BaseLevel bl WHERE bl.base.id = :baseId")
+    long countByBaseId(Long baseId);
 
     /**
      * Search BaseLevel by title

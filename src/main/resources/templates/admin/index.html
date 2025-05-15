@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layouts/base11.html}" >
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
 
 <section layout:fragment="custom-content">
 
     <h2>Bienvenidos!</h2>
+
+    <!-- Сообщение об успехе -->
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <!-- Сообщение об ошибке -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
     <div class="row">
         <div class="col-md-4 mb-3">

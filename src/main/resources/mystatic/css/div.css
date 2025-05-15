@@ -1,0 +1,15 @@
+
+.centered {
+    #position: fixed; /* or absolute */
+    #top: 50%;
+    #left: 50%;
+    #width: 1190px;
+    width: 1280px;
+    height: 560px;
+    #height: 850px;
+    #margin: -450px 0 0 -595px;
+
+    overflow: hidden;
+    border: 4px solid #bfcc58; // #4444;
+}
+

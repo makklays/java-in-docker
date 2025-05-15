@@ -89,7 +89,7 @@ public class UserViewController {
     public String getDiv(Model model) {
         model.addAttribute("title", "V-V-V");
 
-        return "map";
+        return "map/map";
     }
 
     @GetMapping("/admin/")

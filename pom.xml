@@ -24,6 +24,13 @@
         <jakarta.xml.bind.version>4.0.2</jakarta.xml.bind.version>
     </properties>
 
+    <!--repositories>
+        <repository>
+            <id>bintray-neuroph</id>
+            <url>https://dl.bintray.com/neuroph/maven</url>
+        </repository>
+    </repositories-->
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -134,7 +141,25 @@
         </dependency>
         <!-- JAXB runtime (Reference Implementation) -->
 
+        <!-- Neuroph AI -->
+        <!--dependency>
+            <groupId>org.neuroph</groupId>
+            <artifactId>neuroph-core</artifactId>
+        </dependency-->
+        <!-- end Neuroph AI -->
 
+        <!-- DL4J AI -->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-core</artifactId>
+            <version>1.0.0-beta7</version> <!-- Используйте более стабильную версию -->
+        </dependency>
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-native-platform</artifactId>
+            <version>1.0.0-beta7</version> <!-- Используйте более стабильную версию -->
+        </dependency>
+        <!-- end DL4J -->
 
         <dependency>
             <groupId>wsdl4j</groupId>

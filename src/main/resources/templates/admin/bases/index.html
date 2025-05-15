@@ -13,11 +13,23 @@
             </ol>
         </nav>
 
+        <div class="row">
+            <div class="col-md-12" style="text-align:left;" >
+                La lista de los bases de datos))
+            </div>
+        </div>
+
         <div class="row" style="margin-bottom:20px;">
             <div class="col-md-12" style="text-align:right;" >
                 <a href="/admin/bases/add" class="btn btn-primary">Añadir el base</a>
             </div>
         </div>
+
+        <!-- Сообщение об успехе -->
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <!-- Сообщение об ошибке -->
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
         <div class="card" >
             <div class="card-body" style="background-color:#FFF;">
@@ -28,20 +40,31 @@
                             <th class="text-center" style="width:50px;">ID</th>
                             <th>Titulo</th>
                             <th class="text-center">Niveles</th>
+                            <th class="text-center">Imagene</th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="base : ${bases}">
-                            <td class="text-center" style="width:30px;" th:text="${base.Id}">Id</td>
-                            <td>
+                            <td class="text-center align-middle" style="width:30px;" th:text="${base.Id}">Id</td>
+                            <td class="align-middle">
                                 <a href="#" th:href="@{'/admin/bases/view/' + ${base.id}}" th:text="${base.title}">Title</a>
                             </td>
-                            <td class="text-center">
-                                <a th:href="@{'/admin/base-levels/' + ${base.id}}">0</a>
+                            <td class="text-center align-middle">
+                                <th:block th:if="${base != null}">
+                                    <th:block th:if="${base.baseLevels != null}">
+                                        <span th:text="${base.baseLevels != null ? base.baseLevels.size() : 0}"></span>
+                                    </th:block>
+                                </th:block>
                             </td>
-                            <td class="text-center" style="width:250px;">
-                                <a href="#" th:href="@{'/admin/bases/view/' + ${base.id}}">most</a> |
+
+                            <!-- img -->
+                            <td class="text-center align-middle">
+                                <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" alt="img base level" style="width:100px;" />
+                            </td>
+
+                            <td class="text-center align-middle" style="width:250px;">
+                                <a href="#" th:href="@{'/admin/bases/view/' + ${base.id}}">vista</a> |
                                 <a href="#" th:href="@{'/admin/bases/edit/' + ${base.id}}">editar</a> |
                                 <a href="#" th:href="@{'/admin/bases/delete/' + ${base.id}}">borrar</a>
                             </td>

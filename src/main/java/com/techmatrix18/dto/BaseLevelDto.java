@@ -62,6 +62,7 @@ public class BaseLevelDto {
     @Max(value = 99999999, message = "Max secundos — 999999999")
     private Long buildSeconds;
 
+    @NotNull(message = "Файл обязателен")
     private MultipartFile img;
 
     // Getters y setters
@@ -168,6 +169,25 @@ public class BaseLevelDto {
 
     public void setImg(MultipartFile img) {
         this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseLevelDto{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", level=" + level +
+                ", resAgua=" + resAgua +
+                ", resPlastic=" + resPlastic +
+                ", resFood=" + resFood +
+                ", resIron=" + resIron +
+                ", plusResAgua=" + plusResAgua +
+                ", plusResPlastic=" + plusResPlastic +
+                ", plusResFood=" + plusResFood +
+                ", plusResIron=" + plusResIron +
+                ", buildSeconds=" + buildSeconds +
+                ", img=" + img +
+                '}';
     }
 }
 

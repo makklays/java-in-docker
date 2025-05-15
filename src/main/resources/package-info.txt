@@ -10,3 +10,18 @@ This is Alfa-version of project
 
 Теперь RabbitMQ доступен на localhost:15672 (логин: user, пароль: password).
 
+URLs:
+http://localhost:8080/map
+
+empty sector
+http://localhost:8080/map/12/bases
+http://localhost:8080/map/12/bases/1
+
+no empty sector
+http://localhost:8080/map/12/bases/1
+
+para algun logico hay que 'alias' y diferentes Controladores y diferentes Views
+por ejemplo:
+http://localhost:8080/map/12/bases/1/base1
+http://localhost:8080/map/12/bases/1/banco
+

@@ -36,6 +36,12 @@
                     <th>Descripcion</th>
                     <td th:text="${base.description}"></td>
                 </tr>
+
+                <tr>
+                    <th>Imagene</th>
+                    <td><img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" alt="img base level" style="width:150px;" /></td>
+                </tr>
+
                 <tr>
                     <th>Created</th>
                     <td th:text="${base.createdAt} ? ${#dates.format(base.createdAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
@@ -60,6 +66,12 @@
         </div>
     </div>
 
+    <!-- Сообщение об успехе -->
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <!-- Сообщение об ошибке -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
     <div class="card">
         <div class="card-body">
 
@@ -75,6 +87,8 @@
                     <th class="text-center">Food</th>
                     <th class="text-center">Iron</th>
 
+                    <th class="text-center">Seconds</th>
+
                     <th class="text-center">Imagene</th>
 
                     <th class="text-center">Acciones</th>
@@ -88,15 +102,20 @@
                     </td>
                     <td class="text-center" th:text="${baseLevel.level}">nivel</td>
 
-                    <td class="text-center" th:text="${baseLevel.resAgua}">agua</td>
-                    <td class="text-center" th:text="${baseLevel.resPlastic}">plastic</td>
-                    <td class="text-center" th:text="${baseLevel.resFood}">food</td>
-                    <td class="text-center" th:text="${baseLevel.resIron}">iron</td>
+                    <td class="text-center" th:text="${baseLevel.resAgua + ' + ' + baseLevel.plusResAgua}">agua</td>
+                    <td class="text-center" th:text="${baseLevel.resPlastic + ' + ' + baseLevel.plusResPlastic}">plastic</td>
+                    <td class="text-center" th:text="${baseLevel.resFood + ' + ' + baseLevel.plusResFood}">food</td>
+                    <td class="text-center" th:text="${baseLevel.resIron + ' + ' + baseLevel.plusResIron}">iron</td>
 
-                    <td class="text-center" th:text="${baseLevel.getImg() != null ? 'yes' : 'not'}">img</td>
+                    <td class="text-center" th:text="${baseLevel.buildSeconds}">seconds</td>
+
+                    <!--td class="text-center" th:text="${baseLevel.getImg() != null ? 'yes' : 'not'}">img</td-->
+                    <td class="text-center">
+                        <img th:if="${baseLevel.img != null}" th:src="'/uploads/base-levels/'+${baseLevel.img}" alt="img base level" style="width:100px;" />
+                    </td>
 
                     <td class="text-center" style="width:250px;">
-                        <a href="#" th:href="@{'/admin/base-levels/view/'   + ${base.id} + '/' + ${baseLevel.id} }">most</a> |
+                        <a href="#" th:href="@{'/admin/base-levels/view/'   + ${base.id} + '/' + ${baseLevel.id} }">vista</a> |
                         <a href="#" th:href="@{'/admin/base-levels/edit/'   + ${base.id} + '/' + ${baseLevel.id} }">editar</a> |
                         <a href="#" th:href="@{'/admin/base-levels/delete/' + ${base.id} + '/' + ${baseLevel.id} }">borrar</a>
                     </td>
@@ -106,6 +125,10 @@
 
         </div>
     </div>
+
+    <a href="#" th:href="'/admin/bases/'" class="btn btn-secondary" style="margin-top:20px;"> Back</a>
+
+    <br/><br/><br/><br/><br/>
 
 </section>
 

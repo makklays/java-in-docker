@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,6 +32,18 @@ public class Base {
      */
     @Column(name = "description", length = 700)
     private String description;
+
+    /**
+     * image of a base
+     */
+    @Column(name = "img", length = 255)
+    private String img;
+
+    /**
+     *
+     */
+    @OneToMany(mappedBy = "base", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BaseLevel> baseLevels = new ArrayList<>();
 
     /**
      * Date and time of base creation
@@ -72,6 +86,18 @@ public class Base {
         this.description = description;
     }
 
+    public String getImg() { return img; }
+
+    public void setImg(String img) { this.img = img; }
+
+    public List<BaseLevel> getBaseLevels() {
+        return baseLevels;
+    }
+
+    public void setBaseLevels(List<BaseLevel> baseLevels) {
+        this.baseLevels = baseLevels;
+    }
+
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -92,12 +118,12 @@ public class Base {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Base base)) return false;
-        return getId().equals(base.getId()) && getTitle().equals(base.getTitle()) && getDescription().equals(base.getDescription()) && getCreatedAt().equals(base.getCreatedAt()) && getUpdatedAt().equals(base.getUpdatedAt());
+        return getId().equals(base.getId()) && getTitle().equals(base.getTitle()) && getDescription().equals(base.getDescription()) && getImg().equals(base.getImg()) && getBaseLevels().equals(base.getBaseLevels()) && getCreatedAt().equals(base.getCreatedAt()) && getUpdatedAt().equals(base.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getDescription(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getId(), getTitle(), getDescription(), getImg(), getBaseLevels(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
@@ -106,6 +132,8 @@ public class Base {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", img='" + img + '\'' +
+                ", baseLevels=" + baseLevels +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
