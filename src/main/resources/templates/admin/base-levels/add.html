@@ -37,6 +37,12 @@
                     <th>Descripcion</th>
                     <td th:text="${base.description}"></td>
                 </tr>
+
+                <tr>
+                    <th>Imagene</th>
+                    <td><img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" title="${base.title}" alt="img base level" style="width:150px;" /></td>
+                </tr>
+
                 <tr>
                     <th>Created</th>
                     <td th:text="${base.createdAt} ? ${#dates.format(base.createdAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>

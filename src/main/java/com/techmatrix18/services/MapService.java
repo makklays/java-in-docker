@@ -1,5 +1,6 @@
 package com.techmatrix18.services;
 
+import com.techmatrix18.model.Base;
 import com.techmatrix18.model.Map;
 import com.techmatrix18.repositories.MapRepository;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,49 @@ public class MapService {
     // Sector la sorpresa =)
     public Optional<Map> getSector(Long spaceId, Integer sector) {
         return mapRepository.findBySpaceIdAndSector(spaceId, sector);
+    }
+
+    /**
+     * Add Map
+     *
+     * @return boolean
+     */
+    public boolean addMap(Map map) {
+        Map m = mapRepository.save(map);
+        if (m.getId() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Edit Map
+     *
+     * @return boolean
+     */
+    public boolean updateMap(Map map) {
+        Map m = mapRepository.save(map);
+        if (m.getId() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Delete Map by MapID
+     *
+     * @return boolean
+     */
+    public boolean deleteMap(Long id) {
+        Optional<Map> map = mapRepository.findById(id);
+        if (map.get().getId() != null) {
+            mapRepository.delete(map.get());
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

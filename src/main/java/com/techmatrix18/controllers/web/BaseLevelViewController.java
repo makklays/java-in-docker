@@ -82,10 +82,12 @@ public class BaseLevelViewController {
             result.rejectValue("img", "NotEmpty.baseLevelEditDto.img", "Es necesario cargar el archivo.");
         }
 
+        logger.info("-- baseId --> " + baseId);
+
         // Validación el baseLevelDTO
-        Base base = null;
+        Base base = baseService.getById(baseId);
+
         if (result.hasErrors()) {
-            base = baseService.getById(baseId);
             model.addAttribute("base", base);
             model.addAttribute("baseId", baseId);
             model.addAttribute("niveles", this.niveles);
@@ -93,6 +95,8 @@ public class BaseLevelViewController {
 
             return "admin/base-levels/add";
         }
+
+        logger.info("-- base --> " + base.toString());
 
         BaseLevel baseLevel = new BaseLevel();
         baseLevel.setBase(base);
@@ -109,6 +113,8 @@ public class BaseLevelViewController {
         baseLevel.setPlusResPlastic(baseLevelDto.getPlusResPlastic().intValue());
         baseLevel.setPlusResFood(baseLevelDto.getPlusResFood().intValue());
         baseLevel.setPlusResIron(baseLevelDto.getPlusResIron().intValue());
+
+        baseLevel.setBuildSeconds(baseLevelDto.getBuildSeconds().intValue());
 
         //-----------------------------
         // upload file
@@ -186,13 +192,11 @@ public class BaseLevelViewController {
         }*/
 
         // Validación otros campos
-        Base base = null;
+        Base base = baseService.getById(baseId);
         if (result.hasErrors()) {
-            base = baseService.getById(baseId);
             model.addAttribute("base", base);
             model.addAttribute("baseId", baseId);
             model.addAttribute("baseLevelId", baseLevelId);
-
             model.addAttribute("niveles", this.niveles);
             model.addAttribute("baseLevelEditDto", baseLevelEditDto);
 

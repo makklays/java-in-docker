@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 /**
@@ -226,6 +229,14 @@ public class Space {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+    /**
+     *
+     */
+    public Long getDias() {
+        LocalDate createdDate = createdAt.atZone(ZoneId.systemDefault()).toLocalDate();
+        return ChronoUnit.DAYS.between(createdDate, LocalDate.now());
     }
 }
 

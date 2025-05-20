@@ -74,11 +74,20 @@
                 </tr>
                 <tr>
                     <th>Descripcion</th>
-                    <td th:text="${baseLevel.description}"></td>
+
+                    <!-- Если есть описание -->
+                    <th:block th:if="${baseLevel.description != null && baseLevel.description != ''}" >
+                        <td class="text-center align-middle" th:text="${baseLevel.description}"></td>
+                    </th:block>
+
+                    <!-- Если описание пустое или null -->
+                    <th:block th:if="${baseLevel.description == null || baseLevel.description == ''}" >
+                        <td>-</td>
+                    </th:block>
                 </tr>
                 <tr>
                     <th>Nivel</th>
-                    <td th:text="${baseLevel.level}"></td>
+                    <td th:text="${baseLevel.level} ?: '0'"></td>
                 </tr>
 
                 <!-- res + plus res -->

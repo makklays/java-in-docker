@@ -3,7 +3,11 @@ package com.techmatrix18.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 /**
@@ -39,14 +43,35 @@ public class Map {
     /**
      * BaseLevel ID on the map
      */
-    @Column(name = "base_level_id")
-    private Long baseLevelId;
+    //@Column(name = "base_level_id")
+    //private Long baseLevelId;
 
+    /**
+     *
+     */
+    @OneToOne
+    @JoinColumn(name = "base_level_id")
+    private BaseLevel baseLevel;
+
+    /**
+     *
+     */
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "build_started_at")
+    private Instant buildStartedAt;
+
+    /**
+     *
+     */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Instant createdAt;
 
+    /**
+     *
+     */
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
@@ -78,12 +103,18 @@ public class Map {
         this.sector = sector;
     }
 
-    public Long getBaseLevelId() {
+    /*public Long getBaseLevelId() {
         return baseLevelId;
-    }
+    }*/
 
-    public void setBaseLevelId(Long baseLevelId) {
+    /*public void setBaseLevelId(Long baseLevelId) {
         this.baseLevelId = baseLevelId;
+    }*/
+
+    public BaseLevel getBaseLevel() { return baseLevel; }
+
+    public void setBaseLevel(BaseLevel baseLevel) {
+        this.baseLevel = baseLevel;
     }
 
     public Instant getCreatedAt() {
@@ -102,16 +133,20 @@ public class Map {
         this.updatedAt = updatedAt;
     }
 
+    public Instant getBuildStartedAt() { return buildStartedAt; }
+
+    public void setBuildStartedAt(Instant buildStartedAt) { this.buildStartedAt = buildStartedAt; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Map map)) return false;
-        return getId().equals(map.getId()) && getSpaceId().equals(map.getSpaceId()) && getSector().equals(map.getSector()) && getBaseLevelId().equals(map.getBaseLevelId()) && getCreatedAt().equals(map.getCreatedAt()) && Objects.equals(getUpdatedAt(), map.getUpdatedAt());
+        return getId().equals(map.getId()) && getSpaceId().equals(map.getSpaceId()) && getSector().equals(map.getSector()) && getBaseLevel().equals(map.getBaseLevel()) && getCreatedAt().equals(map.getCreatedAt()) && getUpdatedAt().equals(map.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getSpaceId(), getSector(), getBaseLevelId(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getId(), getSpaceId(), getSector(), getBaseLevel(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
@@ -120,10 +155,41 @@ public class Map {
                 "id=" + id +
                 ", spaceId=" + spaceId +
                 ", sector=" + sector +
-                ", baseLevelId=" + baseLevelId +
+                ", baseLevel=" + baseLevel +
+                ", buildStartedAt=" + buildStartedAt +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+    /**
+     *
+     *
+     * @param seconds
+     * @return
+     */
+    public boolean isBuildingNow(int seconds) {
+        if (buildStartedAt == null || seconds <= 0) {
+            return false;
+        }
+
+        Instant endTime = buildStartedAt.plusSeconds(seconds);
+        return Instant.now().isBefore(endTime);
+    }
+
+    /**
+     *
+     */
+    public int secondsToFinish(int seconds) {
+        if (buildStartedAt == null || seconds <= 0) {
+            return 0;
+        }
+
+        Instant endTime = buildStartedAt.plusSeconds(seconds);
+        Duration remaining = Duration.between(Instant.now(), endTime);
+
+        // Если уже закончилось — вернуть 0
+        return (int) Math.max(remaining.getSeconds(), 0);
     }
 }
 

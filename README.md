@@ -4,7 +4,7 @@ Yo como Arquitectador =) pinté esta eschema UML para mejor entender el proyecto
 
 en base de datos. 
 
-<img src="./src/main/resources/mystatic/eschemas/photo_2025-04-13_18-21-00.jpg" />
+<img src="./src/main/resources/mystatic/eschemas/photo_2025-05-19_22-45-35.jpg" />
 
 Varios pantillas del proyecto bajo
 
