@@ -78,43 +78,43 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th class="text-center" style="width:50px;">ID</th>
-                    <th>Titulo</th>
-                    <th class="text-center">Nivel</th>
+                    <th class="text-center align-middle" style="width:50px;">ID</th>
+                    <th class="align-middle">Titulo</th>
+                    <th class="text-center align-middle">Nivel</th>
 
-                    <th class="text-center">Agua</th>
-                    <th class="text-center">Plastic</th>
-                    <th class="text-center">Food</th>
-                    <th class="text-center">Iron</th>
+                    <th class="text-center align-middle">Agua</th>
+                    <th class="text-center align-middle">Plastic</th>
+                    <th class="text-center align-middle">Food</th>
+                    <th class="text-center align-middle">Iron</th>
 
-                    <th class="text-center">Seconds</th>
+                    <th class="text-center align-middle">Seconds</th>
 
-                    <th class="text-center">Imagene</th>
+                    <th class="text-center align-middle">Imagene</th>
 
-                    <th class="text-center">Acciones</th>
+                    <th class="text-center align-middle">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="baseLevel : ${baseLevels}">
-                    <td class="text-center" style="width:30px;" th:text="${baseLevel.Id}">Id</td>
-                    <td>
-                        <a href="#" th:href="@{'/admin/base-levels/view/' + ${baseLevel.id}}" th:text="${baseLevel.title}">Title</a>
+                    <td class="text-center align-middle" style="width:30px;" th:text="${baseLevel.Id}">Id</td>
+                    <td class="align-middle">
+                        <a href="#" th:href="@{'/admin/base-levels/view/' + ${base.id} + '/' + ${baseLevel.id}}" th:text="${baseLevel.title}">Title</a>
                     </td>
-                    <td class="text-center" th:text="${baseLevel.level}">nivel</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.level}">nivel</td>
 
-                    <td class="text-center" th:text="${baseLevel.resAgua + ' + ' + baseLevel.plusResAgua}">agua</td>
-                    <td class="text-center" th:text="${baseLevel.resPlastic + ' + ' + baseLevel.plusResPlastic}">plastic</td>
-                    <td class="text-center" th:text="${baseLevel.resFood + ' + ' + baseLevel.plusResFood}">food</td>
-                    <td class="text-center" th:text="${baseLevel.resIron + ' + ' + baseLevel.plusResIron}">iron</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resAgua + ' + ' + baseLevel.plusResAgua}">agua</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resPlastic + ' + ' + baseLevel.plusResPlastic}">plastic</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resFood + ' + ' + baseLevel.plusResFood}">food</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resIron + ' + ' + baseLevel.plusResIron}">iron</td>
 
-                    <td class="text-center" th:text="${baseLevel.buildSeconds}">seconds</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.buildSeconds}">seconds</td>
 
                     <!--td class="text-center" th:text="${baseLevel.getImg() != null ? 'yes' : 'not'}">img</td-->
-                    <td class="text-center">
+                    <td class="text-center align-middle">
                         <img th:if="${baseLevel.img != null}" th:src="'/uploads/base-levels/'+${baseLevel.img}" alt="img base level" style="width:100px;" />
                     </td>
 
-                    <td class="text-center" style="width:250px;">
+                    <td class="text-center align-middle" style="width:250px;">
                         <a href="#" th:href="@{'/admin/base-levels/view/'   + ${base.id} + '/' + ${baseLevel.id} }">vista</a> |
                         <a href="#" th:href="@{'/admin/base-levels/edit/'   + ${base.id} + '/' + ${baseLevel.id} }">editar</a> |
                         <a href="#" th:href="@{'/admin/base-levels/delete/' + ${base.id} + '/' + ${baseLevel.id} }">borrar</a>

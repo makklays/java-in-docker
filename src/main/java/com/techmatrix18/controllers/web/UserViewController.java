@@ -1,5 +1,6 @@
 package com.techmatrix18.controllers.web;
 
+import com.techmatrix18.model.Map;
 import com.techmatrix18.model.User;
 import com.techmatrix18.model.Contact;
 import com.techmatrix18.services.ContactService;
@@ -83,13 +84,6 @@ public class UserViewController {
         log.info("Contact --> " + contact.toString());
 
         return "redirect:/contact";
-    }
-
-    @GetMapping("/map")
-    public String getDiv(Model model) {
-        model.addAttribute("title", "V-V-V");
-
-        return "map/map";
     }
 
     @GetMapping("/admin/")

@@ -161,6 +161,9 @@ public class BaseViewController {
             return "admin/bases/edit";
         }*/
 
+        // sin borrar baseLevels (relación OneToMany)
+        Base baseUpdate = baseService.getById(base.getId());
+
         //-----------------------------
         // upload file
         if (!img.isEmpty()) {
@@ -170,13 +173,13 @@ public class BaseViewController {
             File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/uploads/bases/", fileName);
             img.transferTo(fileToSave);
 
-            base.setImg(fileName);
+            baseUpdate.setImg(fileName);
         }
         //-----------------------------
 
-        logger.info("Base: " + base.toString());
+        logger.info("------- Base ---------> " + baseUpdate.toString());
 
-        baseService.updateBase(base);
+        baseService.updateBase(baseUpdate);
 
         return "redirect:/admin/bases/";
     }

@@ -31,7 +31,7 @@ public class BaseLevel {
      */
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "base_id")
+    @JoinColumn(name = "base_id", nullable = false)
     private Base base;
 
     /**
@@ -113,6 +113,12 @@ public class BaseLevel {
     private String img;
 
     /**
+     *
+     */
+    @OneToOne(mappedBy = "baseLevel")
+    private Map map;
+
+    /**
      * Date and time of base creation
      */
     @CreationTimestamp
@@ -144,6 +150,10 @@ public class BaseLevel {
     public void setBaseId(Long baseId) {
         this.baseId = baseId;
     }*/
+
+    public Map getMap() { return map; }
+
+    public void setMap(Map map) { this.map = map; }
 
     public Base getBase() {
         return base;
@@ -277,19 +287,19 @@ public class BaseLevel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BaseLevel baseLevel)) return false;
-        return getLevel() == baseLevel.getLevel() && getResAgua() == baseLevel.getResAgua() && getResPlastic() == baseLevel.getResPlastic() && getResFood() == baseLevel.getResFood() && getResIron() == baseLevel.getResIron() && getPlusResAgua() == baseLevel.getPlusResAgua() && getPlusResPlastic() == baseLevel.getPlusResPlastic() && getPlusResFood() == baseLevel.getPlusResFood() && getPlusResIron() == baseLevel.getPlusResIron() && getBuildSeconds() == baseLevel.getBuildSeconds() && getId().equals(baseLevel.getId()) && getBase().equals(baseLevel.getBase()) && getTitle().equals(baseLevel.getTitle()) && getDescription().equals(baseLevel.getDescription()) && getImg().equals(baseLevel.getImg()) && getCreatedAt().equals(baseLevel.getCreatedAt()) && getUpdatedAt().equals(baseLevel.getUpdatedAt());
+        return getLevel() == baseLevel.getLevel() && getResAgua() == baseLevel.getResAgua() && getResPlastic() == baseLevel.getResPlastic() && getResFood() == baseLevel.getResFood() && getResIron() == baseLevel.getResIron() && getPlusResAgua() == baseLevel.getPlusResAgua() && getPlusResPlastic() == baseLevel.getPlusResPlastic() && getPlusResFood() == baseLevel.getPlusResFood() && getPlusResIron() == baseLevel.getPlusResIron() && getBuildSeconds() == baseLevel.getBuildSeconds() && getId().equals(baseLevel.getId()) && getBase().equals(baseLevel.getBase()) && getTitle().equals(baseLevel.getTitle()) && getDescription().equals(baseLevel.getDescription()) && getImg().equals(baseLevel.getImg()) && getMap().equals(baseLevel.getMap()) && getCreatedAt().equals(baseLevel.getCreatedAt()) && getUpdatedAt().equals(baseLevel.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getBase(), getLevel(), getTitle(), getDescription(), getResAgua(), getResPlastic(), getResFood(), getResIron(), getPlusResAgua(), getPlusResPlastic(), getPlusResFood(), getPlusResIron(), getBuildSeconds(), getImg(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getId(), getBase(), getLevel(), getTitle(), getDescription(), getResAgua(), getResPlastic(), getResFood(), getResIron(), getPlusResAgua(), getPlusResPlastic(), getPlusResFood(), getPlusResIron(), getBuildSeconds(), getImg(), getMap(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
     public String toString() {
         return "BaseLevel{" +
                 "id=" + id +
-                //", base=" + base + // recurcion
+                //", base=" + base +
                 ", level=" + level +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -303,6 +313,7 @@ public class BaseLevel {
                 ", plusResIron=" + plusResIron +
                 ", buildSeconds=" + buildSeconds +
                 ", img='" + img + '\'' +
+                //", map=" + map +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

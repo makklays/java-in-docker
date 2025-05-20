@@ -11,6 +11,32 @@
 <body style="background-color:#e7e7e7;">
 
 <div class="container">
+
+    <!-- Menu -->
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 4px 0 4px 0; padding:4px 0 8px 0;">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            5 Estrellas
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/map" class="nav-link px-2 link-secondary">Mi mundo</a></li>
+            <li><a href="/la-historia" class="nav-link px-2 link-dark">La historia</a></li>
+            <li><a href="/info" class="nav-link px-2 link-dark">Información</a></li>
+            <li><a href="/users" class="nav-link px-2 link-dark">Usuarios</a></li>
+            <li><a href="/rating" class="nav-link px-2 link-dark">Rating</a></li>
+            <li><a href="/settings" class="nav-link px-2 link-dark">Settings</a></li>
+            <li><a href="/contact" class="nav-link px-2 link-dark">Contactos</a></li>
+        </ul>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        </form>
+        <div class="dropdown text-end">
+            <a href="#">
+                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            </a>
+        </div>
+    </div>
+
+    <!-- -->
     <div class="row">
         <div class="col-md-12">
             <h1 th:text="'Mi mundo - sector ' + ${sector}"></h1>
@@ -30,11 +56,11 @@
                         <br/>
                         <div th:text="${base.description}"></div>
 
-                        <th:block th:if="${map != null}">
-                            <th:block th:if="${map.baseLevel != null}">
+                        <!--th:block th:if="${map != null}">
+                            <th:block th:if="${map['baseLevel'] != null}">
                                 <div th:text="'Tiene nivel: ' + ${map.baseLevel.level}" style="margin-top:20px;">Tiene el nivel: 1</div>
                             </th:block>
-                        </th:block>
+                        </th:block-->
                         <th:block th:if="${map == null}">
                             <div style="margin-top:20px;">Tiene el nivel: 0</div>
                         </th:block>
@@ -75,6 +101,12 @@
                     <div class="col-md-11">
                         <h4 th:text="${baseLevel.title}"></h4>
                         <div th:text="${baseLevel.description}"></div>
+                        <!-- res para nivel -->
+                        <div>Para este nivel necesita:</div>
+                        <span style="margin-right:20px;" th:text="'Agua: ' + ${baseLevel.resAgua}">Agua: 1</span>
+                        <span style="margin-right:20px;" th:text="'Plastico: ' + ${baseLevel.resPlastic}">Plastico: 1</span>
+                        <span style="margin-right:20px;" th:text="'Food: ' + ${baseLevel.resFood}">Food: 1</span>
+                        <span style="margin-right:20px;" th:text="'Iron: ' + ${baseLevel.resIron}">Iron: 1</span>
                     </div>
                 </div>
             </div>
