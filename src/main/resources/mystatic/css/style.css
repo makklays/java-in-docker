@@ -59,3 +59,8 @@ a, a:hover {
     border-radius: 10px;
     transition: background 0.3s;
 }
+
+.link-my-active, .link-my-active:hover {
+    color: #82910e;
+}
+
