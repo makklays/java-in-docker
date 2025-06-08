@@ -1,8 +1,6 @@
 package com.techmatrix18.controllers.web;
 
-import com.techmatrix18.dto.BaseLevelDto;
 import com.techmatrix18.dto.UserDto;
-import com.techmatrix18.model.Map;
 import com.techmatrix18.model.User;
 import com.techmatrix18.model.Contact;
 import com.techmatrix18.services.ContactService;
@@ -15,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
-import javax.management.remote.JMXAuthenticator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -50,8 +49,10 @@ public class UserViewController {
     }
 
     @GetMapping("/welcome")
-    public String welcome(Model model) {
-        model.addAttribute("vv", "V-V-V");
+    public String welcome(Model model, HttpSession session) {
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        log.info("---------- user ID--------------> " + userId);
 
         return "welcome";
     }
@@ -99,6 +100,9 @@ public class UserViewController {
             Authentication auth = authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
 
+            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                    SecurityContextHolder.getContext());
+
             User user = userService.findUserByUsername(username);
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
@@ -127,7 +131,7 @@ public class UserViewController {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
         } else {
-            return "redirect:/login";
+            return "redirect:/req/login";
         }
 
         return "index";
@@ -141,6 +145,8 @@ public class UserViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         return "users/index";
@@ -168,7 +174,10 @@ public class UserViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
+
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
 
@@ -201,6 +210,8 @@ public class UserViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         return "profile";
@@ -228,7 +239,18 @@ public class UserViewController {
     }
 
     @GetMapping("/admin/")
-    public String getAdmin() {
+    public String getAdmin(Model model, HttpSession session) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        model.addAttribute("userId", userId);
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
+        }
+
         return "admin/index";
     }
 

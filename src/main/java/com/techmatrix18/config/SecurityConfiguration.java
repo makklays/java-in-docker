@@ -61,27 +61,26 @@ public class SecurityConfiguration {
     {
         return http
                 // We disable CSRF, because we work with REST API
-                //.csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable())
 
                 // Configure CORS if necessary (you can additionally specify the CORS source)
                 //.cors(Customizer.withDefaults())
 
                 // Setting up access to endpoints
-                .securityMatcher("/ws", "/ws/**")
+                //.securityMatcher("/ws", "/ws/**") // - conflict with /req/logout and /req/login
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/ws", "/ws/**").permitAll()
-
-                    .requestMatchers("/info").permitAll()
+                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/req/logout").permitAll()
                     .requestMatchers("/mystatic/uploads/base-levels/**").permitAll()
                     .requestMatchers("/mystatic/base-levels/**").permitAll()
                     .requestMatchers("/mystatic/**").permitAll()
-                    .requestMatchers("/imgs/**").permitAll()
+                    .requestMatchers("/images/**").permitAll()
+                    .requestMatchers("/logo/**").permitAll()
                     .requestMatchers("/css/**").permitAll()
                     .requestMatchers("/js/**").permitAll()
                     .requestMatchers("/*.css", "/*.js", "/*.ico", "/*.png", "/*.jpg", "/*.svg", "/*.webapp").permitAll()
                     .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
                     .requestMatchers("/req/signup").permitAll()
-                    .requestMatchers("/div/**", "build/**").permitAll()
                     .requestMatchers("/uploads/**").permitAll()
                     .requestMatchers("/mystatic/uploads/**").permitAll()
 
@@ -95,18 +94,44 @@ public class SecurityConfiguration {
                     .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()*/
 
                     // authenticated
-                    .requestMatchers("/contact").authenticated()
+                    .requestMatchers("/map").authenticated()
+                    .requestMatchers("/map/**/bases/").authenticated()
+                    .requestMatchers("/map/**/bases/**").authenticated()
+                    .requestMatchers("/map/**/base/**").authenticated()
+
+                    .requestMatchers("/map/**/ti-centro").authenticated()
+                    .requestMatchers("/map/**/base-1").authenticated()
+                    .requestMatchers("/map/**/banco").authenticated()
+                    .requestMatchers("/map/**/electriciti").authenticated()
+                    .requestMatchers("/map/**/hierro").authenticated()
+                    .requestMatchers("/map/**/agua").authenticated()
+                    .requestMatchers("/map/**/comida").authenticated()
+                    .requestMatchers("/map/**/iron").authenticated()
+
+                    .requestMatchers("/la-historia").permitAll()
+                    .requestMatchers("/info").permitAll()
+                    .requestMatchers("/users").authenticated()
+                    .requestMatchers("/rating").permitAll()
+                    .requestMatchers("/settings").authenticated()
+                    .requestMatchers("/contact").permitAll()
+                    .requestMatchers("/profile").authenticated()
                     .requestMatchers("/users/**").authenticated()
+
+                    .requestMatchers("/ws", "/ws/**").permitAll()
                 )
                 .formLogin(form -> form
                     .loginPage("/req/login") // Specify the login page
+                    .loginProcessingUrl("/req/login")
                     .permitAll()
                     .defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
                 )
                 .logout(logout -> logout
-                    .logoutUrl("/req/logout")
-                    .logoutSuccessUrl("/req/login?logout")
-                    .permitAll()
+                        .logoutUrl("/req/logout")
+                        .logoutSuccessUrl("/req/login?logout")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
                 )
                 .build();
     }

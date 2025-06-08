@@ -55,9 +55,15 @@ public class MapViewController {
 
         // get session
         Long userId = (Long) session.getAttribute("userId");
+        log.info("---------- user ID--------------> " + userId);
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+
+            log.info("---------- user --------------> " + user.toString());
+
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -128,7 +134,7 @@ public class MapViewController {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
         } else {
-            return "redirect:/login";
+            return "redirect:/req/login";
         }
 
         // space
@@ -164,6 +170,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -256,6 +264,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -344,6 +354,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -432,6 +444,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -523,6 +537,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -609,6 +625,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -689,6 +707,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         // space
@@ -844,6 +864,8 @@ public class MapViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
         }
 
         return "la-empresa";
