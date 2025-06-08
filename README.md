@@ -8,10 +8,12 @@ en base de datos.
 
 Varios pantillas del proyecto bajo
 
-<img src="./src/main/resources/mystatic/images/fons/fon11.png" />
+<a href="/makklays/java-in-docker/blob/main/src/main/resources/mystatic/images/fons/fon11.png">
+    <img src="./src/main/resources/mystatic/images/fons/fon11.png" />
+</a>
 
-<img src="./src/main/resources/mystatic/images/bases/cero_level.png" />
-<img src="./src/main/resources/mystatic/images/bases/one_level.png" />
+<img src="./src/main/resources/mystatic/images/bases/cero_level.png" style="float:left; margin-right:20px;" />
+<img src="./src/main/resources/mystatic/images/bases/one_level.png" style="float:left; margin-right:20px;" />
 <img src="./src/main/resources/mystatic/images/bases/two_level.png" />
 
 ### En Postman
