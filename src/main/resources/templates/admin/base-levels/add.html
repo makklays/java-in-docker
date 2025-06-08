@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <!-- agua -->
+                <!-- Agua -->
                 <div class="row">
                     <div class="col-md-2">
                         <div class="mb-3">
@@ -126,9 +126,16 @@
                             <div th:if="${#fields.hasErrors('plusResAgua')}" th:errors="*{plusResAgua}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_do_res_agua" class="form-label required">Do Agua</label>
+                            <input id="id_do_res_agua" th:field="*{doResAgua}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('doResAgua')}" th:errors="*{doResAgua}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- plastico -->
+                <!-- Plastic -->
                 <div class="row">
                     <div class="col-md-2">
                         <div class="mb-3">
@@ -144,9 +151,16 @@
                             <div th:if="${#fields.hasErrors('plusResPlastic')}" th:errors="*{plusResPlastic}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_do_res_plastic" class="form-label required">Do Plastic</label>
+                            <input id="id_do_res_plastic" th:field="*{doResPlastic}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('doResPlastic')}" th:errors="*{doResPlastic}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- food -->
+                <!-- Food -->
                 <div class="row">
                     <div class="col-md-2">
                         <div class="mb-3">
@@ -162,9 +176,16 @@
                             <div th:if="${#fields.hasErrors('plusResFood')}" th:errors="*{plusResFood}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_do_res_food" class="form-label required">Do Food</label>
+                            <input id="id_do_res_food" th:field="*{doResFood}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('doResFood')}" th:errors="*{doResFood}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- iron -->
+                <!-- Iron -->
                 <div class="row">
                     <div class="col-md-2">
                         <div class="mb-3">
@@ -180,9 +201,16 @@
                             <div th:if="${#fields.hasErrors('plusResIron')}" th:errors="*{plusResIron}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_do_res_iron" class="form-label required">Do Iron</label>
+                            <input id="id_do_res_iron" th:field="*{doResIron}" type="number" class="form-control" placeholder="1" />
+                            <div th:if="${#fields.hasErrors('doResIron')}" th:errors="*{doResIron}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- secundos -->
+                <!-- Seconds -->
                 <div class="row">
                     <div class="col-md-2">
                         <div class="mb-3">
@@ -193,7 +221,7 @@
                     </div>
                 </div>
 
-                <!-- img -->
+                <!-- Image -->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
@@ -216,3 +244,4 @@
 </section>
 
 </html>
+

@@ -1,14 +1,19 @@
 package com.techmatrix18.controllers.web;
 
+import com.techmatrix18.dto.BaseLevelDto;
+import com.techmatrix18.dto.UserDto;
 import com.techmatrix18.model.Map;
 import com.techmatrix18.model.User;
 import com.techmatrix18.model.Contact;
 import com.techmatrix18.services.ContactService;
 import com.techmatrix18.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 import java.util.List;
@@ -38,27 +43,63 @@ public class UserViewController {
     @GetMapping("/welcome")
     public String welcome(Model model) {
         model.addAttribute("vv", "V-V-V");
+
         return "welcome";
     }
 
     @GetMapping("/info")
-    public String info() {
+    public String info(HttpSession session, Model model) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
         return "info";
     }
 
     @GetMapping("/req/login")
-    public String login(User myUser) {
+    public String login(Model model) {
+        model.addAttribute("userDto", new UserDto());
+
         return "auth/login";
     }
 
-    @GetMapping("/req/signup")
-    public String reqistr() {
-        return "auth/signup";
+    @PostMapping("/req/login")
+    public String login(@Valid @ModelAttribute("userDto") UserDto userDto,
+                        BindingResult bindingResult,
+                        Model model,
+                        HttpServletRequest request) {
+        //
+        if (bindingResult.hasErrors()) {
+            return "auth/login";
+        }
+
+        // TODO: find User by login and password
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userId", 1L);
+
+        return "redirect:/";
     }
 
-    @GetMapping("/req/index")
-    public String index(Model model) {
-        model.addAttribute("vv", "V-V-V");
+    @GetMapping("/req/signup")
+    public String reqistr() { return "auth/signup"; }
+
+    @GetMapping("/")
+    public String index(HttpSession session, Model model) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        } /*else {
+            return "redirect:/login";
+        }*/
+
         return "index";
     }
 
@@ -66,6 +107,12 @@ public class UserViewController {
     public String users() {
         return "users/index";
     }
+
+    @GetMapping("/rating")
+    public String rating() { return "rating"; }
+
+    @GetMapping("/settings")
+    public String settings() { return "settings"; }
 
     @GetMapping("/contact")
     public String contact(Contact contact, Model model) {

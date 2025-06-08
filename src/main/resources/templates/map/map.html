@@ -6,51 +6,63 @@
     <title>Nato: Mi mundo</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/div.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 </head>
 <body style="background-color:#e7e7e7;">
-    <div class="container">
+    <div class="container" style="background-color:#FFF;" >
 
         <!-- Menu -->
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 4px 0 4px 0; padding:4px 0 8px 0;">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 0px 0 4px 0; padding:4px 0 8px 0;">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                <img src="logo/logo-11.png" title="Pacto 5 Estrellas" style="width:88px; margin-right:10px;" />
+                <img src="/logo/logo-11.png" title="Pacto 5 Estrellas" style="width:88px; margin-right:10px;" />
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/map" class="nav-link px-2 link-my-active">Mi mundo</a></li>
-                <li><a href="/la-historia" class="nav-link px-2 link-dark">La historia</a></li>
-                <li><a href="/info" class="nav-link px-2 link-dark">Información</a></li>
-                <li><a href="/users" class="nav-link px-2 link-dark">Usuarios</a></li>
-                <li><a href="/rating" class="nav-link px-2 link-dark">Rating</a></li>
-                <li><a href="/settings" class="nav-link px-2 link-dark">Settings</a></li>
-                <li><a href="/contact" class="nav-link px-2 link-dark">Contactos</a></li>
+                <th:block th:if="${user != null}">
+                    <li><a href="/map" class="nav-link px-2 link-my-active"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+                </th:block>
+                <li><a href="/la-historia" class="nav-link px-2 link-dark"><i class="fa-solid fa-timeline"></i> La historia</a></li>
+                <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
+                <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+                <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
+                <li><a href="/settings" class="nav-link px-2 link-dark"><i class="fa-solid fa-gears"></i> Settings</a></li>
+                <li><a href="/contact" class="nav-link px-2 link-dark"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
             </ul>
+
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                 <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
             </form>
-            <div class="dropdown text-end">
-                <a href="/profile">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-            </div>
+
+            <th:block th:if="${user == null}">
+                <a href="/req/login" title="Login" style="margin-right:10px;" >Login</a> |
+                <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+            </th:block>
+            <th:block th:if="${user != null}">
+                <div class="dropdown text-end">
+                    <a href="/profile">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                </div>
+                <a href="/logout">Cerrar sesión</a> <br/><br/>
+            </th:block>
         </div>
 
         <!-- Mi mundo -->
         <div class="row" style="margin-top:20px;">
             <div class="col-md-12">
-                <h1>Mi mundo</h1>
+                <h1><i class="fa-solid fa-map-location-dot"></i> Mi mundo</h1>
                 <div>En este mundo tu puedes crear y añadir tus bases donde tu quieres y cuando quieras.</div>
-                <br/><br/>
+                <br/>
             </div>
 
             <!-- Space -->
             <div class="row">
-                <div class="col-md-12" style="text-align:right:"><h4 th:text="${space.title} + ', Día: ' + ${space.getDias()}">Día: 1</h4></div>
+                <div class="col-md-12" style="text-align:right:"><h4 th:text="${space.title} + ', Día de la misión: ' + ${space.getDias()}">Día: 1</h4></div>
             </div>
             <div class="row" style="margin-bottom:20px;">
                 <div class="col-md-8">
-                    <div style="border: 4px solid #bfcc58; ">
+                    <div style="border: 4px solid #bfcc58; background-color:#FFF;">
 
                         <div class="row">
                             <div class="col-md-3" style="padding-left:30px;" th:text="'Agua: ' + ${space.resAgua} + '/+' + ${space.doResAgua}" >Agua: 10</div>
@@ -61,7 +73,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div style="border: 4px solid #bfcc58;"><marquee style="line-height:18px;">Tu necesita construir "IT CENTRO"</marquee></div>
+                    <div style="border:4px solid #bfcc58; background-color:#FFF; "><marquee style="line-height:18px;">Tu necesita construir "IT CENTRO"</marquee></div>
                 </div>
 
                 <div class="col-md-8">
@@ -88,37 +100,56 @@
 
                     <th:block th:each="sector, iterStat : ${arrSectors}">
                         <div style="position:relative; z-index:11; width:170px; height:140px; float:left;">
-                            <th:block th:if="${sector != null}">
-                                <a th:href="@{/map/{i}/bases/{baseId}(i=${iterStat.index + 1}, baseId=${sector.baseLevel.base.id})}" >
 
-                                    <!--  TODO: add Passport   -->
-                                    <!--  TODO: add BaseLevel:img   -->
-
-                                    <th:block th:if="${sector.buildStartedAt == null  ||  !sector.isBuildingNow(sector.baseLevel.buildSeconds)}">
-                                        <!-- builded img -->
-                                        <img th:src="'images/bases/' + ${sector.getBaseLevel().getImg()}" th:title="${sector.getBaseLevel().getTitle()}" />
-                                    </th:block>
-
-                                    <th:block th:if="${sector.buildStartedAt != null  &&  sector.isBuildingNow(sector.baseLevel.buildSeconds)}">
-                                        <!-- building img -->
-                                        <img src="images/bases/hierro_level_1.png" th:title="${sector.getBaseLevel().getTitle()}" />
-                                        <!-- time -->
-                                        <div th:id="'id_sector_' + (${iterStat.index} + 1)" th:data-seconds="${sector.secondsToFinish( sector.baseLevel.buildSeconds )}" style="position:absolute; z-index:11; top:30px; left:30px; width:100px; text-align:center; background-color:#e7e7e7; color:#000;">
-                                            5 min 10 sec
-                                        </div>
-                                    </th:block>
-                                </a>
-                            </th:block>
-                            <th:block th:if="${sector == null}">
-                                <a th:href="@{/map/{i}/bases/(i=${iterStat.index + 1})}">
-                                    <!--div style="width:170px; height:140px;" th:text="${iterStat.index + 1}">111</div-->
+                            <!-- sector 13,14 -->
+                            <th:block th:if="${(iterStat.index + 1) == 13}">
+                                <a th:href="@{/map/{i}/bases/(i=${iterStat.index + 1})}" onclick="readText(13); return false;">
+                                    <div style="display:none;" id="text_13">Hola, mundo! ¿Que tal? Me alegro te veas al lado de nosotros!</div>
                                     <div style="width:170px; height:140px;"></div>
                                 </a>
                             </th:block>
+
+                            <!-- otros -->
+                            <th:block th:if="${(iterStat.index + 1) != 13}">
+                                <th:block th:if="${sector != null}" >
+                                    <a th:href="@{/map/{i}/bases/{baseId}/{type}(i=${iterStat.index + 1}, baseId=${sector.baseLevel.base.id}, type=${sector.getBaseLevel().getBase().getType()})}" >
+
+                                        <!--  TODO: add Passport   -->
+                                        <!--  TODO: add BaseLevel:img   -->
+
+                                        <th:block th:if="${sector.buildStartedAt == null  ||  !sector.isBuildingNow(sector.baseLevel.buildSeconds)}">
+                                            <!-- builded img -->
+                                            <img th:src="'uploads/base-levels/' + ${sector.getBaseLevel().getImg()}" th:title="${sector.getBaseLevel().getTitle()}" />
+                                        </th:block>
+
+                                        <th:block th:if="${sector.buildStartedAt != null  &&  sector.isBuildingNow(sector.baseLevel.buildSeconds)}">
+                                            <!-- building img -->
+                                            <img src="images/bases/building_now.png" th:title="${sector.getBaseLevel().getTitle()}" />
+                                            <!-- time -->
+                                            <div th:id="'id_sector_' + (${iterStat.index} + 1)" th:data-seconds="${sector.secondsToFinish( sector.baseLevel.buildSeconds )}" style="position:absolute; z-index:11; top:30px; left:30px; width:100px; text-align:center; background-color:#e7e7e7; color:#000;">
+                                                5 min 10 sec
+                                            </div>
+                                        </th:block>
+                                    </a>
+                                </th:block>
+                                <th:block th:if="${sector == null}">
+                                    <a th:href="@{/map/{i}/bases/(i=${iterStat.index + 1})}">
+                                        <!--div style="width:170px; height:140px;" th:text="${iterStat.index + 1}">111</div-->
+                                        <div style="width:170px; height:140px;"></div>
+                                    </a>
+                                </th:block>
+                            </th:block>
+
                         </div>
                     </th:block>
                 </div>
                 <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">MONITOR DE SISTEMA_</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <span th:text="'Last update: ' + ${space.getUpdatedAt()}">date time</span>
             </div>
         </div>
 
@@ -234,5 +265,35 @@
     }
     updateTimer();
     */
+
+    function readText(id){
+        //console.log("Voices:", voices.map(v => v.name + " (" + v.lang + ")"));
+        /*
+        const femaleVoice = voices.find(v =>
+            v.lang.startsWith("es") &&
+            (v.name.toLowerCase().includes("female") ||
+             v.name.toLowerCase().includes("mujer") ||
+             v.name.toLowerCase().includes("laura") ||
+             v.name.toLowerCase().includes("carmen"))
+        ) || voices.find(v => v.lang.startsWith("es"));
+        */
+
+        //
+        const text = document.getElementById("text_"+id).textCotent;
+
+        const msg = new SpeechSynthesisUtterance("Escucho, mi capitán! Estoy listo para cumplir nuestra misión! ¿Qué haremos?");
+        //const msg = new SpeechSynthesisUtterance("Рудокоп готов!");
+        //msg.voice = femaleVoice;
+        //msg.lang = "ru"; //"es-ES";
+        //msg.rate = 0.50;
+        //msg.pitch = 1.0;
+        //msg.name = "Laura"; // "Catalan";
+
+        //msg.voice = femaleVoice;
+        msg.lang = "es"; //"es-ES";
+        msg.rate = 0.75; // 76
+        msg.pitch = 1.0;
+        window.speechSynthesis.speak(msg);
+    }
 </script>
 

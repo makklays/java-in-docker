@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nato: Usuarios</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 
     <script src="http://localhost:8080/js/bootstrap.min.js"></script>
@@ -21,28 +22,39 @@
                 <img src="logo/logo-11.png" title="Pacto 5 Estrellas" style="width:88px; margin-right:10px;" />
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/map" class="nav-link px-2 link-dark">Mi mundo</a></li>
-                <li><a href="/la-historia" class="nav-link px-2 link-dark">La historia</a></li>
-                <li><a href="/info" class="nav-link px-2 link-dark">Información</a></li>
-                <li><a href="/users" class="nav-link px-2 link-my-active">Usuarios</a></li>
-                <li><a href="/rating" class="nav-link px-2 link-dark">Rating</a></li>
-                <li><a href="/settings" class="nav-link px-2 link-dark">Settings</a></li>
-                <li><a href="/contact" class="nav-link px-2 link-dark">Contactos</a></li>
+                <th:block th:if="${user != null}">
+                    <li><a href="/map" class="nav-link px-2 link-dark"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+                </th:block>
+                <li><a href="/la-historia" class="nav-link px-2 link-dark"><i class="fa-solid fa-timeline"></i> La historia</a></li>
+                <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
+                <li><a href="/users" class="nav-link px-2 link-my-active"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+                <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
+                <li><a href="/settings" class="nav-link px-2 link-dark"><i class="fa-solid fa-gears"></i> Settings</a></li>
+                <li><a href="/contact" class="nav-link px-2 link-dark"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
             </ul>
+
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
             </form>
-            <div class="dropdown text-end">
-                <a href="#">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-            </div>
+
+            <th:block th:if="${user == null}">
+                <a href="/req/login" title="Login" style="margin-right:10px;" >Login</a> |
+                <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+            </th:block>
+            <th:block th:if="${user != null}">
+                <div class="dropdown text-end">
+                    <a href="/profile">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                </div>
+                <a href="/logout">Cerrar sesión</a> <br/><br/>
+            </th:block>
         </div>
 
         <!-- -->
         <div class="row" style="margin-top:20px;">
             <div class="col-md-12">
-                <h1>La list de los usuarios</h1>
+                <h1><i class="fa-solid fa-users"></i> La list de los usuarios</h1>
                 <br/>
             </div>
             <div class="col-md-12">

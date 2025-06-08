@@ -34,6 +34,12 @@ public class Base {
     private String description;
 
     /**
+     * type of base
+     */
+    @Column(name = "type", length = 255)
+    private String type;
+
+    /**
      * image of a base
      */
     @Column(name = "img", length = 255)
@@ -50,7 +56,7 @@ public class Base {
      */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, nullable = false)
     private Instant createdAt;
 
     /**
@@ -85,6 +91,10 @@ public class Base {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 
     public String getImg() { return img; }
 
@@ -132,6 +142,7 @@ public class Base {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
                 ", img='" + img + '\'' +
                 ", baseLevels=" + baseLevels +
                 ", createdAt=" + createdAt +

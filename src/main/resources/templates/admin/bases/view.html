@@ -43,6 +43,11 @@
                 </tr>
 
                 <tr>
+                    <th>Typo</th>
+                    <td th:text="${base.type}"></td>
+                </tr>
+
+                <tr>
                     <th>Created</th>
                     <td th:text="${base.createdAt} ? ${#dates.format(base.createdAt, 'dd-MM-yyyy HH:mm')} : '-'"></td>
                 </tr>
@@ -102,10 +107,10 @@
                     </td>
                     <td class="text-center align-middle" th:text="${baseLevel.level}">nivel</td>
 
-                    <td class="text-center align-middle" th:text="${baseLevel.resAgua + ' + ' + baseLevel.plusResAgua}">agua</td>
-                    <td class="text-center align-middle" th:text="${baseLevel.resPlastic + ' + ' + baseLevel.plusResPlastic}">plastic</td>
-                    <td class="text-center align-middle" th:text="${baseLevel.resFood + ' + ' + baseLevel.plusResFood}">food</td>
-                    <td class="text-center align-middle" th:text="${baseLevel.resIron + ' + ' + baseLevel.plusResIron}">iron</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resAgua + ' + ' + baseLevel.plusResAgua + ' + ' + baseLevel.doResAgua}">agua</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resPlastic + ' + ' + baseLevel.plusResPlastic + ' + ' + baseLevel.doResPlastic}">plastic</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resFood + ' + ' + baseLevel.plusResFood + ' + ' + baseLevel.doResFood}">food</td>
+                    <td class="text-center align-middle" th:text="${baseLevel.resIron + ' + ' + baseLevel.plusResIron + ' + ' + baseLevel.doResIron}">iron</td>
 
                     <td class="text-center align-middle" th:text="${baseLevel.buildSeconds}">seconds</td>
 

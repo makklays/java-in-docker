@@ -56,6 +56,27 @@ public class BaseLevelDto {
     @Max(value = 999999, message = "Plus Max Iron — 999999")
     private Long plusResIron;
 
+    // do
+    @NotNull(message = "Do Agua requerido")
+    @Min(value = 0, message = "Do Min Agua — 0")
+    @Max(value = 999999, message = "Do Max Agua — 999999")
+    private Long doResAgua;
+
+    @NotNull(message = "Do Plastico requerido")
+    @Min(value = 0, message = "Do Min Plastico — 0")
+    @Max(value = 999999, message = "Do Max Plastico — 999999")
+    private Long doResPlastic;
+
+    @NotNull(message = "Do Food requerido")
+    @Min(value = 0, message = "Do Min Food — 0")
+    @Max(value = 999999, message = "Do Max Food — 999999")
+    private Long doResFood;
+
+    @NotNull(message = "Do Iron requerido")
+    @Min(value = 0, message = "Do Min Iron — 0")
+    @Max(value = 999999, message = "Do Max Iron — 999999")
+    private Long doResIron;
+
     // seconds
     @NotNull(message = "Building (secundos) requerido")
     @Min(value = 0, message = "Min secundos — 0")
@@ -91,6 +112,7 @@ public class BaseLevelDto {
         this.description = description;
     }
 
+    // res
     public Long getResAgua() {
         return resAgua;
     }
@@ -123,6 +145,7 @@ public class BaseLevelDto {
         this.resIron = resIron;
     }
 
+    // plus
     public Long getPlusResAgua() {
         return plusResAgua;
     }
@@ -155,6 +178,40 @@ public class BaseLevelDto {
         this.plusResIron = plusResIron;
     }
 
+    // do
+    public Long getDoResAgua() {
+        return doResAgua;
+    }
+
+    public void setDoResAgua(Long doResAgua) {
+        this.doResAgua = doResAgua;
+    }
+
+    public Long getDoResPlastic() {
+        return doResPlastic;
+    }
+
+    public void setDoResPlastic(Long doResPlastic) {
+        this.doResPlastic = doResPlastic;
+    }
+
+    public Long getDoResFood() {
+        return doResFood;
+    }
+
+    public void setDoResFood(Long doResFood) {
+        this.doResFood = doResFood;
+    }
+
+    public Long getDoResIron() {
+        return doResIron;
+    }
+
+    public void setDoResIron(Long doResIron) {
+        this.doResIron = doResIron;
+    }
+
+    // seconds
     public Long getBuildSeconds() {
         return buildSeconds;
     }

@@ -1,5 +1,6 @@
 package com.techmatrix18.controllers.web;
 
+import com.techmatrix18.dto.BaseDto;
 import com.techmatrix18.model.Base;
 import com.techmatrix18.model.BaseLevel;
 import com.techmatrix18.services.BaseLevelService;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -77,17 +79,57 @@ public class BaseViewController {
 
     @GetMapping("/admin/bases/add")
     public String getAdminAddBase(Model model) {
-        Base base = new Base();
-        model.addAttribute("base", base);
+        BaseDto baseDto = new BaseDto();
+        model.addAttribute("baseDto", baseDto);
+
+        // typos
+        ArrayList<String> typos = new ArrayList<>();
+        typos.add("ti-centro");
+        typos.add("electriciti");
+        typos.add("base-1");
+        typos.add("base-11");
+        typos.add("banco");
+        typos.add("agua");
+        typos.add("comida");
+        typos.add("plastico");
+        typos.add("hierro");
+        typos.add("biolab");
+
+        model.addAttribute("typos", typos);
 
         return "admin/bases/add";
     }
 
     @PostMapping("/admin/bases/add")
-    public String addAdminAddBase(Model model, @Valid Base base, BindingResult bindingResult, HttpServletRequest request) throws Exception {
-        if (bindingResult.hasErrors()) {
-            return "bases/add";
+    public String addAdminAddBase(@Valid @ModelAttribute BaseDto baseDto, BindingResult bindingResult, Model model, HttpServletRequest request) throws Exception {
+        // Validación el archivo
+        if (baseDto.getImg() == null || baseDto.getImg().isEmpty()) {
+            bindingResult.rejectValue("img", "NotEmpty.baseDto.img", "Es necesario cargar el archivo.");
         }
+
+        if (bindingResult.hasErrors()) {
+
+            ArrayList<String> typos = new ArrayList<>();
+            typos.add("ti-centro");
+            typos.add("electriciti");
+            typos.add("base-1");
+            typos.add("base-11");
+            typos.add("banco");
+            typos.add("agua");
+            typos.add("comida");
+            typos.add("plastico");
+            typos.add("hierro");
+            typos.add("biolab");
+
+            model.addAttribute("typos", typos);
+
+            return "admin/bases/add";
+        }
+
+        Base base = new Base();
+        base.setTitle(baseDto.getTitle());
+        base.setDescription(baseDto.getDescription());
+        base.setType(baseDto.getType());
 
         //-----------------------------
         // upload file
@@ -131,10 +173,34 @@ public class BaseViewController {
     public String editAdminBase(Model model, @PathVariable Long baseId) throws IOException {
         Base base = baseService.getById(baseId);
         if (base.getId() != null) {
+
+            BaseDto baseDto = new BaseDto();
+            baseDto.setTitle(base.getTitle());
+            baseDto.setDescription(base.getDescription());
+            baseDto.setType(base.getType());
+            model.addAttribute("baseDto", baseDto);
+
+            model.addAttribute("img", base.getImg());
             model.addAttribute("base", base);
+
+            // typos
+            ArrayList<String> typos = new ArrayList<>();
+            typos.add("ti-centro");
+            typos.add("electriciti");
+            typos.add("base-1");
+            typos.add("base-11");
+            typos.add("banco");
+            typos.add("agua");
+            typos.add("comida");
+            typos.add("plastico");
+            typos.add("hierro");
+            typos.add("biolab");
+
+            model.addAttribute("typos", typos);
+
             logger.info("Base found..");
         } else {
-            model.addAttribute("city", null);
+            model.addAttribute("base", null);
             logger.info("Error! Base not found..");
         }
 
@@ -143,26 +209,47 @@ public class BaseViewController {
 
     @PostMapping("/admin/bases/edit/{baseId}")
     public String editPostAdminBase(@PathVariable("baseId") Long baseId,
-                                    @Valid @ModelAttribute("base") Base base,
-                                    BindingResult bindingResult,
+                                    @Valid @ModelAttribute("baseDto") BaseDto baseDto,
+                                    @RequestParam("id") Long id,
+                                    BindingResult result,
                                     Model model,
                                     @RequestParam("img") MultipartFile img) throws IOException, ServletException {
         // validacion el archivo
-        if (img.isEmpty()) {
-            bindingResult.rejectValue("img", "NotEmpty.base.img", "Es necesario cargar el archivo.");
-            return "admin/bases/edit";
-        }
-
-        // Validacion los campos
-        /*if (bindingResult.hasErrors()) {
-            base.setId(baseId);
-            model.addAttribute("base", base);
-
+        /*if (img.isEmpty()) {
+            bindingResult.rejectValue("img", "NotEmpty.img", "Es necesario cargar el archivo.");
             return "admin/bases/edit";
         }*/
 
+        // Validacion los campos
+        if (result.hasErrors()) {
+            Base base = baseService.getById(baseId);
+            model.addAttribute("base", base);
+
+            ArrayList<String> typos = new ArrayList<>();
+            typos.add("ti-centro");
+            typos.add("electriciti");
+            typos.add("base-1");
+            typos.add("base-11");
+            typos.add("banco");
+            typos.add("agua");
+            typos.add("comida");
+            typos.add("plastico");
+            typos.add("hierro");
+            typos.add("biolab");
+
+            model.addAttribute("typos", typos);
+            model.addAttribute("img", base.getImg());
+
+            return "admin/bases/edit/";
+        }
+
+        logger.info("1111111111111111111111111");
+
         // sin borrar baseLevels (relación OneToMany)
-        Base baseUpdate = baseService.getById(base.getId());
+        Base baseUpdate = baseService.getById(id);
+        baseUpdate.setTitle(baseDto.getTitle());
+        baseUpdate.setDescription(baseDto.getDescription());
+        baseUpdate.setType(baseDto.getType());
 
         //-----------------------------
         // upload file

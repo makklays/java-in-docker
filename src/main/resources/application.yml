@@ -33,6 +33,7 @@ spring:
     url: jdbc:mysql://localhost:3306/aton
     user: admin
     password: admin
+    out-of-order: true
   thymeleaf:
     check-template-location: true
     prefix: classpath:/templates/  #this is the main
@@ -82,9 +83,14 @@ spring:
       max-request-size: 5MB
   cxf:
     path: /Service
-  server:
-    error:
-      include-message: always
-      include-binding-errors: always
-      whitelabel:
-        enabled: false
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    whitelabel:
+      enabled: false
+
+#logging:
+#  level:
+#    org.thymeleaf: DEBUG

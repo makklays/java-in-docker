@@ -76,6 +76,22 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Find a user by ID.
+     *
+     * @param id User id
+     * @return found user
+     * @throws NoSuchElementException if the user is not found
+     */
+    public User getById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.get().getId() != null) {
+            return user.get();
+        } else {
+            throw(new NoSuchElementException("User with the user ID '" + id + "' not found"));
+        }
+    }
+
+    /**
      * Finds a user by mob.
      *
      * @param mob User mobile
