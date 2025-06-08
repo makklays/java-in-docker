@@ -6,6 +6,7 @@
     <title>Nato: Contacto</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 
     <script src="http://localhost:8080/js/bootstrap.min.js"></script>
@@ -15,33 +16,44 @@
     <div class="container">
 
         <!-- Menu -->
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 4px 0 4px 0; padding:4px 0 8px 0;">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 0px 0 4px 0; padding:4px 0 8px 0;">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                5 Estrellas
+                <img src="logo/logo-11.png" title="Pacto 5 Estrellas" style="width:88px; margin-right:10px;" />
             </a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/map" class="nav-link px-2 link-dark">Mi mundo</a></li>
-                <li><a href="/la-historia" class="nav-link px-2 link-dark">La historia</a></li>
-                <li><a href="/info" class="nav-link px-2 link-dark">Información</a></li>
-                <li><a href="/users" class="nav-link px-2 link-dark">Usuarios</a></li>
-                <li><a href="/rating" class="nav-link px-2 link-dark">Rating</a></li>
-                <li><a href="/settings" class="nav-link px-2 link-dark">Settings</a></li>
-                <li><a href="/contact" class="nav-link px-2 link-dark">Contactos</a></li>
+                <th:block th:if="${user != null}">
+                    <li><a href="/map" class="nav-link px-2 link-dark"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+                </th:block>
+                <li><a href="/la-historia" class="nav-link px-2 link-dark"><i class="fa-solid fa-timeline"></i> La historia</a></li>
+                <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
+                <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+                <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
+                <li><a href="/settings" class="nav-link px-2 link-dark"><i class="fa-solid fa-gears"></i> Settings</a></li>
+                <li><a href="/contact" class="nav-link px-2 link-my-active"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
             </ul>
+
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
             </form>
-            <div class="dropdown text-end">
-                <a href="#">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-            </div>
+
+            <th:block th:if="${user == null}">
+                <a href="/req/login" title="Login" style="margin-right:10px;" >Login</a> |
+                <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+            </th:block>
+            <th:block th:if="${user != null}">
+                <div class="dropdown text-end">
+                    <a href="/profile">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                </div>
+                <a href="/logout">Cerrar sesión</a> <br/><br/>
+            </th:block>
         </div>
 
-        <!-- -->
-        <div class="row">
+        <!-- Content -->
+        <div class="row" style="margin-top:20px;">
             <div class="col-md-12">
-                <h1>Contacto</h1>
+                <h1><i class="fa-solid fa-file-signature"></i> Contacto</h1>
                 <br/>
 
                 <section>

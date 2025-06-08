@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nato: Mi mundo</title>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+</head>
+<body style="background-color:#e7e7e7;">
+
+<div class="container" style="background-color:#FFF;" >
+
+    <!-- Menu -->
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 0px 0 4px 0; padding:4px 0 8px 0;">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            <img src="/logo/logo-11.png" title="Pacto 5 Estrellas" style="width:88px; margin-right:10px;" />
+        </a>
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <th:block th:if="${user != null}">
+                <li><a href="/map" class="nav-link px-2 link-my-active"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+            </th:block>
+            <li><a href="/la-historia" class="nav-link px-2 link-dark">La historia</a></li>
+            <li><a href="/info" class="nav-link px-2 link-dark">Información</a></li>
+            <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+            <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
+            <li><a href="/settings" class="nav-link px-2 link-dark">Settings</a></li>
+            <li><a href="/contact" class="nav-link px-2 link-dark">Contactos</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
+        </form>
+
+        <th:block th:if="${user == null}">
+            <a href="/req/login" title="Login" style="margin-right:10px;" >Login</a> |
+            <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+        </th:block>
+        <th:block th:if="${user != null}">
+            <div class="dropdown text-end">
+                <a href="/profile">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+            </div>
+            <a href="/logout">Cerrar sesión</a> <br/><br/>
+        </th:block>
+    </div>
+
+    <!-- Content -->
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-12">
+            <h1>
+                <i class="fa-solid fa-map-location-dot"></i> TI CENTRO - [sector <span th:text="${sector}"></span>]
+            </h1>
+            <div>En este sector tu tienes el base TI CENTRO</div>
+            <br/>
+        </div>
+
+        <!-- Space -->
+        <div class="row">
+            <div class="col-md-12" style="text-align:right:"><h4 th:text="${space.title} + ', Día de la misión: ' + ${space.getDias()}">Día: 1</h4></div>
+        </div>
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-8">
+                <div style="border: 4px solid #bfcc58; background-color:#FFF; ">
+
+                    <div class="row">
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Agua: ' + ${space.resAgua} + '/+' + ${space.doResAgua}" >Agua: 10</div>
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Plastic: ' + ${space.resPlastic} + '/+' + ${space.doResPlastic}" >Plastic: 10</div>
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Food: ' + ${space.resFood} + '/+' + ${space.doResFood}" >Food: 10</div>
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Iron: ' + ${space.resIron} + '/+' + ${space.doResIron}" >Iron: 10</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="border: 4px solid #bfcc58; background-color:#FFF; "><marquee style="line-height:18px;">Tu necesita construir "IT CENTRO"</marquee></div>
+            </div>
+
+            <div class="col-md-8">
+                <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:280px;">RECURSOS DE LA COLONIA_</div>
+            </div>
+            <div class="col-md-4">
+                <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:150px;">LA PISTA_</div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="row">
+            <div class="col-md-4">
+                <div style="border: 4px solid #bfcc58; padding:0;">
+                    <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" class="img img-fluid" style="min-width:400px;" alt="img base level" />
+                </div>
+                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">MONITOR DE BASE_</div>
+            </div>
+            <div class="col-md-8">
+                <div style="border: 4px solid #bfcc58; padding:10px; background-color:#FFF; ">
+                    <b>Descripción:</b> </br>
+                    <span th:text="${base.getDescription()}" >descrption</span> <br/><br/>
+
+                    <b>Actual nivel:</b> <span th:text="${baseLevelCurrent.level}">1</span> </br></br>
+
+                    <!-- siguiente nivel -->
+                    <th:block th:if="${nextLevel != null}">
+                        <b>Siguiente nivel:</b> <span th:text="${nextLevel.level}">1</span> </br>
+
+                        <b style="margin-right:10px;">Necesita:</b>
+                        <span th:text="'Agua: ' + ${nextLevel.getResAgua()}" style="margin-right:10px;">Agua</span>
+                        <span th:text="'Comida: ' + ${nextLevel.getResFood()}" style="margin-right:10px;">Food</span>
+                        <span th:text="'Plastico: ' + ${nextLevel.getResPlastic()}" style="margin-right:10px;">Plastic</span>
+                        <span th:text="'Hierro: ' + ${nextLevel.getResIron()}" style="margin-right:10px;">Iron</span> <br/>
+
+                        <b style="margin-right:10px;">Tendras plus una vez:</b>
+                        <span th:text="'Agua: ' + ${nextLevel.getPlusResAgua()}" style="margin-right:10px;">plus Agua</span>
+                        <span th:text="'Comida: ' + ${nextLevel.getPlusResFood()}" style="margin-right:10px;">plus Food</span>
+                        <span th:text="'Plastico: ' + ${nextLevel.getPlusResPlastic()}" style="margin-right:10px;">plus Plastic</span>
+                        <span th:text="'Hierro: ' + ${nextLevel.getPlusResIron()}" style="margin-right:10px;">plus Iron</span> <br/>
+
+                        <b style="margin-right:10px;">Tendras plus cada hora:</b>
+                        <span th:text="'Agua: ' + ${nextLevel.getPlusResAgua()}" style="margin-right:10px;">plus hacer Agua</span>
+                        <span th:text="'Comida: ' + ${nextLevel.getPlusResFood()}" style="margin-right:10px;">plus hacer Food</span>
+                        <span th:text="'Plastico: ' + ${nextLevel.getPlusResPlastic()}" style="margin-right:10px;">plus hacer Plastic</span>
+                        <span th:text="'Hierro: ' + ${nextLevel.getPlusResIron()}" style="margin-right:10px;">plus hacer Iron</span> <br/>
+
+                    </th:block>
+                    <th:block th:if="${nextLevel == null}">
+                        <div style="margin-top:20px;">
+                            <div style="padding-top:6px; float:left;">No tiene el nivel siguiente</div> <br/>
+                        </div>
+                    </th:block>
+
+                    <div style="margin-top:20px; margin-bottom:20px;">
+                        <form th:action="@{'/map/' + ${sector} + '/bases/' + ${baseId}}" method="post" style="float:left;">
+                            <th:block th:if="${is_has_agua == true && is_has_plastic == true && is_has_food == true && is_has_iron == true}">
+                                <button class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-regular fa-hand-point-up"></i> Mejorar</button>
+                            </th:block>
+                            <th:block th:if="${is_has_agua == false || is_has_plastic == false || is_has_food == false || is_has_iron == false}">
+                                <button class="btn btn-primary" disabled="disabled" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-regular fa-hand-point-up"></i> Mejorar</button>
+                            </th:block>
+                        </form>
+                        <a href="/map" class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-solid fa-map-location-dot"></i> A mi mundo</a>
+                    </div>
+
+                    <!-- anterior nivel -->
+                    <!--b>Anterior nivel:</b> 0 </br>
+
+                    <form th:action="@{'/map/' + ${sector} + '/bases/' + ${baseId}}" method="post" style="margin-top:20px; margin-bottom:20px;">
+                        <input type="submit" class="btn btn-primary" value="Mejorar" style="margin-right:30px; margin-left:20px; width:180px; border:0px; border-radius:0px;" />
+                    </form-->
+
+                    <br/><br/>
+                    <!--br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/-->
+                </div>
+                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">INFORMACIÓN_</div>
+            </div>
+
+            <!--div class="col-md-4"></div-->
+            <div class="col-md-8 offset-md-4">
+                <div style="border: 4px solid #bfcc58; margin-top:20px; background-color:#FFF; height:128px;">
+                    <div style="position:relative; float:left; ">
+                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
+                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">10</div>
+                    </div>
+                    <div style="position:relative; float:left;">
+                        <img src="/images/personajes/kt-9-1.jpg" class="img img-fluid" style="width:120px;" />
+                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">12</div>
+                    </div>
+                    <div style="position:relative; float:left;">
+                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
+                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">25</div>
+                    </div>
+                    <div style="position:relative; float:left; ">
+                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
+                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">10</div>
+                    </div>
+                    <div style="position:relative; float:left;">
+                        <img src="/images/personajes/kt-9-1.jpg" class="img img-fluid" style="width:120px;" />
+                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">12</div>
+                    </div>
+                    <div style="position:relative; float:left;">
+                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
+                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">25</div>
+                    </div>
+
+                    <div style="position:relative;"></div>
+                </div>
+                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">GUARDAS_</div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div style="border: 4px solid #bfcc58; margin-top:20px; padding:10px; background-color:#FFF; ">
+                    La lista diferentes acciónes en tu colonia
+
+                    <th:block th:if="@{posts != null}">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center" style="width:100px;">ID</th>
+                                <th>Titulo</th>
+                                <th class="text-center" style="width:200px;">Acción</th>
+                                <th class="text-center" style="width:100px;">Día</th>
+                                <th class="text-center" style="width:200px;">Fecha</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="post : ${posts}">
+                                <td class="text-center align-middle" style="width:30px;" th:text="${post.Id}">Id</td>
+                                <td class="align-middle" th:text="${post.title}">Title</td>
+                                <td class="text-center align-middle" th:text="${post.action}">building</td>
+                                <td class="text-center align-middle" th:text="${post.day}">2</td>
+                                <td class="text-center align-middle" th:text="${#temporals.format(post.createdAt.atZone(T(java.time.ZoneId).of('UTC')), 'dd-MM-yyyy HH:mm')}">01.06.2025</td>
+                            </tr>
+                        </table>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">DIARIO DE A BORDO_</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            </div>
+        </div>
+
+        <!--div class="col-md-12">
+            <div th:each="base : ${bases}" style="margin-bottom:20px; padding:10px; background-color:#FFF;" >
+                <div class="row">
+                    <div class="col-md-2">
+                        <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" class="img img-fluid" alt="img base level"  />
+                    </div>
+                    <div class="col-md-10">
+                        <a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" th:text="${base.title}">Title</a>
+                        <br/>
+                        <div th:text="${base.description}"></div>
+                        <br/>
+                        <a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" class="btn btn-primary">Las detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <a href="#" th:href="@{'/map'}" >Devolver a mi mundo</a>
+            </div>
+        </div-->
+    </div>
+</div>
+

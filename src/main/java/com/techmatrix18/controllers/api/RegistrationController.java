@@ -4,6 +4,8 @@ import com.techmatrix18.config.RabbitMQConfig;
 import com.techmatrix18.model.User;
 import com.techmatrix18.repositories.UserRepository;
 import com.techmatrix18.services.RabbitEventPublisherService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,12 +50,15 @@ public class RegistrationController {
      * @return MyUser response with registered user
      */
     @PostMapping(value = "/req/signup", consumes = "application/json")
-    public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user, HttpServletRequest request) {
         System.out.println(user.toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // send model 'user' to rabbitMQ queue 'registration'
         rabbitPublisherService.sendMessage(RabbitMQConfig.QUEUE_REQ, user); // object user
+
+        HttpSession session = request.getSession();
+        session.setAttribute("userId", 1L);
 
         log.info("[x] Log message to rabbitMQ:" + user.toString());
 

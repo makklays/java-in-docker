@@ -114,6 +114,11 @@ public class BaseLevelViewController {
         baseLevel.setPlusResFood(baseLevelDto.getPlusResFood().intValue());
         baseLevel.setPlusResIron(baseLevelDto.getPlusResIron().intValue());
 
+        baseLevel.setDoResAgua(baseLevelDto.getDoResAgua().intValue());
+        baseLevel.setDoResPlastic(baseLevelDto.getDoResPlastic().intValue());
+        baseLevel.setDoResFood(baseLevelDto.getDoResFood().intValue());
+        baseLevel.setDoResIron(baseLevelDto.getDoResIron().intValue());
+
         baseLevel.setBuildSeconds(baseLevelDto.getBuildSeconds().intValue());
 
         //-----------------------------
@@ -164,6 +169,11 @@ public class BaseLevelViewController {
             baseLevelEditDto.setPlusResPlastic((long) baseLevel.getPlusResPlastic());
             baseLevelEditDto.setPlusResFood((long) baseLevel.getPlusResFood());
             baseLevelEditDto.setPlusResIron((long) baseLevel.getPlusResIron());
+
+            baseLevelEditDto.setDoResAgua((long) baseLevel.getDoResAgua());
+            baseLevelEditDto.setDoResPlastic((long) baseLevel.getDoResPlastic());
+            baseLevelEditDto.setDoResFood((long) baseLevel.getDoResFood());
+            baseLevelEditDto.setDoResIron((long) baseLevel.getDoResIron());
 
             baseLevelEditDto.setBuildSeconds((long) baseLevel.getBuildSeconds());
 
@@ -220,6 +230,11 @@ public class BaseLevelViewController {
             baseLevel.setPlusResPlastic(baseLevelEditDto.getPlusResPlastic().intValue());
             baseLevel.setPlusResFood(baseLevelEditDto.getPlusResFood().intValue());
             baseLevel.setPlusResIron(baseLevelEditDto.getPlusResIron().intValue());
+
+            baseLevel.setDoResAgua(baseLevelEditDto.getDoResAgua().intValue());
+            baseLevel.setDoResPlastic(baseLevelEditDto.getDoResPlastic().intValue());
+            baseLevel.setDoResFood(baseLevelEditDto.getDoResFood().intValue());
+            baseLevel.setDoResIron(baseLevelEditDto.getDoResIron().intValue());
 
             baseLevel.setBuildSeconds(baseLevelEditDto.getBuildSeconds().intValue());
 

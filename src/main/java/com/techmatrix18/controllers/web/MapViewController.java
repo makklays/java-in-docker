@@ -1,23 +1,20 @@
 package com.techmatrix18.controllers.web;
 
-import com.techmatrix18.model.Base;
-import com.techmatrix18.model.BaseLevel;
-import com.techmatrix18.model.Map;
-import com.techmatrix18.model.Space;
-import com.techmatrix18.services.BaseLevelService;
-import com.techmatrix18.services.BaseService;
-import com.techmatrix18.services.MapService;
-import com.techmatrix18.services.SpaceService;
+import com.techmatrix18.model.*;
+import com.techmatrix18.services.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -39,24 +36,55 @@ public class MapViewController {
     private BaseLevelService baseLevelService;
     private MapService mapService;
     private SpaceService spaceService;
+    private UserService userService;
+    private BlogService blogService;
 
-    public MapViewController(BaseService baseService, BaseLevelService baseLevelService, MapService mapService, SpaceService spaceService) {
+    public MapViewController(BaseService baseService, BaseLevelService baseLevelService, MapService mapService,
+                             SpaceService spaceService, UserService userService, BlogService blogService) {
         this.baseService = baseService;
         this.baseLevelService = baseLevelService;
         this.mapService = mapService;
         this.spaceService = spaceService;
+        this.userService = userService;
+        this.blogService = blogService;
     }
 
     //
     @GetMapping("/map")
-    public String getDiv(Model model) {
-        // user
-        Long userId = 1L;
+    public String getDiv(Model model, HttpSession session) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
 
         // space
         Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
         if (spaceOptional.isPresent()) {
             Space space = spaceOptional.get();
+
+            // count time - seconds
+            Instant dateTimeNow = Instant.now();
+            Instant lastTime = space.getUpdatedAt(); // Предположим, это тоже Instant
+            long diffSeconds = Duration.between(lastTime, dateTimeNow).getSeconds();
+
+            // update - no less 15 minutes
+            if (diffSeconds >= 60 * 15) {
+                // update res per 1 hour
+                double aguaPerHours = space.getDoResAgua() * (diffSeconds / 3600.0);
+                double plasticPerHours = space.getDoResPlastic() * (diffSeconds / 3600.0);
+                double foodPerHours = space.getDoResFood() * (diffSeconds / 3600.0);
+                double ironPerHours = space.getDoResIron() * (diffSeconds / 3600.0);
+
+                space.setResAgua(space.getResAgua() + (int) aguaPerHours);
+                space.setResPlastic(space.getResPlastic() + (int) plasticPerHours);
+                space.setResFood(space.getResFood() + (int) foodPerHours);
+                space.setResIron(space.getResIron() + (int) ironPerHours);
+                space.setUpdatedAt(Instant.now());
+                spaceService.updateSpace(space);
+            }
             model.addAttribute("space", space);
 
             // map:sectors
@@ -85,17 +113,135 @@ public class MapViewController {
 
     //
     @GetMapping("/map/{sector}/bases/")
-    public String getMapSectorBases(Model model, @PathVariable Integer sector) {
+    public String getMapSectorBases(Model model,
+                                    @PathVariable Integer sector,
+                                    HttpServletRequest request,
+                                    HttpSession session) {
+        //
         List<Base> bases = baseService.getAll();
         model.addAttribute("bases", bases);
         model.addAttribute("sector", sector);
 
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        } else {
+            return "redirect:/login";
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            model.addAttribute("space", space);
+        }
+
         return "map/map-bases";
     }
 
-    //
-    @GetMapping("/map/{sector}/bases/{baseId}")
-    public String getMapSectorBase(Model model, @PathVariable Integer sector, @PathVariable Long baseId) {
+    /**
+     * URL for pages with design for type: Banco
+     *
+     * @param model
+     * @param sector
+     * @param baseId
+     * @return
+     */
+    @GetMapping("/map/{sector}/bases/{baseId}/banco")
+    public String getMapSectorBaseBanco(Model model,
+                                        @PathVariable Integer sector,
+                                        @PathVariable Long baseId,
+                                        HttpSession session) {
+        // get base
+        Base base = baseService.getById(baseId);
+        model.addAttribute("base", base);
+        model.addAttribute("sector", sector);
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            model.addAttribute("space", space);
+
+            // get map
+            Optional<Map> map = mapService.getSector(space.getId(), sector);
+            model.addAttribute("map", map.orElse(null));
+
+            // get current
+            BaseLevel baseLevelCurrent = null;
+            if (map.isPresent() && map.get().getBaseLevel() != null) {
+                baseLevelCurrent = baseLevelService.getById(map.get().getBaseLevel().getId());
+            }
+            model.addAttribute("baseLevelCurrent", baseLevelCurrent);
+
+            // get next
+            BaseLevel nextLevel = null;
+            if (baseLevelCurrent != null) {
+                nextLevel = baseLevelService.getNext(baseId, baseLevelCurrent.getLevel());
+            } else {
+                nextLevel = baseLevelService.getNext(baseId, 0);
+            }
+
+            model.addAttribute("nextLevel", nextLevel);
+
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para nivel siguiente  - Martines
+            if (nextLevel != null) {
+                if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
+                        || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron()) {
+
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                    }
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
+        }
+
+        return "map/map-bases/banco/index";
+    }
+
+    /**
+     * URL for pages with design for type: Base-1
+     *
+     * @param model
+     * @param sector
+     * @param baseId
+     * @return
+     */
+    @GetMapping("/map/{sector}/bases/{baseId}/base-1")
+    public String getMapSectorBaseBase1(Model model,
+                                         @PathVariable Integer sector,
+                                         @PathVariable Long baseId,
+                                         HttpSession session) {
         // get base
         Base base = baseService.getById(baseId);
         model.addAttribute("base", base);
@@ -105,13 +251,371 @@ public class MapViewController {
         List<BaseLevel> baseLevels = baseLevelService.getAllByBaseIdOrderByLevelAsc(baseId);
         model.addAttribute("baseLevels", baseLevels);
 
-        // user
-        Long userId = 1L;
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
 
         // space
         Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
         if (spaceOptional.isPresent()) {
             Space space = spaceOptional.get();
+            model.addAttribute("space", space);
+
+            // get map
+            Optional<Map> map = mapService.getSector(space.getId(), sector);
+            model.addAttribute("map", map.orElse(null));
+
+            // get current
+            BaseLevel baseLevelCurrent = null;
+            if (map.isPresent() && map.get().getBaseLevel() != null) {
+                baseLevelCurrent = baseLevelService.getById(map.get().getBaseLevel().getId());
+            }
+            model.addAttribute("baseLevelCurrent", baseLevelCurrent);
+
+            // get next
+            BaseLevel nextLevel = null;
+            if (baseLevelCurrent != null) {
+                nextLevel = baseLevelService.getNext(baseId, baseLevelCurrent.getLevel());
+            } else {
+                nextLevel = baseLevelService.getNext(baseId, 0);
+            }
+
+            model.addAttribute("nextLevel", nextLevel);
+
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para nivel siguiente  - Martines
+            if (nextLevel != null) {
+                if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
+                        || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron()) {
+
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                    }
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
+        }
+
+        return "map/map-bases/base-1/index";
+    }
+
+    /**
+     * URL for pages with design for type: Hierro
+     *
+     * @param model
+     * @param sector
+     * @param baseId
+     * @return
+     */
+    @GetMapping("/map/{sector}/bases/{baseId}/hierro")
+    public String getMapSectorBaseHierro(Model model,
+                                         @PathVariable Integer sector,
+                                         @PathVariable Long baseId,
+                                         HttpSession session) {
+        // get base
+        Base base = baseService.getById(baseId);
+        model.addAttribute("base", base);
+        model.addAttribute("sector", sector);
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            model.addAttribute("space", space);
+
+            // get map
+            Optional<Map> map = mapService.getSector(space.getId(), sector);
+            model.addAttribute("map", map.orElse(null));
+
+            // get current
+            BaseLevel baseLevelCurrent = null;
+            if (map.isPresent() && map.get().getBaseLevel() != null) {
+                baseLevelCurrent = baseLevelService.getById(map.get().getBaseLevel().getId());
+            }
+            model.addAttribute("baseLevelCurrent", baseLevelCurrent);
+
+            // get next
+            BaseLevel nextLevel = null;
+            if (baseLevelCurrent != null) {
+                nextLevel = baseLevelService.getNext(baseId, baseLevelCurrent.getLevel());
+            } else {
+                nextLevel = baseLevelService.getNext(baseId, 0);
+            }
+
+            model.addAttribute("nextLevel", nextLevel);
+
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para nivel siguiente  - Martines
+            if (nextLevel != null) {
+                if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
+                        || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron()) {
+
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                    }
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
+        }
+
+        return "map/map-bases/hierro/index";
+    }
+
+    /**
+     * URL for pages with design for type: TI CENTRO
+     *
+     * @param model
+     * @param sector
+     * @param baseId
+     * @return
+     */
+    @GetMapping("/map/{sector}/bases/{baseId}/ti-centro")
+    public String getMapSectorBaseTICentro(Model model,
+                                         @PathVariable Integer sector,
+                                         @PathVariable Long baseId,
+                                         HttpSession session) {
+        // get base
+        Base base = baseService.getById(baseId);
+        model.addAttribute("base", base);
+        model.addAttribute("sector", sector);
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            model.addAttribute("space", space);
+
+            // get map
+            Optional<Map> map = mapService.getSector(space.getId(), sector);
+            model.addAttribute("map", map.orElse(null));
+
+            // get current
+            BaseLevel baseLevelCurrent = null;
+            if (map.isPresent() && map.get().getBaseLevel() != null) {
+                baseLevelCurrent = baseLevelService.getById(map.get().getBaseLevel().getId());
+            }
+            model.addAttribute("baseLevelCurrent", baseLevelCurrent);
+
+            // get next
+            BaseLevel nextLevel = null;
+            if (baseLevelCurrent != null) {
+                nextLevel = baseLevelService.getNext(baseId, baseLevelCurrent.getLevel());
+            } else {
+                nextLevel = baseLevelService.getNext(baseId, 0);
+            }
+
+            model.addAttribute("nextLevel", nextLevel);
+
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para nivel siguiente  - Martines
+            if (nextLevel != null) {
+                if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
+                        || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron()) {
+
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                    }
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
+
+            List<Blog> posts = blogService.getAllPosts(space.getId());
+            model.addAttribute("posts", posts);
+        }
+
+        return "map/map-bases/ti-centro/index";
+    }
+
+    /**
+     * URL for pages with design for type: TI CENTRO
+     *
+     * @param model
+     * @param sector
+     * @param baseId
+     * @return
+     */
+    @GetMapping("/map/{sector}/bases/{baseId}/electriciti")
+    public String getMapSectorBaseElectriciti(Model model,
+                                           @PathVariable Integer sector,
+                                           @PathVariable Long baseId,
+                                           HttpSession session) {
+        // get base
+        Base base = baseService.getById(baseId);
+        model.addAttribute("base", base);
+        model.addAttribute("sector", sector);
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            model.addAttribute("space", space);
+
+            // get map
+            Optional<Map> map = mapService.getSector(space.getId(), sector);
+            model.addAttribute("map", map.orElse(null));
+
+            // get current
+            BaseLevel baseLevelCurrent = null;
+            if (map.isPresent() && map.get().getBaseLevel() != null) {
+                baseLevelCurrent = baseLevelService.getById(map.get().getBaseLevel().getId());
+            }
+            model.addAttribute("baseLevelCurrent", baseLevelCurrent);
+
+            // get next
+            BaseLevel nextLevel = null;
+            if (baseLevelCurrent != null) {
+                nextLevel = baseLevelService.getNext(baseId, baseLevelCurrent.getLevel());
+            } else {
+                nextLevel = baseLevelService.getNext(baseId, 0);
+            }
+
+            model.addAttribute("nextLevel", nextLevel);
+
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para nivel siguiente  - Martines
+            if (nextLevel != null) {
+                if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
+                        || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron()) {
+
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                    }
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
+        }
+
+        return "map/map-bases/electriciti/index";
+    }
+
+
+    //
+    @GetMapping("/map/{sector}/bases/{baseId}")
+    public String getMapSectorBase(Model model,
+                                   @PathVariable Integer sector,
+                                   @PathVariable Long baseId,
+                                   HttpSession session) {
+        // get base
+        Base base = baseService.getById(baseId);
+        model.addAttribute("base", base);
+        model.addAttribute("sector", sector);
+
+        // get baseLevels
+        List<BaseLevel> baseLevels = baseLevelService.getAllByBaseIdOrderByLevelAsc(baseId);
+        model.addAttribute("baseLevels", baseLevels);
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            model.addAttribute("space", space);
 
             // get map
             Optional<Map> map = mapService.getSector(space.getId(), sector);
@@ -130,8 +634,39 @@ public class MapViewController {
             } else {
                 nextLevel = baseLevelService.getNext(baseId, 0);
             }
-
             model.addAttribute("nextLevel", nextLevel);
+
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para nivel siguiente  - Martines
+            if (nextLevel != null) {
+                if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
+                        || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron()) {
+
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                    }
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
         }
 
         return "map/map-base";
@@ -142,14 +677,19 @@ public class MapViewController {
     public String getMapSectorBasePost(Model model,
                                        @PathVariable Integer sector,
                                        @PathVariable Long baseId,
-                                       RedirectAttributes redirectAttributes) {
+                                       RedirectAttributes redirectAttributes,
+                                       HttpSession session) {
         //
         Base base = baseService.getById(baseId);
         model.addAttribute("base", base);
         model.addAttribute("sector", sector);
 
-        // user
-        Long userId = 1L;
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
 
         // space
         Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
@@ -174,28 +714,64 @@ public class MapViewController {
                 nextLevel = baseLevelService.getNext(baseId, 0);
             }
 
+            // TODO: probar (!)
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
             // probamos res para nivel siguiente  - Martines
             if (nextLevel != null) {
                 if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
                         || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron() ) {
 
-                    redirectAttributes.addFlashAttribute("error", "No tienes res para mejorar tu base ahora!");
-                    return "redirect:'/map/' + sector + '/bases/' + baseId";
+                    // TODO: probar (!)
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                        log.info("is_has_agua: fasle");
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                        log.info("is_has_plastic: fasle");
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                        log.info("is_has_food: fasle");
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                        log.info("is_has_iron: fasle");
+                    }
+
+                    //redirectAttributes.addFlashAttribute("error", "No tienes res para mejorar tu base ahora!");
+                    //return "redirect:/map/" + sector + "/bases/" + baseId;
+
                 } else {
-                    // TODO: añadir baseLevels.res_do_agua etc para space.res_do_agua
-                    // minus res para esta mejorar'ia
+
+                    // minus - res para esta mejorar'ia
                     space.setResAgua( space.getResAgua() - nextLevel.getResAgua() );
                     space.setResPlastic( space.getResPlastic() - nextLevel.getResPlastic() );
                     space.setResFood( space.getResFood() - nextLevel.getResFood() );
                     space.setResIron( space.getResIron() - nextLevel.getResIron() );
-                    // plus do res desde este base
+                    // plus - plus res desde este base
                     space.setResAgua( space.getResAgua() + nextLevel.getPlusResAgua() );
                     space.setResPlastic( space.getResPlastic() + nextLevel.getPlusResPlastic() );
                     space.setResFood( space.getResFood() + nextLevel.getPlusResFood() );
                     space.setResIron( space.getResIron() + nextLevel.getPlusResIron() );
-                    //
+                    // plus - do res desde este base
+                    space.setDoResAgua( space.getDoResAgua() + nextLevel.getDoResAgua() );
+                    space.setDoResPlastic( space.getDoResPlastic() + nextLevel.getDoResPlastic() );
+                    space.setDoResFood( space.getDoResFood() + nextLevel.getDoResFood() );
+                    space.setDoResIron( space.getDoResIron() + nextLevel.getDoResIron() );
                     spaceService.updateSpace(space);
                 }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
             }
 
             // add new map or update
@@ -205,6 +781,18 @@ public class MapViewController {
                 newMap.setBuildStartedAt(Instant.now()); // date
 
                 mapService.addMap(newMap);
+
+                // add post to Blog (Diario de a bardo)
+                Blog blog = new Blog();
+                blog.setAction("Construcción");
+                blog.setDay(space.getDias().intValue());
+                blog.setSpaceId(space.getId());
+                blog.setSector(sector.longValue());
+                blog.setTitle(nextLevel.getTitle());
+                blog.setPost("Construcción " + nextLevel.getTitle() + ".");
+                blog.setAuthor("Capitan");
+                blogService.addPost(blog);
+
             } else {
                 if (nextLevel != null && nextLevel.getId() != null) { // add
                     Map newMap = new Map();
@@ -215,6 +803,17 @@ public class MapViewController {
                     newMap.setBuildStartedAt(Instant.now()); // date
 
                     mapService.addMap(newMap);
+
+                    // add post to Blog (Diario de a bardo)
+                    Blog blog = new Blog();
+                    blog.setAction("Construcción");
+                    blog.setDay(space.getDias().intValue());
+                    blog.setSpaceId(space.getId());
+                    blog.setSector(sector.longValue());
+                    blog.setTitle(nextLevel.getTitle());
+                    blog.setPost("Construcción " + nextLevel.getTitle() + ".");
+                    blog.setAuthor("Capitan");
+                    blogService.addPost(blog);
                 }
             }
         }

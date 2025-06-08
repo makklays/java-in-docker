@@ -66,7 +66,7 @@ public class Map {
      */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, nullable = false)
     private Instant createdAt;
 
     /**

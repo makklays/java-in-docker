@@ -22,6 +22,11 @@ CREATE TABLE base_levels
     plus_res_food      int null,
     plus_res_iron      int null,
 
+    do_res_agua        int null,
+    do_res_plastic     int null,
+    do_res_food        int null,
+    do_res_iron        int null,
+
     build_seconds      int null,
     img                varchar(255) null,
 

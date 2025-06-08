@@ -6,6 +6,7 @@
     <title>Nato: Mi mundo</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 </head>
 <body style="background-color:#e7e7e7;">
@@ -13,56 +14,118 @@
 <div class="container">
 
     <!-- Menu -->
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 4px 0 4px 0; padding:4px 0 8px 0;">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 0px 0 4px 0; padding:4px 0 8px 0;">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-            5 Estrellas
+            <img src="/logo/logo-11.png" title="Pacto 5 Estrellas" style="width:88px; margin-right:10px;" />
         </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="/map" class="nav-link px-2 link-dark">Mi mundo</a></li>
-            <li><a href="/la-historia" class="nav-link px-2 link-dark">La historia</a></li>
-            <li><a href="/info" class="nav-link px-2 link-dark">Información</a></li>
-            <li><a href="/users" class="nav-link px-2 link-dark">Usuarios</a></li>
-            <li><a href="/rating" class="nav-link px-2 link-dark">Rating</a></li>
-            <li><a href="/settings" class="nav-link px-2 link-dark">Settings</a></li>
-            <li><a href="/contact" class="nav-link px-2 link-dark">Contactos</a></li>
+            <th:block th:if="${user != null}">
+                <li><a href="/map" class="nav-link px-2 link-my-active"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+            </th:block>
+            <li><a href="/la-historia" class="nav-link px-2 link-dark"><i class="fa-solid fa-timeline"></i> La historia</a></li>
+            <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
+            <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+            <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
+            <li><a href="/settings" class="nav-link px-2 link-dark"><i class="fa-solid fa-gears"></i> Settings</a></li>
+            <li><a href="/contact" class="nav-link px-2 link-dark"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
         </ul>
+
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
         </form>
-        <div class="dropdown text-end">
-            <a href="#">
-                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-            </a>
-        </div>
+
+        <th:block th:if="${user == null}">
+            <a href="/req/login" title="Login" style="margin-right:10px;" >Login</a> |
+            <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+        </th:block>
+        <th:block th:if="${user != null}">
+            <div class="dropdown text-end">
+                <a href="/profile">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+            </div>
+            <a href="/logout">Cerrar sesión</a> <br/><br/>
+        </th:block>
     </div>
 
-    <!-- -->
+    <!-- Content -->
     <div class="row">
         <div class="col-md-12">
-            <h1 th:text="'Mi mundo - sector ' + ${sector}"></h1>
+            <h1>
+                <i class="fa-solid fa-map-location-dot"></i> Mi mundo - [sector <span th:text="${sector}"></span>]
+            </h1>
             <div>En este sector tu puedes tener los bases siguintes de la lista</div>
             <br/>
         </div>
 
-        <div class="col-md-12">
-
-            <div th:each="base : ${bases}" style="margin-bottom:20px; padding:10px; background-color:#FFF;" >
-                <div class="row">
-                    <div class="col-md-2">
-                        <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" class="img img-fluid" alt="img base level"  />
-                    </div>
-                    <div class="col-md-10">
-                        <a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" th:text="${base.title}">Title</a>
-                        <br/>
-                        <div th:text="${base.description}"></div>
-                        <br/>
-                        <a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" class="btn btn-primary">Las detalles</a>
+        <!-- Space -->
+        <div class="row">
+            <div class="col-md-12" style="text-align:right:"><h4 th:text="${space.title} + ', Día de la misión: ' + ${space.getDias()}">Día: 1</h4></div>
+        </div>
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-8">
+                <div style="border: 4px solid #bfcc58; background-color:#FFF;">
+                    <div class="row">
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Agua: ' + ${space.resAgua} + '/+' + ${space.doResAgua}" >Agua: 10</div>
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Plastic: ' + ${space.resPlastic} + '/+' + ${space.doResPlastic}" >Plastic: 10</div>
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Food: ' + ${space.resFood} + '/+' + ${space.doResFood}" >Food: 10</div>
+                        <div class="col-md-3" style="padding-left:30px;" th:text="'Iron: ' + ${space.resIron} + '/+' + ${space.doResIron}" >Iron: 10</div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div style="border:4px solid #bfcc58; background-color:#FFF; "><marquee style="line-height:18px;">Tu necesita construir "IT CENTRO"</marquee></div>
+            </div>
+
+            <div class="col-md-8">
+                <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:280px;">RECURSOS DE LA COLONIA_</div>
+            </div>
+            <div class="col-md-4">
+                <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:150px;">LA PISTA_</div>
+            </div>
+        </div>
+
+        <!-- Сообщение об успехе -->
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <!-- Сообщение об ошибке -->
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <!-- info -->
+        <div class="row">
+            <th:block th:each="base : ${bases}" >
+                <div class="col-md-6">
+                    <div class="row" style="margin-top:10px; margin-bottom:10px;">
+                        <div class="col-md-4" style="">
+                            <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" class="img img-fluid" alt="img base level" />
+                        </div>
+                        <div class="col-md-8" style="background-color:#FFF; padding:10px 20px;">
+                            <h5 style="margin-bottoM;0px;"><a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" th:text="${base.title}">Title</a></h5>
+
+                            <div th:text="${base.description}"></div>
+
+                            <!-- count niveles -->
+                            <th:block th:if="${base.baseLevels != null}">
+                                <span th:with="niveles=${base.baseLevels != null ? base.baseLevels.size() : 0}"
+                                      th:utext="'<b>Niveles:</b> ' + ${niveles}"></span></br>
+                            </th:block>
+
+                            <th:block th:if="${base.baseLevels != null && base.baseLevels.size() > 0}">
+                                <a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" style="margin-top:10px;" class="btn btn-primary">Más detalles</a>
+                            </th:block>
+                            <th:block th:if="${base.baseLevels == null || base.baseLevels.size() <= 0}">
+                                <a href="#" th:href="@{'/map/' + ${sector} + '/bases/' + ${base.id}}" style="margin-top:10px;" class="btn btn-primary disabled">Más detalles</a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
 
             <div class="col-md-12">
-                <a href="#" th:href="@{'/map'}" >Devolver a mi mundo</a>
+                <br/>
+                <a href="/map" class="btn btn-primary" style="margin-right:30px; width:180px; border:0px; border-radius:0px;"><i class="fa-solid fa-map-location-dot"></i> A mi mundo</a>
+
+                <br/><br/><br/><br/>
             </div>
 
         </div>

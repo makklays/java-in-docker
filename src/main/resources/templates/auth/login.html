@@ -4,40 +4,81 @@
         <title>Nato: Login</title>
 
         <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/div.css" />
         <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 
         <script src="http://localhost:8080/js/bootstrap.min.js"></script>
         <script src="http://localhost:8080/js/signup.js"></script>
     </head>
     <body style="background-color:#e7e7e7;">
-        <main>
-            <div class="container py-4">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h1>LOGIN</h1>
-                        <section>
-                            <form action="/req/login" th:object="${myUser}" method="post">
-                                <div class="mb-3">
-                                    <label for="id_login" class="form-label">Login</label>
-                                    <input type="text" name="username" class="form-control" id="id_login" />
-                                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="id_password" class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control" id="id_password">
-                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Username Error</div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
 
-                                <br/><br/>
-                                Yet have not an account? <a href="/req/signup">Sign Up</a>
-                            </form>
-                        </section>
+        <div class="container">
+
+            <!-- Menu -->
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 0px 0 4px 0; padding:4px 0 8px 0;">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                    <img src="/logo/logo-11.png" title="Pacto 5 Estrellas" style="width:88px; margin-right:10px;" />
+                </a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <th:block th:if="${user != null}">
+                        <li><a href="/map" class="nav-link px-2 link-dark"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+                    </th:block>
+                    <li><a href="/la-historia" class="nav-link px-2 link-dark"><i class="fa-solid fa-timeline"></i> La historia</a></li>
+                    <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
+                    <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
+                    <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
+                    <li><a href="/settings" class="nav-link px-2 link-dark"><i class="fa-solid fa-gears"></i> Settings</a></li>
+                    <li><a href="/contact" class="nav-link px-2 link-dark"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
+                </form>
+
+                <th:block th:if="${user == null}">
+                    <a href="/req/login" title="Login" class="link-my-active" style="margin-right:10px;" >Login</a> |
+                    <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+                </th:block>
+                <th:block th:if="${user != null}">
+                    <div class="dropdown text-end">
+                        <a href="/profile">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
                     </div>
-                </div>
-                <footer class="pt-3 mt-4 text-muted border-top">© 2021</footer>
+                    <a href="/logout">Cerrar sesión</a> <br/><br/>
+                </th:block>
             </div>
-        </main>
+
+            <!-- Content -->
+            <div class="row">
+                <div class="col-md-3">
+                    <h1>LOGIN</h1>
+                    <section>
+                        <form action="/req/login" th:object="${userDto}" method="post" >
+                            <div class="mb-3">
+                                <label for="id_login" class="form-label">Login</label>
+                                <input type="text" name="username" class="form-control" id="id_login" />
+                                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red;">Username Error</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_password" class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" id="id_password">
+                                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;">Username Error</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                            <br/><br/>
+                            Yet have not an account? <a href="/req/signup">Sign Up</a>
+                        </form>
+                    </section>
+                </div>
+            </div>
+
+            <footer class="pt-3 mt-4 text-muted border-top">© 2021</footer>
+
+        </div>
+
     </body>
 </html>
 

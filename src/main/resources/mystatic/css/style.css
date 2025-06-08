@@ -16,12 +16,14 @@ button.btn-primary, input.btn.btn-primary, a.btn-primary, .btn.btn-primary {
     background-color: #bfcc58;
     border-color: #464c54;
     color: #464c54;
+    border-radius:0;
 }
 
 button.btn-primary:hover, input.btn-primary, a.btn-primary:hover {
     background-color: #464c54;
     border-color: #bfcc58;
     color: #bfcc58;
+    border-radius:0;
 }
 
 a, a:hover {
@@ -56,6 +58,11 @@ a, a:hover {
     font-size: 18px;
     font-weight: bold;
     text-align: center;
-    border-radius: 10px;
+    #border-radius: 10px;
     transition: background 0.3s;
 }
+
+.link-my-active, .link-my-active:hover {
+    color: #82910e;
+}
+

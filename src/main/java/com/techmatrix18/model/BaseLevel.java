@@ -101,6 +101,30 @@ public class BaseLevel {
     private int plusResIron;
 
     /**
+     * adding resource 'agua' by 1 hour
+     */
+    @Column(name = "do_res_agua")
+    private int doResAgua;
+
+    /**
+     * adding resource 'plastic' by 1 hour
+     */
+    @Column(name = "do_res_plastic")
+    private int doResPlastic;
+
+    /**
+     * adding resource 'food' by 1 hour
+     */
+    @Column(name = "do_res_food")
+    private int doResFood;
+
+    /**
+     * adding resource 'iron' by 1 hour
+     */
+    @Column(name = "do_res_iron")
+    private int doResIron;
+
+    /**
      * build time in seconds
      */
     @Column(name = "build_seconds")
@@ -123,7 +147,7 @@ public class BaseLevel {
      */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, nullable = false)
     private Instant createdAt;
 
     /**
@@ -187,6 +211,7 @@ public class BaseLevel {
         this.description = description;
     }
 
+    // costs
     public int getResAgua() {
         return resAgua;
     }
@@ -219,6 +244,7 @@ public class BaseLevel {
         this.resIron = resIron;
     }
 
+    // adding by time
     public int getPlusResAgua() {
         return plusResAgua;
     }
@@ -251,6 +277,40 @@ public class BaseLevel {
         this.plusResIron = plusResIron;
     }
 
+    // adding by 1 hour
+    public int getDoResAgua() {
+        return doResAgua;
+    }
+
+    public void setDoResAgua(int doResAgua) {
+        this.doResAgua = doResAgua;
+    }
+
+    public int getDoResPlastic() {
+        return doResPlastic;
+    }
+
+    public void setDoResPlastic(int doResPlastic) {
+        this.doResPlastic = doResPlastic;
+    }
+
+    public int getDoResFood() {
+        return doResFood;
+    }
+
+    public void setDoResFood(int doResFood) {
+        this.doResFood = doResFood;
+    }
+
+    public int getDoResIron() {
+        return doResIron;
+    }
+
+    public void setDoResIron(int doResIron) {
+        this.doResIron = doResIron;
+    }
+
+    // seconds
     public int getBuildSeconds() {
         return buildSeconds;
     }
@@ -287,12 +347,12 @@ public class BaseLevel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BaseLevel baseLevel)) return false;
-        return getLevel() == baseLevel.getLevel() && getResAgua() == baseLevel.getResAgua() && getResPlastic() == baseLevel.getResPlastic() && getResFood() == baseLevel.getResFood() && getResIron() == baseLevel.getResIron() && getPlusResAgua() == baseLevel.getPlusResAgua() && getPlusResPlastic() == baseLevel.getPlusResPlastic() && getPlusResFood() == baseLevel.getPlusResFood() && getPlusResIron() == baseLevel.getPlusResIron() && getBuildSeconds() == baseLevel.getBuildSeconds() && getId().equals(baseLevel.getId()) && getBase().equals(baseLevel.getBase()) && getTitle().equals(baseLevel.getTitle()) && getDescription().equals(baseLevel.getDescription()) && getImg().equals(baseLevel.getImg()) && getMap().equals(baseLevel.getMap()) && getCreatedAt().equals(baseLevel.getCreatedAt()) && getUpdatedAt().equals(baseLevel.getUpdatedAt());
+        return getLevel() == baseLevel.getLevel() && getResAgua() == baseLevel.getResAgua() && getResPlastic() == baseLevel.getResPlastic() && getResFood() == baseLevel.getResFood() && getResIron() == baseLevel.getResIron() && getPlusResAgua() == baseLevel.getPlusResAgua() && getPlusResPlastic() == baseLevel.getPlusResPlastic() && getPlusResFood() == baseLevel.getPlusResFood() && getPlusResIron() == baseLevel.getPlusResIron() && getDoResAgua() == baseLevel.getDoResAgua() && getDoResPlastic() == baseLevel.getDoResPlastic() && getDoResFood() == baseLevel.getDoResFood() && getDoResIron() == baseLevel.getDoResIron() && getBuildSeconds() == baseLevel.getBuildSeconds() && getId().equals(baseLevel.getId()) && getBase().equals(baseLevel.getBase()) && getTitle().equals(baseLevel.getTitle()) && getDescription().equals(baseLevel.getDescription()) && getImg().equals(baseLevel.getImg()) && getMap().equals(baseLevel.getMap()) && getCreatedAt().equals(baseLevel.getCreatedAt()) && getUpdatedAt().equals(baseLevel.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getBase(), getLevel(), getTitle(), getDescription(), getResAgua(), getResPlastic(), getResFood(), getResIron(), getPlusResAgua(), getPlusResPlastic(), getPlusResFood(), getPlusResIron(), getBuildSeconds(), getImg(), getMap(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getId(), getBase(), getLevel(), getTitle(), getDescription(), getResAgua(), getResPlastic(), getResFood(), getResIron(), getPlusResAgua(), getPlusResPlastic(), getPlusResFood(), getPlusResIron(), getDoResAgua(), getDoResPlastic(), getDoResFood(), getDoResIron(), getBuildSeconds(), getImg(), getMap(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
@@ -311,6 +371,10 @@ public class BaseLevel {
                 ", plusResPlastic=" + plusResPlastic +
                 ", plusResFood=" + plusResFood +
                 ", plusResIron=" + plusResIron +
+                ", doResAgua=" + doResAgua +
+                ", doResPlastic=" + doResPlastic +
+                ", doResFood=" + doResFood +
+                ", doResIron=" + doResIron +
                 ", buildSeconds=" + buildSeconds +
                 ", img='" + img + '\'' +
                 //", map=" + map +
