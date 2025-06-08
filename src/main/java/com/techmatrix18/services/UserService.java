@@ -76,6 +76,21 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Finds a user by username.
+     *
+     * @param username
+     * @return
+     */
+    public User findUserByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.get().getId() != null) {
+            return user.get();
+        } else {
+            throw(new NoSuchElementException("User with the username '" + username + "' not found"));
+        }
+    }
+
+    /**
      * Find a user by ID.
      *
      * @param id User id

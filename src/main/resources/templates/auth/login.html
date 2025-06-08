@@ -66,6 +66,10 @@
                                 <input type="password" name="password" class="form-control" id="id_password">
                                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;">Username Error</div>
                             </div>
+
+                            <div>
+                                <p th:if="${loginError}" style="color:red">Неверный логин или пароль</p>
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
 
                             <br/><br/>

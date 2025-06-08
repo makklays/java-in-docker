@@ -10,12 +10,19 @@ import com.techmatrix18.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+
+import javax.management.remote.JMXAuthenticator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,10 +41,12 @@ public class UserViewController {
 
     private final ContactService contactService;
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
-    public UserViewController(ContactService contactService, UserService userService) {
+    public UserViewController(ContactService contactService, UserService userService, AuthenticationManager authenticationManager) {
         this.contactService = contactService;
         this.userService = userService;
+        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/welcome")
@@ -71,18 +80,39 @@ public class UserViewController {
     public String login(@Valid @ModelAttribute("userDto") UserDto userDto,
                         BindingResult bindingResult,
                         Model model,
-                        HttpServletRequest request) {
+                        HttpServletRequest request,
+                        HttpSession session) {
         //
         if (bindingResult.hasErrors()) {
             return "auth/login";
         }
 
-        // TODO: find User by login and password
+        try {
+            String username = request.getParameter("username"); // not email (!)
+            String password = request.getParameter("password");
 
-        HttpSession session = request.getSession();
-        session.setAttribute("userId", 1L);
+            log.info("------username---> " + username + "-----password----->" + password);
 
-        return "redirect:/";
+            UsernamePasswordAuthenticationToken token =
+                    new UsernamePasswordAuthenticationToken(username, password);
+
+            Authentication auth = authenticationManager.authenticate(token);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            User user = userService.findUserByUsername(username);
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("email", user.getEmail());
+
+            log.info("----User-auth------->" + auth.getPrincipal().toString());
+
+            return "redirect:/";
+
+        } catch (AuthenticationException e) {
+            model.addAttribute("loginError", true);
+
+            return "auth/login"; // вернёт на форму с ошибкой
+        }
     }
 
     @GetMapping("/req/signup")
@@ -96,34 +126,98 @@ public class UserViewController {
         if (userId != null) {
             User user = userService.getById(userId);
             model.addAttribute("user", user);
-        } /*else {
+        } else {
             return "redirect:/login";
-        }*/
+        }
 
         return "index";
     }
 
     @GetMapping("/users")
-    public String users() {
+    public String users(Model model, HttpSession session) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
         return "users/index";
     }
 
     @GetMapping("/rating")
-    public String rating() { return "rating"; }
+    public String rating(Model model, HttpSession session) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
+        return "rating";
+    }
 
     @GetMapping("/settings")
-    public String settings() { return "settings"; }
+    public String settings(Model model, HttpSession session) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        model.addAttribute("userId", userId);
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("username", username);
+
+        String email = (String) session.getAttribute("email");
+        model.addAttribute("email", email);
+
+        return "settings";
+    }
 
     @GetMapping("/contact")
-    public String contact(Contact contact, Model model) {
+    public String contact(Contact contact, Model model, HttpSession session) {
         model.addAttribute("contact", contact);
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        model.addAttribute("userId", userId);
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
 
         return "contact";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model, HttpSession session) {
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        model.addAttribute("userId", userId);
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
+        return "profile";
+    }
+
     @PostMapping("/contact")
-    public String contactPost(@Valid Contact contact, BindingResult bindingResult) {
+    public String contactPost(@Valid Contact contact, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
+
+            // get session
+            Long userId = (Long) session.getAttribute("userId");
+            model.addAttribute("userId", userId);
+            if (userId != null) {
+                User user = userService.getById(userId);
+                model.addAttribute("user", user);
+            }
+
             return "contact";
         }
 

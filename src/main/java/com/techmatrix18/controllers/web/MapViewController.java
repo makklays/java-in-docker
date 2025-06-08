@@ -823,13 +823,29 @@ public class MapViewController {
 
     //
     @GetMapping("/la-historia")
-    public String pageLaHistoria(Model model) {
+    public String pageLaHistoria(Model model, HttpSession session) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
         return "la-historia";
     }
 
     //
     @GetMapping("/sobre-nosotros")
-    public String pageLaEmpresa(Model model) {
+    public String pageLaEmpresa(Model model, HttpSession session) {
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        }
+
         return "la-empresa";
     }
 }

@@ -61,7 +61,7 @@ public class SecurityConfiguration {
     {
         return http
                 // We disable CSRF, because we work with REST API
-                .csrf(csrf -> csrf.disable())
+                //.csrf(csrf -> csrf.disable())
 
                 // Configure CORS if necessary (you can additionally specify the CORS source)
                 //.cors(Customizer.withDefaults())
@@ -69,30 +69,31 @@ public class SecurityConfiguration {
                 // Setting up access to endpoints
                 .securityMatcher("/ws", "/ws/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/ws").permitAll()
-                        .requestMatchers("/ws/**").permitAll()
-                )
-                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/ws", "/ws/**").permitAll()
+
                     .requestMatchers("/info").permitAll()
                     .requestMatchers("/mystatic/uploads/base-levels/**").permitAll()
+                    .requestMatchers("/mystatic/base-levels/**").permitAll()
+                    .requestMatchers("/mystatic/**").permitAll()
+                    .requestMatchers("/imgs/**").permitAll()
+                    .requestMatchers("/css/**").permitAll()
+                    .requestMatchers("/js/**").permitAll()
+                    .requestMatchers("/*.css", "/*.js", "/*.ico", "/*.png", "/*.jpg", "/*.svg", "/*.webapp").permitAll()
+                    .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
+                    .requestMatchers("/req/signup").permitAll()
+                    .requestMatchers("/div/**", "build/**").permitAll()
+                    .requestMatchers("/uploads/**").permitAll()
+                    .requestMatchers("/mystatic/uploads/**").permitAll()
 
-                    .requestMatchers(new AntPathRequestMatcher("/mystatic/base-levels/**")).permitAll()
+                    /*.requestMatchers(new AntPathRequestMatcher("/mystatic/base-levels/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/mystatic/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/mystatic/uploads/base-levels/**")).permitAll()
-
                     .requestMatchers(new AntPathRequestMatcher("/imgs/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/*.{css,js}")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()
-                    .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
-                    .requestMatchers("/req/signup").permitAll()
-                    .requestMatchers("/ws/**").permitAll()
-                    .requestMatchers("/div/**", "build/**").permitAll()
+                    .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()*/
 
-                    .requestMatchers("/uploads/**").permitAll()
-                    .requestMatchers("/mystatic/uploads/**").permitAll()
-                    .requestMatchers("/mystatic/uploads/base-levels/**").permitAll()
                     // authenticated
                     .requestMatchers("/contact").authenticated()
                     .requestMatchers("/users/**").authenticated()
@@ -103,8 +104,8 @@ public class SecurityConfiguration {
                     .defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
                 )
                 .logout(logout -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
+                    .logoutUrl("/req/logout")
+                    .logoutSuccessUrl("/req/login?logout")
                     .permitAll()
                 )
                 .build();
