@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
-
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -88,32 +87,35 @@ public class UserViewController {
             return "auth/login";
         }
 
+        log.info("------------- User /req/login-post ---------> ");
+
         try {
-            String username = request.getParameter("username"); // not email (!)
-            String password = request.getParameter("password");
+            //String username = request.getParameter("username"); // not email (!)
+            //String password = request.getParameter("password");
 
-            log.info("------username---> " + username + "-----password----->" + password);
+            log.info("---username---> " + userDto.getUsername() + "---password--->" + userDto.getPassword());
 
-            UsernamePasswordAuthenticationToken token =
-                    new UsernamePasswordAuthenticationToken(username, password);
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword());
 
-            Authentication auth = authenticationManager.authenticate(token);
+            Authentication auth = authenticationManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                    SecurityContextHolder.getContext());
+            request.getSession().setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
-            User user = userService.findUserByUsername(username);
+            User user = userService.findUserByUsername(userDto.getUsername());
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
             session.setAttribute("email", user.getEmail());
 
             log.info("----User-auth------->" + auth.getPrincipal().toString());
 
-            return "redirect:/";
+            return "redirect:/welcome";
 
         } catch (AuthenticationException e) {
             model.addAttribute("loginError", true);
+
+            log.info("---- User-auth ------- Exception -----------");
 
             return "auth/login"; // вернёт на форму с ошибкой
         }

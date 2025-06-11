@@ -422,6 +422,96 @@ public class MapViewController {
     }
 
     /**
+     * URL for pages with design for type: Comida
+     *
+     * @param model
+     * @param sector
+     * @param baseId
+     * @return
+     */
+    @GetMapping("/map/{sector}/bases/{baseId}/comida")
+    public String getMapSectorBaseComida(Model model,
+                                         @PathVariable Integer sector,
+                                         @PathVariable Long baseId,
+                                         HttpSession session) {
+        // get base
+        Base base = baseService.getById(baseId);
+        model.addAttribute("base", base);
+        model.addAttribute("sector", sector);
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            model.addAttribute("space", space);
+
+            // get map
+            Optional<Map> map = mapService.getSector(space.getId(), sector);
+            model.addAttribute("map", map.orElse(null));
+
+            // get current
+            BaseLevel baseLevelCurrent = null;
+            if (map.isPresent() && map.get().getBaseLevel() != null) {
+                baseLevelCurrent = baseLevelService.getById(map.get().getBaseLevel().getId());
+            }
+            model.addAttribute("baseLevelCurrent", baseLevelCurrent);
+
+            // get next
+            BaseLevel nextLevel = null;
+            if (baseLevelCurrent != null) {
+                nextLevel = baseLevelService.getNext(baseId, baseLevelCurrent.getLevel());
+            } else {
+                nextLevel = baseLevelService.getNext(baseId, 0);
+            }
+
+            model.addAttribute("nextLevel", nextLevel);
+
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para nivel siguiente  - Martines
+            if (nextLevel != null) {
+                if (space.getResAgua() < nextLevel.getResAgua() || space.getResPlastic() < nextLevel.getResPlastic()
+                        || space.getResFood() < nextLevel.getResFood() || space.getResIron() < nextLevel.getResIron()) {
+
+                    // check res
+                    if (space.getResAgua() < nextLevel.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                    }
+                    if (space.getResPlastic() < nextLevel.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                    }
+                    if (space.getResFood() < nextLevel.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                    }
+                    if (space.getResIron() < nextLevel.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                    }
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
+        }
+
+        return "map/map-bases/comida/index";
+    }
+
+    /**
      * URL for pages with design for type: TI CENTRO
      *
      * @param model

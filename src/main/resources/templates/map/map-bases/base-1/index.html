@@ -147,10 +147,10 @@
                         <span th:text="'Hierro: ' + ${nextLevel.getPlusResIron()}" style="margin-right:10px;">plus Iron</span> <br/>
 
                         <b style="margin-right:10px;">Tendras plus cada hora:</b>
-                        <span th:text="'Agua: ' + ${nextLevel.getPlusResAgua()}" style="margin-right:10px;">plus hacer Agua</span>
-                        <span th:text="'Comida: ' + ${nextLevel.getPlusResFood()}" style="margin-right:10px;">plus hacer Food</span>
-                        <span th:text="'Plastico: ' + ${nextLevel.getPlusResPlastic()}" style="margin-right:10px;">plus hacer Plastic</span>
-                        <span th:text="'Hierro: ' + ${nextLevel.getPlusResIron()}" style="margin-right:10px;">plus hacer Iron</span> <br/>
+                        <span th:text="'Agua: ' + ${nextLevel.getDoResAgua()}" style="margin-right:10px;">plus hacer Agua</span>
+                        <span th:text="'Comida: ' + ${nextLevel.getDoResFood()}" style="margin-right:10px;">plus hacer Food</span>
+                        <span th:text="'Plastico: ' + ${nextLevel.getDoResPlastic()}" style="margin-right:10px;">plus hacer Plastic</span>
+                        <span th:text="'Hierro: ' + ${nextLevel.getDoResIron()}" style="margin-right:10px;">plus hacer Iron</span> <br/>
 
                     </th:block>
                     <th:block th:if="${nextLevel == null}">

@@ -118,13 +118,15 @@ public class SecurityConfiguration {
                     .requestMatchers("/users/**").authenticated()
 
                     .requestMatchers("/ws", "/ws/**").permitAll()
+
+                    .requestMatchers("/admin/", "/admin/**").authenticated()
                 )
-                .formLogin(form -> form
+                /*.formLogin(form -> form // удаляем полностью .formLogin( так как он не разрешает валидацию Dto и перехватывает POST раньше (!)
                     .loginPage("/req/login") // Specify the login page
                     .loginProcessingUrl("/req/login")
                     .permitAll()
-                    .defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
-                )
+                    //.defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
+                )*/
                 .logout(logout -> logout
                         .logoutUrl("/req/logout")
                         .logoutSuccessUrl("/req/login?logout")
