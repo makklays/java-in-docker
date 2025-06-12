@@ -52,6 +52,7 @@ public class RegistrationController {
     @PostMapping(value = "/req/signup", consumes = "application/json")
     public User createUser(@RequestBody User user, HttpServletRequest request) {
         System.out.println(user.toString());
+        // with hash password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // send model 'user' to rabbitMQ queue 'registration'

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nato: Settings</title>
+    <title>Nato: Profile</title>
 
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
@@ -26,7 +26,7 @@
             <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
             <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
             <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
-            <li><a href="/settings" class="nav-link px-2 link-my-active"><i class="fa-solid fa-gears"></i> Settings</a></li>
+            <li><a href="/settings" class="nav-link px-2 link-dark"><i class="fa-solid fa-gears"></i> Settings</a></li>
             <li><a href="/contact" class="nav-link px-2 link-dark"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
         </ul>
 
@@ -44,22 +44,29 @@
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
             </div>
-            <a href="/req/logout">Cerrar sesión</a> <br/><br/>
+
+            <!--a href="/req/logout">Cerrar sesión</a-->
+            <form th:action="@{/req/logout}" method="POST">
+                <input type="submit" class="btn" value="Выйти" />
+            </form>
         </th:block>
     </div>
 
     <!-- Content -->
     <div class="row" style="margin-top:20px;">
         <div class="col-md-12">
-            <h1>Settings</h1>
+            <h1>Mi perfil</h1>
             <br/>
         </div>
         <div class="col-md-12">
 
-            <div th:text="'User ID: ' + ${userId}">User ID</div>
-            <div th:text="'Username: ' + ${username}">Username</div>
-            <div th:text="'E-mail: ' + ${email}">Email</div>
+            <div th:text="'Usuário ID: ' + ${user.getId()}">User ID</div>
+            <div th:text="'Nómbre: ' + ${user.getUsername()}">Username</div>
+            <div th:text="'Móvil: ' + ${user.getMob()}">+38 098 111 2233</div>
+            <div th:text="'E-mail: ' + ${user.getEmail()}">Email</div>
+            <br/>
 
+            <div th:text="'CreatedAt: ' + ${#dates.format(user.createdAt, 'dd.MM.yyyy')}">Email</div>
             <br/><br/><br/><br/><br/><br/>
 
         </div>

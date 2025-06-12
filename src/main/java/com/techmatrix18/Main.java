@@ -2,6 +2,7 @@ package com.techmatrix18;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
@@ -30,6 +31,11 @@ public class Main {
 
         log.info("== log variable =>" + obj2.variable);
         log.info("== log variable =>" + obj2.statVariable);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPassword = "password11";
+        String hashedPassword = encoder.encode(rawPassword);
+        System.out.println("Хеш пароля: " + hashedPassword);
 
         // run application
         SpringApplication.run(Main.class, args);

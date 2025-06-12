@@ -67,45 +67,73 @@ public class SecurityConfiguration {
                 //.cors(Customizer.withDefaults())
 
                 // Setting up access to endpoints
-                .securityMatcher("/ws", "/ws/**")
+                //.securityMatcher("/ws", "/ws/**") // - conflict with /req/logout and /req/login
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/ws").permitAll()
-                        .requestMatchers("/ws/**").permitAll()
-                )
-                .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/info").permitAll()
+                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/req/logout").permitAll()
                     .requestMatchers("/mystatic/uploads/base-levels/**").permitAll()
+                    .requestMatchers("/mystatic/base-levels/**").permitAll()
+                    .requestMatchers("/mystatic/**").permitAll()
+                    .requestMatchers("/images/**").permitAll()
+                    .requestMatchers("/logo/**").permitAll()
+                    .requestMatchers("/css/**").permitAll()
+                    .requestMatchers("/js/**").permitAll()
+                    .requestMatchers("/*.css", "/*.js", "/*.ico", "/*.png", "/*.jpg", "/*.svg", "/*.webapp").permitAll()
+                    .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
+                    .requestMatchers("/req/signup").permitAll()
+                    .requestMatchers("/uploads/**").permitAll()
+                    .requestMatchers("/mystatic/uploads/**").permitAll()
 
-                    .requestMatchers(new AntPathRequestMatcher("/mystatic/base-levels/**")).permitAll()
+                    /*.requestMatchers(new AntPathRequestMatcher("/mystatic/base-levels/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/mystatic/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/mystatic/uploads/base-levels/**")).permitAll()
-
                     .requestMatchers(new AntPathRequestMatcher("/imgs/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/*.{css,js}")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()
-                    .requestMatchers("/req/login", "/req/index", "/welcome", "/api/v1/auth").permitAll()
-                    .requestMatchers("/req/signup").permitAll()
-                    .requestMatchers("/ws/**").permitAll()
-                    .requestMatchers("/div/**", "build/**").permitAll()
+                    .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()*/
 
-                    .requestMatchers("/uploads/**").permitAll()
-                    .requestMatchers("/mystatic/uploads/**").permitAll()
-                    .requestMatchers("/mystatic/uploads/base-levels/**").permitAll()
                     // authenticated
-                    .requestMatchers("/contact").authenticated()
+                    .requestMatchers("/map").authenticated()
+                    .requestMatchers("/map/**/bases/").authenticated()
+                    .requestMatchers("/map/**/bases/**").authenticated()
+                    .requestMatchers("/map/**/base/**").authenticated()
+
+                    .requestMatchers("/map/**/ti-centro").authenticated()
+                    .requestMatchers("/map/**/base-1").authenticated()
+                    .requestMatchers("/map/**/banco").authenticated()
+                    .requestMatchers("/map/**/electriciti").authenticated()
+                    .requestMatchers("/map/**/hierro").authenticated()
+                    .requestMatchers("/map/**/agua").authenticated()
+                    .requestMatchers("/map/**/comida").authenticated()
+                    .requestMatchers("/map/**/iron").authenticated()
+
+                    .requestMatchers("/la-historia").permitAll()
+                    .requestMatchers("/info").permitAll()
+                    .requestMatchers("/users").authenticated()
+                    .requestMatchers("/rating").permitAll()
+                    .requestMatchers("/settings").authenticated()
+                    .requestMatchers("/contact").permitAll()
+                    .requestMatchers("/profile").authenticated()
                     .requestMatchers("/users/**").authenticated()
+
+                    .requestMatchers("/ws", "/ws/**").permitAll()
+
+                    .requestMatchers("/admin/", "/admin/**").authenticated()
                 )
-                .formLogin(form -> form
+                /*.formLogin(form -> form // удаляем полностью .formLogin( так как он не разрешает валидацию Dto и перехватывает POST раньше (!)
                     .loginPage("/req/login") // Specify the login page
+                    .loginProcessingUrl("/req/login")
                     .permitAll()
-                    .defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
-                )
+                    //.defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
+                )*/
                 .logout(logout -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll()
+                        .logoutUrl("/req/logout")
+                        .logoutSuccessUrl("/req/login?logout")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
                 )
                 .build();
     }

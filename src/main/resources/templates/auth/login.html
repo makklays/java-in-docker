@@ -46,7 +46,7 @@
                             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                     </div>
-                    <a href="/logout">Cerrar sesión</a> <br/><br/>
+                    <a href="/req/logout">Cerrar sesión</a> <br/><br/>
                 </th:block>
             </div>
 
@@ -65,6 +65,10 @@
                                 <label for="id_password" class="form-label">Password</label>
                                 <input type="password" name="password" class="form-control" id="id_password">
                                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;">Username Error</div>
+                            </div>
+
+                            <div>
+                                <p th:if="${loginError}" style="color:red">Неверный логин или пароль</p>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
 
