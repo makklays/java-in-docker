@@ -94,6 +94,7 @@ public class BaseViewController {
         typos.add("plastico");
         typos.add("hierro");
         typos.add("biolab");
+        typos.add("hangar");
 
         model.addAttribute("typos", typos);
 
@@ -120,6 +121,7 @@ public class BaseViewController {
             typos.add("plastico");
             typos.add("hierro");
             typos.add("biolab");
+            typos.add("hangar");
 
             model.addAttribute("typos", typos);
 
@@ -195,6 +197,7 @@ public class BaseViewController {
             typos.add("plastico");
             typos.add("hierro");
             typos.add("biolab");
+            typos.add("hangar");
 
             model.addAttribute("typos", typos);
 
@@ -236,6 +239,7 @@ public class BaseViewController {
             typos.add("plastico");
             typos.add("hierro");
             typos.add("biolab");
+            typos.add("hangar");
 
             model.addAttribute("typos", typos);
             model.addAttribute("img", base.getImg());
