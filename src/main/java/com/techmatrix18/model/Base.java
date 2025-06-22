@@ -9,6 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * An entity representing a base in the system.
+ *
+ * Corresponds to the 'bases' table in the database.
+ *
+ * @author Alexander Kuziv
+ * @since 24-04-2025
+ * @version 0.0.1
+ */
+
 @Entity
 @Table(name = "bases")
 public class Base {

@@ -7,6 +7,16 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * An entity representing a artifact in the system.
+ *
+ * Corresponds to the 'artifacts' table in the database.
+ *
+ * @author Alexander Kuziv
+ * @since 24-04-2025
+ * @version 0.0.1
+ */
+
 @Entity
 @Table(name = "artifacts")
 public class Artifact {

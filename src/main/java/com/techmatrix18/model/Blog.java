@@ -7,6 +7,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * An entity representing a blog in the system.
+ *
+ * Corresponds to the 'blogs' table in the database.
+ *
+ * @author Alexander Kuziv
+ * @since 24-04-2025
+ * @version 0.0.1
+ */
+
 @Entity
 @Table(name = "blogs")
 public class Blog {

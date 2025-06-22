@@ -24,6 +24,9 @@ import java.util.Objects;
 @Table(name = "maps")
 public class Map {
 
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,14 +50,14 @@ public class Map {
     //private Long baseLevelId;
 
     /**
-     *
+     * Base Level ID
      */
     @OneToOne
     @JoinColumn(name = "base_level_id")
     private BaseLevel baseLevel;
 
     /**
-     *
+     * Time of start of building
      */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,7 +65,7 @@ public class Map {
     private Instant buildStartedAt;
 
     /**
-     *
+     * Date and time of base creation
      */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -70,7 +73,7 @@ public class Map {
     private Instant createdAt;
 
     /**
-     *
+     * Date and time of base update
      */
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
