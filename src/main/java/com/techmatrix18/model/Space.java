@@ -23,10 +23,16 @@ import java.util.Objects;
 @Table(name = "spaces")
 public class Space {
 
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * User ID
+     */
     @Column(name = "user_id")
     private Long userId;
 
@@ -84,11 +90,17 @@ public class Space {
     @Column(name = "do_res_iron")
     private int doResIron;
 
+    /**
+     * Date and time of base creation
+     */
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", updatable = false, nullable = false)
     private Instant createdAt;
 
+    /**
+     * Date and time of base update
+     */
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")

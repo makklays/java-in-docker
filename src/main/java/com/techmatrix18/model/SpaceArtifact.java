@@ -7,10 +7,23 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * An entity representing a SpaceArtifact in the system.
+ *
+ * Corresponds to the 'space_artifacts' table in the database.
+ *
+ * @author Alexander Kuziv
+ * @since 22-06-2025
+ * @version 0.0.1
+ */
+
 @Entity
 @Table(name = "space_artifacts")
 public class SpaceArtifact {
 
+    /**
+     * Unique user identifier (primary key).
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

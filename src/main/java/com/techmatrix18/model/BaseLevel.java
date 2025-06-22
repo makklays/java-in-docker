@@ -9,6 +9,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * An entity representing a BaseLevel in the system.
+ *
+ * Corresponds to the 'base_levels' table in the database.
+ *
+ * @author Alexander Kuziv
+ * @since 24-04-2025
+ * @version 0.0.1
+ */
+
 @Entity
 @Table(name = "base_levels")
 public class BaseLevel {
