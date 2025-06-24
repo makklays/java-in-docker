@@ -98,7 +98,7 @@ public class Unit {
     /**
      * range of Unit
      */
-    @Column(name = "range")
+    @Column(name = "`range`")
     private int range;
 
     /**

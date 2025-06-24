@@ -1,0 +1,205 @@
+package com.techmatrix18.controllers.web;
+
+import com.techmatrix18.dto.UnitDto;
+import com.techmatrix18.model.Unit;
+import com.techmatrix18.services.UnitService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+@Controller
+public class UnitViewController {
+
+    Logger logger = Logger.getLogger(BaseViewController.class.getName());
+
+    private final UnitService unitService;
+
+    public UnitViewController(UnitService unitService) {
+        this.unitService = unitService;
+    }
+
+    @GetMapping("/admin/units/")
+    public String getAdminUnits(Model model) {
+        List<Unit> units = unitService.getAll();
+        model.addAttribute("units", units);
+
+        return "admin/units/index";
+    }
+
+    @GetMapping("/admin/units/add")
+    public String getAdminAddUnit(Model model) {
+        UnitDto unitDto = new UnitDto();
+        model.addAttribute("unitDto", unitDto);
+
+        // typos
+        ArrayList<String> typos = new ArrayList<>();
+        typos.add("biolab");
+        typos.add("hangar");
+
+        model.addAttribute("typos", typos);
+
+        return "admin/units/add";
+    }
+
+    @PostMapping("/admin/units/add")
+    public String addAdminAddUnit(@Valid @ModelAttribute UnitDto unitDto, BindingResult bindingResult, Model model, HttpServletRequest request) throws Exception {
+        // Validación el archivo
+        if (unitDto.getImg() == null || unitDto.getImg().isEmpty()) {
+            bindingResult.rejectValue("img", "NotEmpty.unitDto.img", "Es necesario cargar el archivo.");
+        }
+
+        if (bindingResult.hasErrors()) {
+
+            ArrayList<String> typos = new ArrayList<>();
+            typos.add("biolab");
+            typos.add("hangar");
+
+            model.addAttribute("typos", typos);
+
+            return "admin/units/add";
+        }
+
+        Unit unit = new Unit();
+        unit.setTitle(unitDto.getTitle());
+        unit.setDescription(unitDto.getDescription());
+        unit.setType(unitDto.getType());
+
+        //-----------------------------
+        // upload file
+        Part part = request.getPart("img");
+        if (part != null && part.getSize() > 0) {
+            logger.info("--------------> Entr'e en part for 'img' ---------->");
+            //get the InputStream to store the file somewhere
+            InputStream fileInputStream = part.getInputStream();
+            String fileName = part.getSubmittedFileName();
+            File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/uploads/units/" + fileName);
+            Files.copy(fileInputStream, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            unit.setImg(fileName);
+        }
+        //-----------------------------
+
+        unitService.addUnit(unit);
+
+        return "redirect:/admin/units/";
+    }
+
+    @GetMapping("/admin/units/view/{unitId}")
+    public String getAdminUnit(Model model, @PathVariable Long unitId) throws IOException {
+        Unit unit = unitService.getById(unitId);
+        if (unit.getId() != null) {
+            model.addAttribute("unit", unit);
+
+            logger.info("Unit found..");
+        } else {
+            model.addAttribute("unit", null);
+            logger.info("Error! Unit not found..");
+        }
+
+        return "admin/units/view";
+    }
+
+    @GetMapping("/admin/units/edit/{unitId}")
+    public String editAdminUnit(Model model, @PathVariable Long unitId) throws IOException {
+        Unit unit = unitService.getById(unitId);
+        if (unit.getId() != null) {
+
+            UnitDto unitDto = new UnitDto();
+            unitDto.setTitle(unit.getTitle());
+            unitDto.setDescription(unit.getDescription());
+            unitDto.setType(unit.getType());
+            model.addAttribute("unitDto", unitDto);
+
+            model.addAttribute("img", unit.getImg());
+            model.addAttribute("unit", unit);
+
+            // typos
+            ArrayList<String> typos = new ArrayList<>();
+            typos.add("biolab");
+            typos.add("hangar");
+
+            model.addAttribute("typos", typos);
+
+            logger.info("Unit found..");
+        } else {
+            model.addAttribute("unit", null);
+            logger.info("Error! Unit not found..");
+        }
+
+        return "admin/units/edit";
+    }
+
+    @PostMapping("/admin/units/edit/{unitId}")
+    public String editPostAdminUnit(@PathVariable("unitId") Long unitId,
+                                    @Valid @ModelAttribute("unitDto") UnitDto unitDto,
+                                    @RequestParam("id") Long id,
+                                    BindingResult result,
+                                    Model model,
+                                    @RequestParam("img") MultipartFile img) throws IOException, ServletException {
+        // Validacion los campos
+        if (result.hasErrors()) {
+            Unit unit = unitService.getById(unitId);
+            model.addAttribute("unit", unit);
+
+            ArrayList<String> typos = new ArrayList<>();
+            typos.add("biolab");
+            typos.add("hangar");
+
+            model.addAttribute("typos", typos);
+            model.addAttribute("img", unit.getImg());
+
+            return "admin/units/edit/";
+        }
+
+        // sin borrar baseLevels (relación OneToMany)
+        Unit unitUpdate = unitService.getById(id);
+        unitUpdate.setTitle(unitDto.getTitle());
+        unitUpdate.setDescription(unitDto.getDescription());
+        unitUpdate.setType(unitDto.getType());
+
+        //-----------------------------
+        // upload file
+        if (!img.isEmpty()) {
+            // Ejemplo: gurdar el archivo, recibir un nombre
+            String fileName = img.getOriginalFilename();
+            // Guarda cuando necesite
+            File fileToSave = new File("/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/uploads/units/", fileName);
+            img.transferTo(fileToSave);
+
+            unitUpdate.setImg(fileName);
+        }
+        //-----------------------------
+
+        logger.info("------- Base ---------> " + unitUpdate.toString());
+
+        unitService.updateUnit(unitUpdate);
+
+        return "redirect:/admin/units/";
+    }
+
+    @GetMapping("/admin/units/delete/{unitId}")
+    public void delete(HttpServletRequest request, HttpServletResponse response, @PathVariable Long unitId) throws IOException {
+        Unit unit = unitService.getById(unitId);
+        if (unit.getId() != null) {
+            unitService.deleteUnit(unitId);
+        }
+
+        response.sendRedirect("/admin/units/");
+    }
+}
+
