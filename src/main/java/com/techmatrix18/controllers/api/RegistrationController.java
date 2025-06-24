@@ -65,5 +65,37 @@ public class RegistrationController {
 
         return userRepository.save(user);
     }
+
+    /**
+     * Registering a new user from mobile application by URL from REST API
+     *
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "/api/v1/mob-app-registr", consumes = "application/json")
+    public String registrUser(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = passwordEncoder.encode(request.getParameter("password"));
+        String mobile = request.getParameter("mobile");
+        String gender = request.getParameter("gender");
+        String age = request.getParameter("age");
+
+        if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !mobile.isEmpty() && !gender.isEmpty() && !age.isEmpty()) {
+            User user = new User();
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setMob(mobile);
+            user.setGender(gender);
+            user.setAge(age);
+            user.setPassword(password);
+            userRepository.save(user);
+
+            return "Успешно зарегистрировался!";
+
+        } else {
+            return "Не заполнено обязательное поле";
+        }
+    }
 }
 

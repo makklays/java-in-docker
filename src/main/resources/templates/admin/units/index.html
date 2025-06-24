@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
+
+    <section layout:fragment="custom-content">
+
+        <h2><i class="fa-solid fa-truck-field-un"></i> Units</h2>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Units</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-12" style="text-align:left;" >
+                La lista de los units de la laboratoria))
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-12" style="text-align:right;" >
+                <a href="/admin/units/add" class="btn btn-primary">Añadir el unit</a>
+            </div>
+        </div>
+
+        <!-- Сообщение об успехе -->
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <!-- Сообщение об ошибке -->
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="card" >
+            <div class="card-body" style="background-color:#FFF;">
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width:50px;">ID</th>
+                            <th>Titulo</th>
+
+                            <th class="text-center">Typo</th>
+
+                            <th class="text-center">Level</th>
+
+                            <th class="text-center">Agua</th>
+                            <th class="text-center">Plastic</th>
+                            <th class="text-center">Food</th>
+                            <th class="text-center">Iron</th>
+
+                            <th class="text-center">HP</th>
+                            <th class="text-center">Armor</th>
+                            <th class="text-center">Attack</th>
+                            <th class="text-center">Range</th>
+                            <th class="text-center">Speed</th>
+
+                            <th class="text-center">Seconds</th>
+
+                            <th class="text-center">Imagene</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="unit : ${units}">
+                            <td class="text-center align-middle" style="width:30px;" th:text="${unit.Id}">Id</td>
+                            <td class="align-middle">
+                                <a href="#" th:href="@{'/admin/units/view/' + ${unit.id}}" th:text="${unit.title}">Title</a>
+                            </td>
+
+                            <!-- type -->
+                            <td class="text-center align-middle" th:text="${unit.type}">Type</td>
+
+                            <!-- level -->
+                            <td class="text-center align-middle" th:text="${unit.level}">Level</td>
+
+                            <!-- res -->
+                            <td class="text-center align-middle" th:text="${unit.resAgua}">Agua</td>
+                            <td class="text-center align-middle" th:text="${unit.resPlastic}">Plastic</td>
+                            <td class="text-center align-middle" th:text="${unit.resFood}">Food</td>
+                            <td class="text-center align-middle" th:text="${unit.resIron}">Iron</td>
+
+                            <td class="text-center align-middle" th:text="${unit.hp}">HP</td>
+                            <td class="text-center align-middle" th:text="${unit.armor}">Armor</td>
+                            <td class="text-center align-middle" th:text="${unit.attack}">Attack</td>
+                            <td class="text-center align-middle" th:text="${unit.range}">Range</td>
+                            <td class="text-center align-middle" th:text="${unit.speed}">Speed</td>
+
+                            <td class="text-center align-middle" th:text="${unit.trainingSeconds}">Seconds</td>
+
+                            <!-- img -->
+                            <td class="text-center align-middle">
+                                <img th:if="${unit.img != null}" th:src="'/uploads/units/'+${unit.img}" alt="img base level" style="width:100px;" />
+                            </td>
+
+                            <td class="text-center align-middle" style="width:250px;">
+                                <a href="#" th:href="@{'/admin/units/view/' + ${unit.id}}">vista</a> |
+                                <a href="#" th:href="@{'/admin/units/edit/' + ${unit.id}}">editar</a> |
+                                <a href="#" th:href="@{'/admin/units/delete/' + ${unit.id}}">borrar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </section>
+
+</html>
+
