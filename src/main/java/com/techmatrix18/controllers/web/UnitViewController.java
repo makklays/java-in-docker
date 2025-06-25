@@ -1,6 +1,7 @@
 package com.techmatrix18.controllers.web;
 
 import com.techmatrix18.dto.UnitDto;
+import com.techmatrix18.dto.UnitEditDto;
 import com.techmatrix18.model.Unit;
 import com.techmatrix18.services.UnitService;
 import jakarta.servlet.ServletException;
@@ -29,6 +30,8 @@ public class UnitViewController {
 
     private final UnitService unitService;
 
+    private final List<String> niveles = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
+
     public UnitViewController(UnitService unitService) {
         this.unitService = unitService;
     }
@@ -50,8 +53,9 @@ public class UnitViewController {
         ArrayList<String> typos = new ArrayList<>();
         typos.add("biolab");
         typos.add("hangar");
-
         model.addAttribute("typos", typos);
+
+        model.addAttribute("niveles", this.niveles);
 
         return "admin/units/add";
     }
@@ -68,8 +72,9 @@ public class UnitViewController {
             ArrayList<String> typos = new ArrayList<>();
             typos.add("biolab");
             typos.add("hangar");
-
             model.addAttribute("typos", typos);
+
+            model.addAttribute("niveles", this.niveles);
 
             return "admin/units/add";
         }
@@ -119,11 +124,27 @@ public class UnitViewController {
         Unit unit = unitService.getById(unitId);
         if (unit.getId() != null) {
 
-            UnitDto unitDto = new UnitDto();
-            unitDto.setTitle(unit.getTitle());
-            unitDto.setDescription(unit.getDescription());
-            unitDto.setType(unit.getType());
-            model.addAttribute("unitDto", unitDto);
+            UnitEditDto unitEditDto = new UnitEditDto();
+            unitEditDto.setTitle(unit.getTitle());
+            unitEditDto.setDescription(unit.getDescription());
+            unitEditDto.setType(unit.getType());
+
+            unitEditDto.setResAgua(unit.getResAgua());
+            unitEditDto.setResPlastic(unit.getResPlastic());
+            unitEditDto.setResFood(unit.getResFood());
+            unitEditDto.setResIron(unit.getResIron());
+
+            unitEditDto.setLevel(unit.getLevel());
+
+            unitEditDto.setHp(unit.getHp());
+            unitEditDto.setArmor(unit.getArmor());
+            unitEditDto.setAttack(unit.getAttack());
+            unitEditDto.setRange(unit.getRange());
+            unitEditDto.setSpeed(unit.getSpeed());
+
+            unitEditDto.setTrainingSeconds(unit.getTrainingSeconds());
+
+            model.addAttribute("unitEditDto", unitEditDto);
 
             model.addAttribute("img", unit.getImg());
             model.addAttribute("unit", unit);
@@ -132,8 +153,9 @@ public class UnitViewController {
             ArrayList<String> typos = new ArrayList<>();
             typos.add("biolab");
             typos.add("hangar");
-
             model.addAttribute("typos", typos);
+
+            model.addAttribute("niveles", this.niveles);
 
             logger.info("Unit found..");
         } else {
@@ -145,32 +167,55 @@ public class UnitViewController {
     }
 
     @PostMapping("/admin/units/edit/{unitId}")
-    public String editPostAdminUnit(@PathVariable("unitId") Long unitId,
-                                    @Valid @ModelAttribute("unitDto") UnitDto unitDto,
-                                    @RequestParam("id") Long id,
+    public String editPostAdminUnit(@PathVariable Long unitId,
+                                    @Valid @ModelAttribute("unitEditDto") UnitEditDto unitEditDto,
                                     BindingResult result,
                                     Model model,
                                     @RequestParam("img") MultipartFile img) throws IOException, ServletException {
+
+        // debugging
+        System.out.println("---------------------==========resAgua====> " + unitEditDto.getResAgua());
+
         // Validacion los campos
         if (result.hasErrors()) {
+
             Unit unit = unitService.getById(unitId);
             model.addAttribute("unit", unit);
+
+            model.addAttribute("unitEditDto", unitEditDto);
 
             ArrayList<String> typos = new ArrayList<>();
             typos.add("biolab");
             typos.add("hangar");
-
             model.addAttribute("typos", typos);
+
+            model.addAttribute("niveles", this.niveles);
+
             model.addAttribute("img", unit.getImg());
 
-            return "admin/units/edit/";
+            return "admin/units/edit";
         }
 
         // sin borrar baseLevels (relación OneToMany)
-        Unit unitUpdate = unitService.getById(id);
-        unitUpdate.setTitle(unitDto.getTitle());
-        unitUpdate.setDescription(unitDto.getDescription());
-        unitUpdate.setType(unitDto.getType());
+        Unit unitUpdate = unitService.getById(unitId);
+        unitUpdate.setTitle(unitEditDto.getTitle());
+        unitUpdate.setDescription(unitEditDto.getDescription());
+        unitUpdate.setType(unitEditDto.getType());
+
+        unitUpdate.setResAgua(unitEditDto.getResAgua());
+        unitUpdate.setResPlastic(unitEditDto.getResPlastic());
+        unitUpdate.setResFood(unitEditDto.getResFood());
+        unitUpdate.setResIron(unitEditDto.getResIron());
+
+        unitUpdate.setLevel(unitEditDto.getLevel());
+
+        unitUpdate.setHp(unitEditDto.getHp());
+        unitUpdate.setArmor(unitEditDto.getArmor());
+        unitUpdate.setAttack(unitEditDto.getAttack());
+        unitUpdate.setRange(unitEditDto.getRange());
+        unitUpdate.setSpeed(unitEditDto.getSpeed());
+
+        unitUpdate.setTrainingSeconds(unitEditDto.getTrainingSeconds());
 
         //-----------------------------
         // upload file

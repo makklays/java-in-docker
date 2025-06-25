@@ -23,16 +23,18 @@
     <div class="card" >
         <div class="card-body" style="background-color:#FFF;">
 
-            <form th:action="@{/admin/units/edit/{unitId}(unitId=${unit.id})}" method="post" th:object="${unitDto}" enctype="multipart/form-data">
+            <form th:action="@{/admin/units/edit/{unitId}(unitId=${unit.id})}" method="post" th:object="${unitEditDto}" enctype="multipart/form-data">
 
-                <input type="hidden" name="id" th:value="${unit.Id}" />
+                <input type="hidden" name="id" th:value="${unit.id}" />
 
+                <!-- Titulo -->
                 <div class="mb-3">
                     <label for="id_title" class="form-label required">Titulo</label>
                     <input id="id_title" type="text" th:field="*{title}" class="form-control" placeholder="title">
                     <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;">Title error</span>
                 </div>
 
+                <!-- Description -->
                 <div class="mb-3">
                     <label for="id_descr" class="form-label">Descripcion</label>
                     <textarea id="id_descr" name="description" th:field="*{description}" class="form-control" rows="3"></textarea>
@@ -40,7 +42,7 @@
 
                 <!-- Type -->
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="mb-3">
                             <label class="form-label required">Typo:</label>
                             <select th:field="*{type}" class="form-control">
@@ -50,6 +52,115 @@
                                         th:text="${t}"></option>
                             </select>
                             <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agua Plastic Food Iron -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_agua" class="form-label required">Agua</label>
+                            <input id="id_res_agua" th:field="*{resAgua}" name="res_agua" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('resAgua')}" th:errors="*{resAgua}" style="color:red;">res agua errore</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_plastic" class="form-label required">Plastic</label>
+                            <input id="id_res_plastic" th:field="*{resPlastic}" type="number" class="form-control" placeholder="100" />
+                            <div th:if="${#fields.hasErrors('resPlastic')}" th:errors="*{resPlastic}" style="color:red;">res plastic errore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_food" class="form-label required">Food</label>
+                            <input id="id_res_food" th:field="*{resFood}" type="number" class="form-control" placeholder="110" />
+                            <div th:if="${#fields.hasErrors('resFood')}" th:errors="*{resFood}" style="color:red;">res food errore</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_res_iron" class="form-label required">Iron</label>
+                            <input id="id_res_iron" th:field="*{resIron}" type="number" class="form-control" placeholder="21" />
+                            <div th:if="${#fields.hasErrors('resIron')}" th:errors="*{resIron}" style="color:red;">res iron errore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <!-- HP Armor Attack Range Speed -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_hp" class="form-label required">HP</label>
+                            <input id="id_hp" th:field="*{hp}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('hp')}" th:errors="*{hp}" style="color:red;">hp errore</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_armor" class="form-label required">Armor</label>
+                            <input id="id_armor" th:field="*{armor}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('armor')}" th:errors="*{armor}" style="color:red;">armor errore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_attack" class="form-label required">Attack</label>
+                            <input id="id_attack" th:field="*{attack}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('attack')}" th:errors="*{attack}" style="color:red;">attack errore</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_range" class="form-label required">Range</label>
+                            <input id="id_range" th:field="*{range}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('range')}" th:errors="*{range}" style="color:red;">range errore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_speed" class="form-label required">Speed</label>
+                            <input id="id_speed" th:field="*{speed}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('speed')}" th:errors="*{speed}" style="color:red;">speed errore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <!-- Nivel -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <!-- Select -->
+                            <label class="form-label required">Nivel:</label>
+                            <select th:field="*{level}" class="form-control">
+                                <option value="">-- Elije nivel --</option>
+                                <option th:each="level : ${niveles}"
+                                        th:value="${level}"
+                                        th:text="${level}"></option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('level')}" th:errors="*{level}" style="color:red;">Ошибка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seconds -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_training_seconds" class="form-label required">Training Seconds</label>
+                            <input id="id_training_seconds" th:field="*{trainingSeconds}" type="number" class="form-control" placeholder="1000" />
+                            <div th:if="${#fields.hasErrors('trainingSeconds')}" th:errors="*{trainingSeconds}" style="color:red;">Ошибка</div>
                         </div>
                     </div>
                 </div>
