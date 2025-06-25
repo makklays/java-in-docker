@@ -3,7 +3,7 @@ package com.techmatrix18.dto;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
-public class UnitDto {
+public class UnitEditDto {
 
     @NotBlank(message = "Titulo requerido")
     private String title;
