@@ -196,6 +196,8 @@ public class UnitViewController {
             return "admin/units/edit";
         }
 
+        System.out.println("=================== unit edit dto ===>" + unitEditDto.getDescription());
+
         // sin borrar baseLevels (relación OneToMany)
         Unit unitUpdate = unitService.getById(unitId);
         unitUpdate.setTitle(unitEditDto.getTitle());

@@ -38,15 +38,18 @@ public class MapViewController {
     private SpaceService spaceService;
     private UserService userService;
     private BlogService blogService;
+    private UnitService unitService;
 
     public MapViewController(BaseService baseService, BaseLevelService baseLevelService, MapService mapService,
-                             SpaceService spaceService, UserService userService, BlogService blogService) {
+                             SpaceService spaceService, UserService userService, BlogService blogService,
+                             UnitService unitService) {
         this.baseService = baseService;
         this.baseLevelService = baseLevelService;
         this.mapService = mapService;
         this.spaceService = spaceService;
         this.userService = userService;
         this.blogService = blogService;
+        this.unitService = unitService;
     }
 
     //
@@ -598,6 +601,9 @@ public class MapViewController {
             }
         }
 
+        List<Unit> units = unitService.getAllFromBiolab();
+        model.addAttribute("units", units);
+
         return "map/map-bases/biolab/index";
     }
 
@@ -687,6 +693,9 @@ public class MapViewController {
                 model.addAttribute("is_has_iron", false);
             }
         }
+
+        List<Unit> units = unitService.getAllFromHangar();
+        model.addAttribute("units", units);
 
         return "map/map-bases/hangar/index";
     }

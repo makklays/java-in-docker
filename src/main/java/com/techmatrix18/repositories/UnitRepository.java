@@ -43,4 +43,18 @@ public interface UnitRepository extends JpaRepository<Unit, Long> {
      */
     @Query("SELECT a FROM Unit a WHERE LOWER(a.title) LIKE LOWER(CONCAT('%', :titlePart, '%'))")
     List<Unit> searchByTitleContaining(@Param("titlePart") String titlePart);
+
+    /**
+     * Search unit by type 'biolab'.
+     * JPQL query is used.
+     */
+    @Query("SELECT a FROM Unit a WHERE a.type = 'biolab'")
+    List<Unit> findAllByTypeBiolab();
+
+    /**
+     * Search unit by type 'hangar'.
+     * JPQL query is used.
+     */
+    @Query("SELECT a FROM Unit a WHERE a.type = 'hangar'")
+    List<Unit> findAllByTypeHangar();
 }
