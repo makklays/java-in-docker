@@ -193,38 +193,76 @@
             <div class="col-md-4"></div>
             <div class="col-md-8">
                 <div style="border: 4px solid #bfcc58; padding:10px; background-color:#FFF;">
-                    <!--div class="row">
-                        <div class="col-md-2">
-                            <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" title="KT-9 Old" style="margin-bottom:10px;" />
-                        </div>
-                        <div class="col-md-10 p-0" style="margin-bottom:10px;">
-                            Android KT-9 Old <br/> Description...
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="col-md-2">
-                            <img src="/images/personajes/kt-9-1.jpg" class="img img-fluid" title="KT-9" style="margin-bottom:10px;" />
-                        </div>
-                        <div class="col-md-10 p-0" style="margin-bottom:10px;">
-                            Android KT-9 <br/> Description text text text text text text text...
-                        </div>
+
+                        <th:block th:each="u : ${units}">
+                            <div class="col-md-2">
+                                <th:block th:if="${u.level > baseLevelCurrent.level}" > <!-- nivel menor -->
+                                    <div style="position: relative; display: inline-block; margin-bottom:10px;">
+                                        <img th:src="'/images/personajes/' + ${u.img}" class="img img-fluid" th:title="${u.title}" />
+                                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-color:#bfcc58; opacity:0.6; "></div>
+                                    </div>
+                                </th:block>
+
+                                <th:block th:if="${u.level <= baseLevelCurrent.level}" > <!-- nivel bien -->
+                                    <a href="#" th:onclick="'training('+ ${u.id} +'); return false;'">
+                                        <img th:src="'/images/personajes/' + ${u.img}" class="img img-fluid" th:title="${u.title}" style="margin-bottom:10px;" />
+                                    </a>
+                                </th:block>
+                            </div>
+                            <div class="col-md-10 p-0" style="margin-bottom:10px;">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <h5 th:text="${u.title}">Title</h5>
+                                        <b>Agua:</b> <span th:text="${u.resAgua}">1</span>
+                                        <b>Plastic:</b> <span th:text="${u.resPlastic}">1</span>
+                                        <b>Food:</b> <span th:text="${u.resFood}">1</span>
+                                        <b>Iron:</b> <span th:text="${u.resIron}">1</span>
+                                        <b>Nivel:</b> <span th:text="${u.level}">1</span>
+                                        </br>
+                                        <b>HP:</b> <span th:text="${u.hp}">1</span>
+                                        <b>Armor:</b> <span th:text="${u.armor}">1</span>
+                                        <b>Attack:</b> <span th:text="${u.attack}">1</span>
+                                        <b>Range:</b> <span th:text="${u.range}">1</span>
+                                        <b>Speed:</b> <span th:text="${u.speed}">1</span>
+                                        <b>Nivel:</b> <span th:text="${u.level}">1</span>
+                                        </br>
+                                        <!--strong>Класс:</strong> Боевая поддержка </br-->
+                                        <a href="#" th:onclick="'show_detail(' + ${u.id} + '); return false;'">Más detalles</a>
+                                    </div>
+
+                                    <th:block th:if="${u.level > baseLevelCurrent.level}" > <!-- nivel menor -->
+                                        <div class="text-center col-md-3 d-flex align-items-center">
+                                            <div>Hay que nivel <b th:text="${u.level}">1</b> </div>
+                                        </div>
+                                    </th:block>
+
+                                    <th:block th:if="${u.level <= baseLevelCurrent.level}" > <!-- nivel bien -->
+                                        <div class="text-center col-md-3 d-flex align-items-center">
+                                            <a href="/" th:onclick="'training('+ ${u.id} +'); return false;'" class="btn btn-primary" ><i class="fa-solid fa-hand-fist"></i> Training unit</a>
+                                        </div>
+                                    </th:block>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div th:id="'id_'+${u.id}" style="display:none;"> <br/>
+                                            <div th:text="${u.description}"></div> <br/><br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
                     </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="/images/personajes/tesla.jpg" class="img img-fluid" title="Tesla" style="margin-bottom:10px;" />
-                        </div>
-                        <div class="col-md-10 p-0" style="margin-bottom:10px;">
-                            Tesla <br/> Description...
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="/images/personajes/espinaje.jpg" class="img img-fluid" title="Espinaje" style="margin-bottom:10px;" />
-                        </div>
-                        <div class="col-md-10 p-0" style="margin-bottom:10px;">
-                            Espinaje <br/> Description...
-                        </div>
-                    </div-->
+                </div>
+                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">expoNATOs_</div>
+            </div>
+        </div>
+
+        <!--
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <div style="border: 4px solid #bfcc58; padding:10px; background-color:#FFF;">
                     <div class="row">
                         <div class="col-md-2">
                             <img src="/images/personajes/dron-patrol.jpg" class="img img-fluid" title="Dron Patrol" style="margin-bottom:10px;" />
@@ -269,6 +307,7 @@
                 <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">EXPONATOS_</div>
             </div>
         </div>
+        -->
 
         <div class="row" style="margin-top:30px;">
             <div class="col-md-12">
@@ -346,4 +385,24 @@
         </div-->
     </div>
 </div>
+
+<script>
+    function show_detail(id) {
+        var el = document.getElementById('id_' + id);
+        if (el.style.display === 'none' || el.style.display === '') {
+            el.style.display = 'block';
+        } else {
+            el.style.display = 'none';
+        }
+        return false;
+    }
+
+    function training(id) {
+        //var el = document.getElementById('id_sold_' + id);
+
+        alert('Entrenar una unidad!');
+
+        return false;
+    }
+</script>
 

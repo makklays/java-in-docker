@@ -38,6 +38,24 @@ public class UnitService {
     }
 
     /**
+     * Finds all units from BioLab
+     *
+     * @return found all units from BioLab
+     */
+    public List<Unit> getAllFromBiolab() {
+        return unitRepository.findAllByTypeBiolab();
+    }
+
+    /**
+     * Finds all units from Hangar
+     *
+     * @return found all units from Hangar
+     */
+    public List<Unit> getAllFromHangar() {
+        return unitRepository.findAllByTypeHangar();
+    }
+
+    /**
      * Finds a unit by title.
      *
      * @param title Unit title

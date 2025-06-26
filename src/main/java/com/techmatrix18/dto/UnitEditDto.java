@@ -8,7 +8,7 @@ public class UnitEditDto {
     @NotBlank(message = "Titulo requerido")
     private String title;
 
-    @Size(max = 700, message = "La descripcion no debe ser más 700 letras")
+    @Size(max = 3000, message = "La descripcion no debe ser más 3000 letras")
     private String description;
 
     @NotBlank(message = "Seleccione un typo")
