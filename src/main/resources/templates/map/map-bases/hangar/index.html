@@ -10,9 +10,9 @@
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 </head>
-<body style="background-color:#e7e7e7;">
+<body style="background-color:#e7e7e7; background-image:url('/images/fons/fon_site_12.png');" >
 
-<div class="container">
+<div class="container" style="background-color:#FFF;">
 
     <!-- Menu -->
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="border-bottom: 1px solid grey; margin: 0px 0 4px 0; padding:4px 0 8px 0;">
@@ -168,6 +168,7 @@
                                 <button class="btn btn-primary" disabled="disabled" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-regular fa-hand-point-up"></i> Mejorar</button>
                             </th:block>
                         </form>
+                        <a href="/ti-centro" class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-solid fa-map-location-dot"></i> A TI-Centro</a>
                         <a href="/map" class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-solid fa-map-location-dot"></i> A mi mundo</a>
                     </div>
 
@@ -205,7 +206,7 @@
                                 </th:block>
 
                                 <th:block th:if="${u.level <= baseLevelCurrent.level}" > <!-- nivel bien -->
-                                    <a href="#" th:onclick="'training('+ ${u.id} +'); return false;'">
+                                    <a th:href="@{'/unit-training/'+${sector}+'/'+${baseId}+'/'+${u.id}}" th:onclick="'s_training('+ ${u.id} +'); return false;'">
                                         <img th:src="'/images/personajes/' + ${u.img}" class="img img-fluid" th:title="${u.title}" style="margin-bottom:10px;" />
                                     </a>
                                 </th:block>
@@ -239,7 +240,9 @@
 
                                     <th:block th:if="${u.level <= baseLevelCurrent.level}" > <!-- nivel bien -->
                                         <div class="text-center col-md-3 d-flex align-items-center">
-                                            <a href="/" th:onclick="'training('+ ${u.id} +'); return false;'" class="btn btn-primary" ><i class="fa-solid fa-hand-fist"></i> Training unit</a>
+                                            <a th:href="@{'/unit-training/'+${sector}+'/'+${baseId}+'/'+${u.id}}" th:onclick="'s_training('+ ${u.id} +'); return false;'" class="btn btn-primary" >
+                                                <i class="fa-solid fa-hand-fist"></i> Training unit
+                                            </a>
                                         </div>
                                     </th:block>
                                 </div>

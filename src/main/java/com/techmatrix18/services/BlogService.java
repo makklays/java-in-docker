@@ -32,7 +32,7 @@ public class BlogService {
      * @return
      */
     public List<Blog> getAllPosts(Long spaceId) {
-        return blogRepository.findBySpaceIdOrderBySectorAsc(spaceId);
+        return blogRepository.findBySpaceIdOrderByIdDesc(spaceId);
     }
 
     /**

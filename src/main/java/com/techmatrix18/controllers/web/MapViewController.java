@@ -39,10 +39,11 @@ public class MapViewController {
     private UserService userService;
     private BlogService blogService;
     private UnitService unitService;
+    private SpaceUnitService spaceUnitService;
 
     public MapViewController(BaseService baseService, BaseLevelService baseLevelService, MapService mapService,
                              SpaceService spaceService, UserService userService, BlogService blogService,
-                             UnitService unitService) {
+                             UnitService unitService, SpaceUnitService spaceUnitService) {
         this.baseService = baseService;
         this.baseLevelService = baseLevelService;
         this.mapService = mapService;
@@ -50,6 +51,7 @@ public class MapViewController {
         this.userService = userService;
         this.blogService = blogService;
         this.unitService = unitService;
+        this.spaceUnitService = spaceUnitService;
     }
 
     //
@@ -788,6 +790,9 @@ public class MapViewController {
 
             List<Blog> posts = blogService.getAllPosts(space.getId());
             model.addAttribute("posts", posts);
+
+            List<SpaceUnit> spaceUnits = spaceUnitService.getAllDataBySpaceId(space.getId());
+            model.addAttribute("spaceUnits", spaceUnits);
         }
 
         return "map/map-bases/ti-centro/index";
@@ -1118,6 +1123,126 @@ public class MapViewController {
         }
 
         return "redirect:/map";
+    }
+
+    //
+    @GetMapping("/unit-training/{sector}/{baseId}/{unitId}")
+    public String doUnitTrainingPost(Model model,
+                                     @PathVariable Integer sector,
+                                     @PathVariable Long baseId,
+                                     @PathVariable Long unitId,
+                                     RedirectAttributes redirectAttributes,
+                                     HttpSession session) {
+        //
+        Unit unit = unitService.getById(unitId);
+        model.addAttribute("unit", unit);
+
+        log.info("=====================> aqui ");
+
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+        } else {
+            return "redirect:/req/login";
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+
+            // TODO: probar (!)
+            // by default - check res
+            model.addAttribute("is_has_agua", true);
+            model.addAttribute("is_has_plastic", true);
+            model.addAttribute("is_has_food", true);
+            model.addAttribute("is_has_iron", true);
+
+            // probamos res para unit  - Martines
+            if (unit != null) {
+                if (space.getResAgua() < unit.getResAgua() || space.getResPlastic() < unit.getResPlastic()
+                        || space.getResFood() < unit.getResFood() || space.getResIron() < unit.getResIron() ) {
+
+                    // TODO: probar (!)
+                    // check res
+                    if (space.getResAgua() < unit.getResAgua()) {
+                        model.addAttribute("is_has_agua", false);
+                        log.info("is_has_agua: fasle");
+                    }
+                    if (space.getResPlastic() < unit.getResPlastic()) {
+                        model.addAttribute("is_has_plastic", false);
+                        log.info("is_has_plastic: fasle");
+                    }
+                    if (space.getResFood() < unit.getResFood()) {
+                        model.addAttribute("is_has_food", false);
+                        log.info("is_has_food: fasle");
+                    }
+                    if (space.getResIron() < unit.getResIron()) {
+                        model.addAttribute("is_has_iron", false);
+                        log.info("is_has_iron: fasle");
+                    }
+                } else {
+                    // minus - res para esta mejorar'ia
+                    space.setResAgua( space.getResAgua() - unit.getResAgua() );
+                    space.setResPlastic( space.getResPlastic() - unit.getResPlastic() );
+                    space.setResFood( space.getResFood() - unit.getResFood() );
+                    space.setResIron( space.getResIron() - unit.getResIron() );
+                    spaceService.updateSpace(space);
+                }
+            } else {
+                model.addAttribute("is_has_agua", false);
+                model.addAttribute("is_has_plastic", false);
+                model.addAttribute("is_has_food", false);
+                model.addAttribute("is_has_iron", false);
+            }
+
+            Optional<SpaceUnit> spaceUnit = spaceUnitService.getBySpaceIdAndUnitId(space.getId(), unit.getId());
+            if (spaceUnit.isPresent()) { // update
+                SpaceUnit newSpaceUnit = spaceUnit.get();
+                newSpaceUnit.setCount(newSpaceUnit.getCount() + 1);
+                newSpaceUnit.setIsTraining("1");
+                newSpaceUnit.setTrainingStartedAt(Instant.now()); // date
+
+                spaceUnitService.updateSpaceUnit(newSpaceUnit);
+
+                // add post to Blog (Diario de a bardo)
+                Blog blog = new Blog();
+                blog.setAction("Entrenamiento");
+                blog.setDay(space.getDias().intValue());
+                blog.setSpaceId(space.getId());
+                blog.setSector(sector.longValue());
+                blog.setTitle(unit.getTitle());
+                blog.setPost("Entrenamiento " + unit.getTitle() + ".");
+                blog.setAuthor("Capitan");
+                blogService.addPost(blog);
+            } else {
+                if (unit != null && unit.getId() != null) { // add
+                    SpaceUnit newSpaceUnit = new SpaceUnit();
+                    newSpaceUnit.setSpaceId(space.getId());
+                    newSpaceUnit.setUnit(unit);
+                    newSpaceUnit.setIsTraining("1");
+                    newSpaceUnit.setCount(1);
+                    newSpaceUnit.setTrainingStartedAt(Instant.now()); // date
+
+                    spaceUnitService.addSpaceUnit(newSpaceUnit);
+
+                    // add post to Blog (Diario de a bardo)
+                    Blog blog = new Blog();
+                    blog.setAction("Entrenamiento");
+                    blog.setDay(space.getDias().intValue());
+                    blog.setSpaceId(space.getId());
+                    blog.setSector(sector.longValue());
+                    blog.setTitle(unit.getTitle());
+                    blog.setPost("Entrenamiento " + unit.getTitle() + ".");
+                    blog.setAuthor("Capitan");
+                    blogService.addPost(blog);
+                }
+            }
+        }
+
+        return "redirect:/map/{sector}/bases/{baseId}/biolab";
     }
 
     //

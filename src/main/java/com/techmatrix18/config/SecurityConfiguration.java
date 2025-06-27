@@ -108,6 +108,10 @@ public class SecurityConfiguration {
                     .requestMatchers("/map/**/comida").authenticated()
                     .requestMatchers("/map/**/iron").authenticated()
 
+                    .requestMatchers("/unit-training/**").authenticated()
+                    .requestMatchers("/unit/**").authenticated()
+                    .requestMatchers("/diario-de-bordo/**").authenticated()
+
                     .requestMatchers("/la-historia").permitAll()
                     .requestMatchers("/info").permitAll()
                     .requestMatchers("/users").authenticated()
