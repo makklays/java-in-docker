@@ -192,7 +192,9 @@
                     <div style="border: 4px solid #bfcc58; margin-top:20px; background-color:#214c5e; height:128px;">
                         <th:block th:each="su : ${spaceUnits}">
                             <div style="position:relative; float:left;">
-                                <img th:src="'/images/personajes/' + ${su.unit.img}" class="img img-fluid" th:title="${su.unit.title}" style="width:120px;" />
+                                <a th:href="@{'/unit/' + ${su.unit.id}}">
+                                    <img th:src="'/images/personajes/' + ${su.unit.img}" class="img img-fluid" th:title="${su.unit.title}" style="width:120px;" />
+                                </a>
                                 <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;" th:text="${su.count}"></div>
                             </div>
                         </th:block>
@@ -222,7 +224,9 @@
                                 <tbody>
                                 <tr th:each="post : ${posts}">
                                     <td class="text-center align-middle" style="width:30px;" th:text="${post.Id}">Id</td>
-                                    <td class="align-middle" th:text="${post.title}">Title</td>
+                                    <td class="align-middle">
+                                        <a th:href="@{'/diario-de-bordo/' + ${post.id}}" th:text="${post.title}">Title</a>
+                                    </td>
                                     <td class="text-center align-middle" th:text="${post.action}">building</td>
                                     <td class="text-center align-middle" th:text="${post.day}">2</td>
                                     <td class="text-center align-middle" th:text="${#temporals.format(post.createdAt.atZone(T(java.time.ZoneId).of('UTC')), 'dd-MM-yyyy HH:mm')}">01.06.2025</td>

@@ -38,6 +38,13 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
     List<Blog> findBySpaceIdOrderBySectorAsc(Long spaceId);
 
     /**
+     * Search list of Map by spaceId
+     * @param spaceId Space
+     * @return Blog, wrapped in List
+     */
+    List<Blog> findBySpaceIdOrderByIdDesc(Long spaceId);
+
+    /**
      * Search last 10 posts of Blog by SpaceID
      * @param spaceId Space ID
      * @return Blog, wrapped in List

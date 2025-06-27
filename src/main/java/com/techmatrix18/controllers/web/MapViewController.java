@@ -1209,7 +1209,7 @@ public class MapViewController {
 
                 // add post to Blog (Diario de a bardo)
                 Blog blog = new Blog();
-                blog.setAction("Construcción");
+                blog.setAction("Entrenamiento");
                 blog.setDay(space.getDias().intValue());
                 blog.setSpaceId(space.getId());
                 blog.setSector(sector.longValue());
@@ -1230,12 +1230,12 @@ public class MapViewController {
 
                     // add post to Blog (Diario de a bardo)
                     Blog blog = new Blog();
-                    blog.setAction("Construcción");
+                    blog.setAction("Entrenamiento");
                     blog.setDay(space.getDias().intValue());
                     blog.setSpaceId(space.getId());
                     blog.setSector(sector.longValue());
                     blog.setTitle(unit.getTitle());
-                    blog.setPost("Construcción " + unit.getTitle() + ".");
+                    blog.setPost("Entrenamiento " + unit.getTitle() + ".");
                     blog.setAuthor("Capitan");
                     blogService.addPost(blog);
                 }
