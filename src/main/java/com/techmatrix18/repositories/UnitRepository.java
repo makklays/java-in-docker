@@ -22,7 +22,7 @@ public interface UnitRepository extends JpaRepository<Unit, Long> {
      * Search all units
      * @return all units
      */
-    List<Unit> findAll();
+    List<Unit> findAllByOrderByTypeAscLevelAsc();
 
     /**
      * Search unit by title
@@ -48,13 +48,13 @@ public interface UnitRepository extends JpaRepository<Unit, Long> {
      * Search unit by type 'biolab'.
      * JPQL query is used.
      */
-    @Query("SELECT a FROM Unit a WHERE a.type = 'biolab'")
+    @Query("SELECT a FROM Unit a WHERE a.type = 'biolab' ORDER BY a.level ASC ")
     List<Unit> findAllByTypeBiolab();
 
     /**
      * Search unit by type 'hangar'.
      * JPQL query is used.
      */
-    @Query("SELECT a FROM Unit a WHERE a.type = 'hangar'")
+    @Query("SELECT a FROM Unit a WHERE a.type = 'hangar' ORDER BY a.level ASC ")
     List<Unit> findAllByTypeHangar();
 }

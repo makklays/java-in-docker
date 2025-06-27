@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
 </head>
-<body style="background-color:#e7e7e7;">
+<body style="background-color:#e7e7e7; background-image:url('/images/fons/fon_site_12.png');">
 
 <div class="container" style="background-color:#FFF;" >
 
@@ -60,205 +60,187 @@
         </div>
 
         <!-- Space -->
-        <div class="row">
-            <div class="col-md-12" style="text-align:right:"><h4 th:text="${space.title} + ', Día de la misión: ' + ${space.getDias()}">Día: 1</h4></div>
-        </div>
-        <div class="row" style="margin-bottom:20px;">
-            <div class="col-md-8">
-                <div style="border: 4px solid #bfcc58; background-color:#FFF; ">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12" style="text-align:right:"><h4 th:text="${space.title} + ', Día de la misión: ' + ${space.getDias()}">Día: 1</h4></div>
+            </div>
+            <div class="row" style="margin-bottom:20px;">
+                <div class="col-md-8">
+                    <div style="border: 4px solid #bfcc58; background-color:#FFF; ">
 
-                    <div class="row">
-                        <div class="col-md-3" style="padding-left:30px;" th:text="'Agua: ' + ${space.resAgua} + '/+' + ${space.doResAgua}" >Agua: 10</div>
-                        <div class="col-md-3" style="padding-left:30px;" th:text="'Plastic: ' + ${space.resPlastic} + '/+' + ${space.doResPlastic}" >Plastic: 10</div>
-                        <div class="col-md-3" style="padding-left:30px;" th:text="'Food: ' + ${space.resFood} + '/+' + ${space.doResFood}" >Food: 10</div>
-                        <div class="col-md-3" style="padding-left:30px;" th:text="'Iron: ' + ${space.resIron} + '/+' + ${space.doResIron}" >Iron: 10</div>
+                        <div class="row">
+                            <div class="col-md-3" style="padding-left:30px;" th:text="'Agua: ' + ${space.resAgua} + '/+' + ${space.doResAgua}" >Agua: 10</div>
+                            <div class="col-md-3" style="padding-left:30px;" th:text="'Plastic: ' + ${space.resPlastic} + '/+' + ${space.doResPlastic}" >Plastic: 10</div>
+                            <div class="col-md-3" style="padding-left:30px;" th:text="'Food: ' + ${space.resFood} + '/+' + ${space.doResFood}" >Food: 10</div>
+                            <div class="col-md-3" style="padding-left:30px;" th:text="'Iron: ' + ${space.resIron} + '/+' + ${space.doResIron}" >Iron: 10</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div style="border: 4px solid #bfcc58; background-color:#FFF; "><marquee style="line-height:18px;">Tu necesita construir "IT CENTRO"</marquee></div>
-            </div>
+                <div class="col-md-4">
+                    <div style="border: 4px solid #bfcc58; background-color:#FFF; "><marquee style="line-height:18px;">Tu necesita construir "IT CENTRO"</marquee></div>
+                </div>
 
-            <div class="col-md-8">
-                <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:280px;">RECURSOS DE LA COLONIA_</div>
-            </div>
-            <div class="col-md-4">
-                <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:150px;">LA PISTA_</div>
+                <div class="col-md-8">
+                    <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:280px;">RECURSOS DE LA COLONIA_</div>
+                </div>
+                <div class="col-md-4">
+                    <div style="border: 4px solid #bfcc58; padding-left:20px; background-color:#bfcc58; width:150px;">LA PISTA_</div>
+                </div>
             </div>
         </div>
 
         <!-- Info -->
-        <div class="row">
-            <div class="col-md-4">
-                <div style="border: 4px solid #bfcc58; padding:0;">
-                    <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" class="img img-fluid" style="min-width:400px;" alt="img base level" />
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <div style="border: 4px solid #bfcc58; padding:0;">
+                        <img th:if="${base.img != null}" th:src="'/uploads/bases/'+${base.img}" class="img img-fluid" style="min-width:400px;" alt="img base level" />
+                    </div>
+                    <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">MONITOR DE BASE_</div>
                 </div>
-                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">MONITOR DE BASE_</div>
-            </div>
-            <div class="col-md-8">
-                <div style="border: 4px solid #bfcc58; padding:10px; background-color:#FFF; ">
-                    <b>Descripción:</b> </br>
-                    <span th:text="${base.getDescription()}" >descrption</span> <br/><br/>
+                <div class="col-md-8">
+                    <div style="border: 4px solid #bfcc58; padding:10px; background-color:#FFF; ">
+                        <b>Descripción:</b> </br>
+                        <span th:text="${base.getDescription()}" >descrption</span> <br/><br/>
 
-                    <b>Actual nivel:</b> <span th:text="${baseLevelCurrent.level}">1</span> </br></br>
+                        <b>Actual nivel:</b> <span th:text="${baseLevelCurrent.level}">1</span> </br></br>
 
-                    <!-- siguiente nivel -->
-                    <th:block th:if="${nextLevel != null}">
-                        <b>Siguiente nivel:</b> <span th:text="${nextLevel.level}">1</span> </br>
+                        <!-- siguiente nivel -->
+                        <th:block th:if="${nextLevel != null}">
+                            <b>Siguiente nivel:</b> <span th:text="${nextLevel.level}">1</span> </br>
 
-                        <b style="margin-right:10px;">Necesita:</b>
-                        <!-- agua -->
-                        <th:block th:if="${is_has_agua == true}">
-                            <span style="margin-right:20px; color:green;" th:text="'Agua: ' + ${nextLevel.resAgua}">Agua: 1</span>
+                            <b style="margin-right:10px;">Necesita:</b>
+                            <!-- agua -->
+                            <th:block th:if="${is_has_agua == true}">
+                                <span style="margin-right:20px; color:green;" th:text="'Agua: ' + ${nextLevel.resAgua}">Agua: 1</span>
+                            </th:block>
+                            <th:block th:if="${is_has_agua == false}">
+                                <span style="margin-right:20px; color:red;" th:text="'Agua: ' + ${nextLevel.resAgua}">Agua: 1</span>
+                            </th:block>
+
+                            <!-- plastic -->
+                            <th:block th:if="${is_has_plastic == true}">
+                                <span style="margin-right:20px; color:green;" th:text="'Plastico: ' + ${nextLevel.resPlastic}">Plastico: 1</span>
+                            </th:block>
+                            <th:block th:if="${is_has_plastic == false}">
+                                <span style="margin-right:20px; color:red;" th:text="'Plastico: ' + ${nextLevel.resPlastic}">Plastico: 1</span>
+                            </th:block>
+
+                            <!-- food -->
+                            <th:block th:if="${is_has_food == true}">
+                                <span style="margin-right:20px; color:green;" th:text="'Food: ' + ${nextLevel.resFood}">Food: 1</span>
+                            </th:block>
+                            <th:block th:if="${is_has_food == false}">
+                                <span style="margin-right:20px; color:red;" th:text="'Food: ' + ${nextLevel.resFood}">Food: 1</span>
+                            </th:block>
+
+                            <!-- iron -->
+                            <th:block th:if="${is_has_iron == true}">
+                                <span style="margin-right:20px; color:green;" th:text="'Iron: ' + ${nextLevel.resIron}">Iron: 1</span>
+                            </th:block>
+                            <th:block th:if="${is_has_iron == false}">
+                                <span style="margin-right:20px; color:red;" th:text="'Iron: ' + ${nextLevel.resIron}">Iron: 1</span>
+                            </th:block>
+
+                            <br/>
+
+                            <b style="margin-right:10px;">Tendras plus una vez:</b>
+                            <span th:text="'Agua: ' + ${nextLevel.getPlusResAgua()}" style="margin-right:10px;">plus Agua</span>
+                            <span th:text="'Comida: ' + ${nextLevel.getPlusResFood()}" style="margin-right:10px;">plus Food</span>
+                            <span th:text="'Plastico: ' + ${nextLevel.getPlusResPlastic()}" style="margin-right:10px;">plus Plastic</span>
+                            <span th:text="'Hierro: ' + ${nextLevel.getPlusResIron()}" style="margin-right:10px;">plus Iron</span> <br/>
+
+                            <b style="margin-right:10px;">Tendras plus cada hora:</b>
+                            <span th:text="'Agua: ' + ${nextLevel.getDoResAgua()}" style="margin-right:10px;">plus hacer Agua</span>
+                            <span th:text="'Comida: ' + ${nextLevel.getDoResFood()}" style="margin-right:10px;">plus hacer Food</span>
+                            <span th:text="'Plastico: ' + ${nextLevel.getDoResPlastic()}" style="margin-right:10px;">plus hacer Plastic</span>
+                            <span th:text="'Hierro: ' + ${nextLevel.getDoResIron()}" style="margin-right:10px;">plus hacer Iron</span> <br/>
+
                         </th:block>
-                        <th:block th:if="${is_has_agua == false}">
-                            <span style="margin-right:20px; color:red;" th:text="'Agua: ' + ${nextLevel.resAgua}">Agua: 1</span>
+                        <th:block th:if="${nextLevel == null}">
+                            <div style="margin-top:20px;">
+                                <div style="padding-top:6px; float:left;">No tiene el nivel siguiente</div> <br/>
+                            </div>
                         </th:block>
 
-                        <!-- plastic -->
-                        <th:block th:if="${is_has_plastic == true}">
-                            <span style="margin-right:20px; color:green;" th:text="'Plastico: ' + ${nextLevel.resPlastic}">Plastico: 1</span>
-                        </th:block>
-                        <th:block th:if="${is_has_plastic == false}">
-                            <span style="margin-right:20px; color:red;" th:text="'Plastico: ' + ${nextLevel.resPlastic}">Plastico: 1</span>
-                        </th:block>
-
-                        <!-- food -->
-                        <th:block th:if="${is_has_food == true}">
-                            <span style="margin-right:20px; color:green;" th:text="'Food: ' + ${nextLevel.resFood}">Food: 1</span>
-                        </th:block>
-                        <th:block th:if="${is_has_food == false}">
-                            <span style="margin-right:20px; color:red;" th:text="'Food: ' + ${nextLevel.resFood}">Food: 1</span>
-                        </th:block>
-
-                        <!-- iron -->
-                        <th:block th:if="${is_has_iron == true}">
-                            <span style="margin-right:20px; color:green;" th:text="'Iron: ' + ${nextLevel.resIron}">Iron: 1</span>
-                        </th:block>
-                        <th:block th:if="${is_has_iron == false}">
-                            <span style="margin-right:20px; color:red;" th:text="'Iron: ' + ${nextLevel.resIron}">Iron: 1</span>
-                        </th:block>
-
-                        <br/>
-
-                        <b style="margin-right:10px;">Tendras plus una vez:</b>
-                        <span th:text="'Agua: ' + ${nextLevel.getPlusResAgua()}" style="margin-right:10px;">plus Agua</span>
-                        <span th:text="'Comida: ' + ${nextLevel.getPlusResFood()}" style="margin-right:10px;">plus Food</span>
-                        <span th:text="'Plastico: ' + ${nextLevel.getPlusResPlastic()}" style="margin-right:10px;">plus Plastic</span>
-                        <span th:text="'Hierro: ' + ${nextLevel.getPlusResIron()}" style="margin-right:10px;">plus Iron</span> <br/>
-
-                        <b style="margin-right:10px;">Tendras plus cada hora:</b>
-                        <span th:text="'Agua: ' + ${nextLevel.getDoResAgua()}" style="margin-right:10px;">plus hacer Agua</span>
-                        <span th:text="'Comida: ' + ${nextLevel.getDoResFood()}" style="margin-right:10px;">plus hacer Food</span>
-                        <span th:text="'Plastico: ' + ${nextLevel.getDoResPlastic()}" style="margin-right:10px;">plus hacer Plastic</span>
-                        <span th:text="'Hierro: ' + ${nextLevel.getDoResIron()}" style="margin-right:10px;">plus hacer Iron</span> <br/>
-
-                    </th:block>
-                    <th:block th:if="${nextLevel == null}">
-                        <div style="margin-top:20px;">
-                            <div style="padding-top:6px; float:left;">No tiene el nivel siguiente</div> <br/>
+                        <div style="margin-top:20px; margin-bottom:20px;">
+                            <form th:action="@{'/map/' + ${sector} + '/bases/' + ${baseId}}" method="post" style="float:left;">
+                                <th:block th:if="${is_has_agua == true && is_has_plastic == true && is_has_food == true && is_has_iron == true}">
+                                    <button class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-regular fa-hand-point-up"></i> Mejorar</button>
+                                </th:block>
+                                <th:block th:if="${is_has_agua == false || is_has_plastic == false || is_has_food == false || is_has_iron == false}">
+                                    <button class="btn btn-primary" disabled="disabled" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-regular fa-hand-point-up"></i> Mejorar</button>
+                                </th:block>
+                            </form>
+                            <a href="/map" class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-solid fa-map-location-dot"></i> A mi mundo</a>
                         </div>
-                    </th:block>
 
-                    <div style="margin-top:20px; margin-bottom:20px;">
-                        <form th:action="@{'/map/' + ${sector} + '/bases/' + ${baseId}}" method="post" style="float:left;">
-                            <th:block th:if="${is_has_agua == true && is_has_plastic == true && is_has_food == true && is_has_iron == true}">
-                                <button class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-regular fa-hand-point-up"></i> Mejorar</button>
-                            </th:block>
-                            <th:block th:if="${is_has_agua == false || is_has_plastic == false || is_has_food == false || is_has_iron == false}">
-                                <button class="btn btn-primary" disabled="disabled" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-regular fa-hand-point-up"></i> Mejorar</button>
-                            </th:block>
-                        </form>
-                        <a href="/map" class="btn btn-primary" style="margin-right:30px; margin-left:16px; width:180px; border:0px; border-radius:0px;"><i class="fa-solid fa-map-location-dot"></i> A mi mundo</a>
+                        <!-- anterior nivel -->
+                        <!--b>Anterior nivel:</b> 0 </br>
+
+                        <form th:action="@{'/map/' + ${sector} + '/bases/' + ${baseId}}" method="post" style="margin-top:20px; margin-bottom:20px;">
+                            <input type="submit" class="btn btn-primary" value="Mejorar" style="margin-right:30px; margin-left:20px; width:180px; border:0px; border-radius:0px;" />
+                        </form-->
+
+                        <br/><br/>
+                        <!--br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/-->
                     </div>
-
-                    <!-- anterior nivel -->
-                    <!--b>Anterior nivel:</b> 0 </br>
-
-                    <form th:action="@{'/map/' + ${sector} + '/bases/' + ${baseId}}" method="post" style="margin-top:20px; margin-bottom:20px;">
-                        <input type="submit" class="btn btn-primary" value="Mejorar" style="margin-right:30px; margin-left:20px; width:180px; border:0px; border-radius:0px;" />
-                    </form-->
-
-                    <br/><br/>
-                    <!--br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/-->
+                    <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">INFORMACIÓN_</div>
                 </div>
-                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">INFORMACIÓN_</div>
-            </div>
 
-            <!--div class="col-md-4"></div-->
-            <div class="col-md-8 offset-md-4">
-                <div style="border: 4px solid #bfcc58; margin-top:20px; background-color:#FFF; height:128px;">
-                    <div style="position:relative; float:left; ">
-                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
-                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">10</div>
+                <div class="col-md-12 offset-md-0">
+                    <div style="border: 4px solid #bfcc58; margin-top:20px; background-color:#214c5e; height:128px;">
+                        <th:block th:each="su : ${spaceUnits}">
+                            <div style="position:relative; float:left;">
+                                <img th:src="'/images/personajes/' + ${su.unit.img}" class="img img-fluid" th:title="${su.unit.title}" style="width:120px;" />
+                                <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;" th:text="${su.count}"></div>
+                            </div>
+                        </th:block>
                     </div>
-                    <div style="position:relative; float:left;">
-                        <img src="/images/personajes/kt-9-1.jpg" class="img img-fluid" style="width:120px;" />
-                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">12</div>
-                    </div>
-                    <div style="position:relative; float:left;">
-                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
-                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">25</div>
-                    </div>
-                    <div style="position:relative; float:left; ">
-                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
-                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">10</div>
-                    </div>
-                    <div style="position:relative; float:left;">
-                        <img src="/images/personajes/kt-9-1.jpg" class="img img-fluid" style="width:120px;" />
-                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">12</div>
-                    </div>
-                    <div style="position:relative; float:left;">
-                        <img src="/images/personajes/kt-9-3.jpg" class="img img-fluid" style="width:120px;" />
-                        <div style="position:absolute; top:10px; z-index:11; left:10px; color:#FFF; font-size:30px;">25</div>
-                    </div>
-
-                    <div style="position:relative;"></div>
-                </div>
-                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">GUARDAS_</div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div style="border: 4px solid #bfcc58; margin-top:20px; padding:10px; background-color:#FFF; ">
-                    La lista diferentes acciónes en tu colonia
-
-                    <th:block th:if="@{posts != null}">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th class="text-center" style="width:100px;">ID</th>
-                                <th>Titulo</th>
-                                <th class="text-center" style="width:200px;">Acción</th>
-                                <th class="text-center" style="width:100px;">Día</th>
-                                <th class="text-center" style="width:200px;">Fecha</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="post : ${posts}">
-                                <td class="text-center align-middle" style="width:30px;" th:text="${post.Id}">Id</td>
-                                <td class="align-middle" th:text="${post.title}">Title</td>
-                                <td class="text-center align-middle" th:text="${post.action}">building</td>
-                                <td class="text-center align-middle" th:text="${post.day}">2</td>
-                                <td class="text-center align-middle" th:text="${#temporals.format(post.createdAt.atZone(T(java.time.ZoneId).of('UTC')), 'dd-MM-yyyy HH:mm')}">01.06.2025</td>
-                            </tr>
-                        </table>
-                    </th:block>
+                    <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">GUARDAS_</div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">DIARIO DE A BORDO_</div>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="border: 4px solid #bfcc58; margin-top:20px; padding:10px; background-color:#FFF; ">
+                        La lista diferentes acciónes en tu colonia
+
+                        <th:block th:if="@{posts != null}">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="text-center" style="width:100px;">ID</th>
+                                    <th>Titulo</th>
+                                    <th class="text-center" style="width:200px;">Acción</th>
+                                    <th class="text-center" style="width:100px;">Día</th>
+                                    <th class="text-center" style="width:200px;">Fecha</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="post : ${posts}">
+                                    <td class="text-center align-middle" style="width:30px;" th:text="${post.Id}">Id</td>
+                                    <td class="align-middle" th:text="${post.title}">Title</td>
+                                    <td class="text-center align-middle" th:text="${post.action}">building</td>
+                                    <td class="text-center align-middle" th:text="${post.day}">2</td>
+                                    <td class="text-center align-middle" th:text="${#temporals.format(post.createdAt.atZone(T(java.time.ZoneId).of('UTC')), 'dd-MM-yyyy HH:mm')}">01.06.2025</td>
+                                </tr>
+                            </table>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="border: 4px solid #bfcc58; background-color:#bfcc58; padding-left:20px; width:240px;">DIARIO DE A BORDO_</div>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            </div>
+        <div class="col-md-12">
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
 
         <!--div class="col-md-12">

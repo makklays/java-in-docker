@@ -34,7 +34,7 @@ public class UnitService {
      * @return found all units
      */
     public List<Unit> getAll() {
-        return unitRepository.findAll();
+        return unitRepository.findAllByOrderByTypeAscLevelAsc();
     }
 
     /**

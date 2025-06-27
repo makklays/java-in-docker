@@ -84,6 +84,21 @@ public class UnitViewController {
         unit.setDescription(unitDto.getDescription());
         unit.setType(unitDto.getType());
 
+        unit.setResAgua(unitDto.getResAgua());
+        unit.setResPlastic(unitDto.getResPlastic());
+        unit.setResFood(unitDto.getResFood());
+        unit.setResIron(unitDto.getResIron());
+
+        unit.setLevel(unitDto.getLevel());
+
+        unit.setHp(unitDto.getHp());
+        unit.setArmor(unitDto.getArmor());
+        unit.setAttack(unitDto.getAttack());
+        unit.setRange(unitDto.getRange());
+        unit.setSpeed(unitDto.getSpeed());
+
+        unit.setTrainingSeconds(unitDto.getTrainingSeconds());
+
         //-----------------------------
         // upload file
         Part part = request.getPart("img");
