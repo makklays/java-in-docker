@@ -54,6 +54,10 @@ public class MapViewController {
         this.spaceUnitService = spaceUnitService;
     }
 
+    @GetMapping("/map2")
+    public String getMap2(Model model, HttpSession session) {
+        return "map/map2";
+    }
     //
     @GetMapping("/map")
     public String getDiv(Model model, HttpSession session) {
