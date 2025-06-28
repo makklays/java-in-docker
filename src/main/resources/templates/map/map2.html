@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Перетаскиваемая карта</title>
+    <style>
+    body {
+        background-color: #0f1b2d; // #222
+        margin: 0;
+        padding: 0;
+    }
+
+    .viewport {
+        width: 2720px;  // 1190px;
+        height: 1400px; // 560px;
+        overflow: hidden;
+        border: 3px solid #555;
+        margin: 50px auto;
+        position: relative;
+        background-color: #0d0d0d;
+    }
+
+    .map {
+        position: absolute;
+        width: 2720px;
+        height: 1400px;
+        left: -850px; // -100px;
+        top: 0px; // -100px;
+        cursor: grab;
+        transition: background 0.2s;
+        background-image: url('images/fons/fon11.png');
+    }
+
+    .tile {
+        width: 170px;
+        height: 140px;
+        //background-color: #444444;
+        border: 1px solid #e7e7e7;
+        box-sizing: border-box;
+        position: absolute;
+    }
+
+    .tile:hover {
+        background-color: #666;
+    }
+  </style>
+</head>
+<body>
+<div class="viewport">
+    <div class="map" id="map">
+        <!-- Генерация 10x10 плиток -->
+
+        <!--div class="tile" style="left:0px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,0</div>
+        <div class="tile" style="left:170px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,0</div>
+        <div class="tile" style="left:340px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,0</div>
+        <div class="tile" style="left:510px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,0</div>
+        <div class="tile" style="left:680px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,0</div>
+        <div class="tile" style="left:850px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,0</div>
+        <div class="tile" style="left:1020px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,0</div>
+        <div class="tile" style="left:1190px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,0</div>
+        <div class="tile" style="left:1360px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,0</div>
+        <div class="tile" style="left:1530px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,0</div>
+        <div class="tile" style="left:1700px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,0</div>
+        <div class="tile" style="left:1870px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,0</div>
+        <div class="tile" style="left:2040px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,0</div>
+        <div class="tile" style="left:2210px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,0</div>
+        <div class="tile" style="left:2380px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,0</div>
+        <div class="tile" style="left:2550px; top:0px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,0</div-->
+
+        <div class="tile" style="left:0px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,1</div>
+        <div class="tile" style="left:170px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,1</div>
+        <div class="tile" style="left:340px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,1</div>
+        <div class="tile" style="left:510px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,1</div>
+        <div class="tile" style="left:680px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,1</div>
+        <div class="tile" style="left:850px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,1</div>
+        <div class="tile" style="left:1020px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,1</div>
+        <div class="tile" style="left:1190px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,1</div>
+        <div class="tile" style="left:1360px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,1</div>
+        <div class="tile" style="left:1530px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,1</div>
+        <div class="tile" style="left:1700px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,1</div>
+        <div class="tile" style="left:1870px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,1</div>
+        <div class="tile" style="left:2040px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,1</div>
+        <div class="tile" style="left:2210px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,1</div>
+        <div class="tile" style="left:2380px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,1</div>
+        <div class="tile" style="left:2550px; top:140px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,1</div>
+
+        <div class="tile" style="left:0px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,2</div>
+        <div class="tile" style="left:170px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,2</div>
+        <div class="tile" style="left:340px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,2</div>
+        <div class="tile" style="left:510px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,2</div>
+        <div class="tile" style="left:680px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,2</div>
+        <div class="tile" style="left:850px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,2</div>
+        <div class="tile" style="left:1020px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,2</div>
+        <div class="tile" style="left:1190px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,2</div>
+        <div class="tile" style="left:1360px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,2</div>
+        <div class="tile" style="left:1530px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,2</div>
+        <div class="tile" style="left:1700px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,2</div>
+        <div class="tile" style="left:1870px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,2</div>
+        <div class="tile" style="left:2040px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,2</div>
+        <div class="tile" style="left:2210px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,2</div>
+        <div class="tile" style="left:2380px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,2</div>
+        <div class="tile" style="left:2550px; top:280px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,2</div>
+
+        <div class="tile" style="left:0px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,3</div>
+        <div class="tile" style="left:170px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,3</div>
+        <div class="tile" style="left:340px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,3</div>
+        <div class="tile" style="left:510px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,3</div>
+        <div class="tile" style="left:680px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,3</div>
+        <div class="tile" style="left:850px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,3</div>
+        <div class="tile" style="left:1020px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,3</div>
+        <div class="tile" style="left:1190px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,3</div>
+        <div class="tile" style="left:1360px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,3</div>
+        <div class="tile" style="left:1530px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,3</div>
+        <div class="tile" style="left:1700px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,3</div>
+        <div class="tile" style="left:1870px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,3</div>
+        <div class="tile" style="left:2040px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,3</div>
+        <div class="tile" style="left:2210px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,3</div>
+        <div class="tile" style="left:2380px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,3</div>
+        <div class="tile" style="left:2550px; top:420px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,3</div>
+
+        <div class="tile" style="left:0px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,4</div>
+        <div class="tile" style="left:170px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,4</div>
+        <div class="tile" style="left:340px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,4</div>
+        <div class="tile" style="left:510px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,4</div>
+        <div class="tile" style="left:680px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,4</div>
+        <div class="tile" style="left:850px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,4</div>
+        <div class="tile" style="left:1020px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,4</div>
+        <div class="tile" style="left:1190px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,4</div>
+        <div class="tile" style="left:1360px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,4</div>
+        <div class="tile" style="left:1530px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,4</div>
+        <div class="tile" style="left:1700px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,4</div>
+        <div class="tile" style="left:1870px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,4</div>
+        <div class="tile" style="left:2040px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,4</div>
+        <div class="tile" style="left:2210px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,4</div>
+        <div class="tile" style="left:2380px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,4</div>
+        <div class="tile" style="left:2550px; top:560px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,4</div>
+
+        <div class="tile" style="left:0px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,5</div>
+        <div class="tile" style="left:170px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,5</div>
+        <div class="tile" style="left:340px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,5</div>
+        <div class="tile" style="left:510px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,5</div>
+        <div class="tile" style="left:680px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,5</div>
+        <div class="tile" style="left:850px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,5</div>
+        <div class="tile" style="left:1020px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,5</div>
+        <div class="tile" style="left:1190px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,5</div>
+        <div class="tile" style="left:1360px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,5</div>
+        <div class="tile" style="left:1530px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,5</div>
+        <div class="tile" style="left:1700px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,5</div>
+        <div class="tile" style="left:1870px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,5</div>
+        <div class="tile" style="left:2040px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,5</div>
+        <div class="tile" style="left:2210px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,5</div>
+        <div class="tile" style="left:2380px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,5</div>
+        <div class="tile" style="left:2550px; top:700px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,5</div>
+
+        <div class="tile" style="left:0px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,6</div>
+        <div class="tile" style="left:170px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,6</div>
+        <div class="tile" style="left:340px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,6</div>
+        <div class="tile" style="left:510px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,6</div>
+        <div class="tile" style="left:680px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,6</div>
+        <div class="tile" style="left:850px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,6</div>
+        <div class="tile" style="left:1020px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,6</div>
+        <div class="tile" style="left:1190px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,6</div>
+        <div class="tile" style="left:1360px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,6</div>
+        <div class="tile" style="left:1530px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,6</div>
+        <div class="tile" style="left:1700px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,6</div>
+        <div class="tile" style="left:1870px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,6</div>
+        <div class="tile" style="left:2040px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,6</div>
+        <div class="tile" style="left:2210px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,6</div>
+        <div class="tile" style="left:2380px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,6</div>
+        <div class="tile" style="left:2550px; top:840px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,6</div>
+
+        <div class="tile" style="left:0px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,7</div>
+        <div class="tile" style="left:170px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,7</div>
+        <div class="tile" style="left:340px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,7</div>
+        <div class="tile" style="left:510px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,7</div>
+        <div class="tile" style="left:680px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,7</div>
+        <div class="tile" style="left:850px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,7</div>
+        <div class="tile" style="left:1020px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,7</div>
+        <div class="tile" style="left:1190px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,7</div>
+        <div class="tile" style="left:1360px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,7</div>
+        <div class="tile" style="left:1530px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,7</div>
+        <div class="tile" style="left:1700px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,7</div>
+        <div class="tile" style="left:1870px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,7</div>
+        <div class="tile" style="left:2040px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,7</div>
+        <div class="tile" style="left:2210px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,7</div>
+        <div class="tile" style="left:2380px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,7</div>
+        <div class="tile" style="left:2550px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,7</div>
+        <div class="tile" style="left:2550px; top:980px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,7</div>
+
+        <div class="tile" style="left:0px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,8</div>
+        <div class="tile" style="left:170px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,8</div>
+        <div class="tile" style="left:340px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,8</div>
+        <div class="tile" style="left:510px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,8</div>
+        <div class="tile" style="left:680px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,8</div>
+        <div class="tile" style="left:850px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,8</div>
+        <div class="tile" style="left:1020px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,8</div>
+        <div class="tile" style="left:1190px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,8</div>
+        <div class="tile" style="left:1360px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,8</div>
+        <div class="tile" style="left:1530px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,8</div>
+        <div class="tile" style="left:1700px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,8</div>
+        <div class="tile" style="left:1870px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,8</div>
+        <div class="tile" style="left:2040px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,8</div>
+        <div class="tile" style="left:2210px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,8</div>
+        <div class="tile" style="left:2380px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,8</div>
+        <div class="tile" style="left:2550px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,8</div>
+        <div class="tile" style="left:2550px; top:1120px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,8</div>
+
+        <div class="tile" style="left:0px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">0,8</div>
+        <div class="tile" style="left:170px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">1,8</div>
+        <div class="tile" style="left:340px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">2,8</div>
+        <div class="tile" style="left:510px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">3,8</div>
+        <div class="tile" style="left:680px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">4,8</div>
+        <div class="tile" style="left:850px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">5,8</div>
+        <div class="tile" style="left:1020px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">6,8</div>
+        <div class="tile" style="left:1190px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">7,8</div>
+        <div class="tile" style="left:1360px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">8,8</div>
+        <div class="tile" style="left:1530px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">9,8</div>
+        <div class="tile" style="left:1700px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">10,8</div>
+        <div class="tile" style="left:1870px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">11,8</div>
+        <div class="tile" style="left:2040px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">12,8</div>
+        <div class="tile" style="left:2210px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">13,8</div>
+        <div class="tile" style="left:2380px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">14,8</div>
+        <div class="tile" style="left:2550px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,8</div>
+        <div class="tile" style="left:2550px; top:1260px; color:#aaa; font-size:10px; text-align:center; line-height:100px;">15,8</div>
+    </div>
+</div>
+
+<script>
+    const map = document.getElementById('map');
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+
+    map.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = parseInt(map.style.left) || 0;
+        startTop = parseInt(map.style.top) || 0;
+        map.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        map.style.left = `${startLeft + dx}px`;
+        map.style.top = `${startTop + dy}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        map.style.cursor = 'grab';
+    });
+  </script>
+</body>
+</html>
+

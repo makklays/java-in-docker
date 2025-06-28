@@ -94,6 +94,7 @@ public class SecurityConfiguration {
                     .requestMatchers(new AntPathRequestMatcher("/*.{ico,png,jpg,svg,webapp}")).permitAll()*/
 
                     // authenticated
+                    .requestMatchers("/map2").authenticated()
                     .requestMatchers("/map").authenticated()
                     .requestMatchers("/map/**/bases/").authenticated()
                     .requestMatchers("/map/**/bases/**").authenticated()
