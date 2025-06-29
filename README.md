@@ -20,6 +20,7 @@ Varios pantillas del proyecto bajo
     <img src="./src/main/resources/mystatic/images/bases_for_upload/lab_1.png" width="170" />
     <img src="./src/main/resources/mystatic/images/bases_for_upload/banco_3.png" width="170" />
     <img src="./src/main/resources/mystatic/images/bases_for_upload/hangar_1.png" width="170" />
+    <img src="./src/main/resources/mystatic/images/bases_for_upload/cards.jpg" width="170" />
 </p>
 
 ### En Postman
