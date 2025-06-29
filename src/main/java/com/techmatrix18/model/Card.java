@@ -28,6 +28,9 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
     /**
      * Number of card
      */
@@ -150,6 +153,10 @@ public class Card {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long getUserId() { return userId; }
+
+    public void setUserId(Long userId) { this.userId = userId; }
 
     public String getCardNumber() {
         return cardNumber;
@@ -291,18 +298,19 @@ public class Card {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Card card)) return false;
-        return Objects.equals(getId(), card.getId()) && Objects.equals(getCardNumber(), card.getCardNumber()) && Objects.equals(getCardholderName(), card.getCardholderName()) && Objects.equals(getExpirationDate(), card.getExpirationDate()) && Objects.equals(getCvv(), card.getCvv()) && Objects.equals(getPin(), card.getPin()) && Objects.equals(getBalance(), card.getBalance()) && Objects.equals(getCreditLimit(), card.getCreditLimit()) && Objects.equals(getCurrency(), card.getCurrency()) && getStatus() == card.getStatus() && Objects.equals(getBankName(), card.getBankName()) && getType() == card.getType() && Objects.equals(getIssueDate(), card.getIssueDate()) && Objects.equals(getRewardPoints(), card.getRewardPoints()) && Objects.equals(getInterestRate(), card.getInterestRate()) && Objects.equals(getContactless(), card.getContactless()) && Objects.equals(getCreatedAt(), card.getCreatedAt()) && Objects.equals(getUpdatedAt(), card.getUpdatedAt());
+        return getId().equals(card.getId()) && getUserId().equals(card.getUserId()) && getCardNumber().equals(card.getCardNumber()) && getCardholderName().equals(card.getCardholderName()) && getExpirationDate().equals(card.getExpirationDate()) && getCvv().equals(card.getCvv()) && getPin().equals(card.getPin()) && getBalance().equals(card.getBalance()) && getCreditLimit().equals(card.getCreditLimit()) && getCurrency().equals(card.getCurrency()) && getStatus() == card.getStatus() && getBankName().equals(card.getBankName()) && getType() == card.getType() && getIssueDate().equals(card.getIssueDate()) && getRewardPoints().equals(card.getRewardPoints()) && getInterestRate().equals(card.getInterestRate()) && getContactless().equals(card.getContactless()) && getCreatedAt().equals(card.getCreatedAt()) && getUpdatedAt().equals(card.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCardNumber(), getCardholderName(), getExpirationDate(), getCvv(), getPin(), getBalance(), getCreditLimit(), getCurrency(), getStatus(), getBankName(), getType(), getIssueDate(), getRewardPoints(), getInterestRate(), getContactless(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getId(), getUserId(), getCardNumber(), getCardholderName(), getExpirationDate(), getCvv(), getPin(), getBalance(), getCreditLimit(), getCurrency(), getStatus(), getBankName(), getType(), getIssueDate(), getRewardPoints(), getInterestRate(), getContactless(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
     public String toString() {
         return "Card {" +
                 "id=" + id +
+                ", userId='" + userId + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", cardholderName='" + cardholderName + '\'' +
                 ", expirationDate=" + expirationDate +
