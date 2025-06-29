@@ -4,7 +4,7 @@ Yo como Arquitectador =) pinté esta eschema UML para mejor entender el proyecto
 
 en base de datos. 
 
-<img src="./src/main/resources/mystatic/eschemas/photo_2025-06-29_18-58-03.jpg" title="Eschema las tablas con relaciones" />
+<img src="./src/main/resources/mystatic/eschemas/photo_2025-06-29_19-13-14.jpg" title="Eschema las tablas con relaciones" />
 
 Varios pantillas del proyecto bajo
 
@@ -18,6 +18,8 @@ Varios pantillas del proyecto bajo
     <img src="./src/main/resources/mystatic/images/bases_for_upload/base1_2.png" width="170" />
     <img src="./src/main/resources/mystatic/images/bases_for_upload/base1_3.png" width="170" />
     <img src="./src/main/resources/mystatic/images/bases_for_upload/lab_1.png" width="170" />
+    <img src="./src/main/resources/mystatic/images/bases_for_upload/banco_3.png" width="170" />
+    <img src="./src/main/resources/mystatic/images/bases_for_upload/hangar_1.png" width="170" />
 </p>
 
 ### En Postman
