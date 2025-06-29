@@ -56,8 +56,70 @@ public class MapViewController {
 
     @GetMapping("/map2")
     public String getMap2(Model model, HttpSession session) {
+        // get session
+        Long userId = (Long) session.getAttribute("userId");
+        log.info("---------- user ID--------------> " + userId);
+        if (userId != null) {
+            User user = userService.getById(userId);
+            model.addAttribute("user", user);
+
+            log.info("---------- user --------------> " + user.toString());
+
+        } else {
+            return "redirect:/req/login";
+        }
+
+        // space
+        Optional<Space> spaceOptional = spaceService.getSpaceByUserId(userId);
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+
+            // count time - seconds
+            Instant dateTimeNow = Instant.now();
+            Instant lastTime = space.getUpdatedAt(); // Предположим, это тоже Instant
+            long diffSeconds = Duration.between(lastTime, dateTimeNow).getSeconds();
+
+            // update - no less 15 minutes
+            if (diffSeconds >= 60 * 15) {
+                // update res per 1 hour
+                double aguaPerHours = space.getDoResAgua() * (diffSeconds / 3600.0);
+                double plasticPerHours = space.getDoResPlastic() * (diffSeconds / 3600.0);
+                double foodPerHours = space.getDoResFood() * (diffSeconds / 3600.0);
+                double ironPerHours = space.getDoResIron() * (diffSeconds / 3600.0);
+
+                space.setResAgua(space.getResAgua() + (int) aguaPerHours);
+                space.setResPlastic(space.getResPlastic() + (int) plasticPerHours);
+                space.setResFood(space.getResFood() + (int) foodPerHours);
+                space.setResIron(space.getResIron() + (int) ironPerHours);
+                space.setUpdatedAt(Instant.now());
+                spaceService.updateSpace(space);
+            }
+            model.addAttribute("space", space);
+
+            // map:sectors
+            List<Map> sectors = mapService.getAllSectors(space.getId());
+            model.addAttribute("sectors", sectors);
+
+            ArrayList<Map> arrSectors = new ArrayList<>();
+            for (int i = 0; i <= 28; i++) {
+                //if (sectors.filter()) // exist i in sectors - in_array(i, sectors);
+                arrSectors.add(i, null);
+            }
+
+            //Если тебе нужна структура с «пропущенными» индексами, вместо List лучше использовать:
+            //Map<Integer, Object> map = new HashMap<>();
+            //map.put(8, someValue);  // Работает независимо от порядка
+
+            for (int j = 0; j < sectors.size(); j++) {
+                Map m = sectors.get(j);
+                arrSectors.set((m.getSector().intValue() - 1), m);
+            }
+            model.addAttribute("arrSectors", arrSectors);
+        }
+
         return "map/map2";
     }
+
     //
     @GetMapping("/map")
     public String getDiv(Model model, HttpSession session) {
