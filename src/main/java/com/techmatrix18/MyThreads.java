@@ -7,7 +7,7 @@ package com.techmatrix18;
  * @since 13-06-2025
  * @version 0.0.1
  */
-public class Main2 {
+public class MyThreads {
     public static void main(String[] args) throws InterruptedException {
 
         // 4 Threads
