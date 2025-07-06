@@ -84,6 +84,8 @@
     <a href="/admin/bases/" class="nav-link my-1"><span class="icon"><i class="fa-solid fa-warehouse"></i></span> <span class="text-label">Bases</span></a>
     <a href="/admin/units/" class="nav-link my-1"><span class="icon"><i class="fa-solid fa-truck-field-un"></i></span> <span class="text-label">Units</span></a>
     <a href="/admin/users/" class="nav-link my-1"><span class="icon"><i class="fa-solid fa-users"></i></span> <span class="text-label">Users</span></a>
+    <a href="/admin/auto-battles/" class="nav-link my-1"><span class="icon"><i class="fa-solid fa-baseball-bat-ball"></i></span> <span class="text-label">Auto-battles</span></a>
+
     <a href="/admin/settings/" class="nav-link my-1"><span class="icon"><i class="fa-solid fa-gear"></i></span> <span class="text-label">Settings</span></a>
 </div>
 
@@ -113,20 +115,20 @@
 </div>
 
 <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="http://localhost:8080/js/bootstrap.bundle.min.js"></script>
 
 <!-- Скрипт переключения меню -->
 <script>
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('toggleSidebar');
-  const content = document.getElementById('mainContent');
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const content = document.getElementById('mainContent');
 
-  toggleBtn.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
     sidebar.classList.toggle('expanded');
     content.classList.toggle('collapsed');
     toggleBtn.classList.toggle('collapsed');
-  });
+    });
 </script>
 
 </body>
