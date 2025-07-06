@@ -21,9 +21,9 @@
         </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <th:block th:if="${user != null}">
-                <li><a href="/map" class="nav-link px-2 link-dark"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+                <li><a href="/map" class="nav-link px-2 link-dark"><i class="fa-solid fa-map-location-dot"></i> <span th:text="#{menu.mi_mundo}">Mi mundo</span></a></li>
             </th:block>
-            <li><a href="/la-historia" class="nav-link px-2 link-my-active"><i class="fa-solid fa-timeline"></i> La historia</a></li>
+            <li><a href="/la-historia" class="nav-link px-2 link-my-active"><i class="fa-solid fa-timeline"></i> <span th:text="#{menu.la_historia}">La historia</span></a></li>
             <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
             <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
             <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
@@ -31,21 +31,62 @@
             <li><a href="/contact" class="nav-link px-2 link-dark"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <!-- langs -->
+        <div class="dropdown ms-auto" style="margin-right:20px;">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <th:block th:if="${#locale.language == 'en'}">
+                    <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="EN"> English
+                </th:block>
+                <th:block th:if="${#locale.language == 'es'}">
+                    <img src="https://flagcdn.com/w40/es.png" class="flag-icon" alt="ES"> Español
+                </th:block>
+                <th:block th:if="${#locale.language == 'ru'}">
+                    <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="RU"> Русский
+                </th:block>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <th:block th:if="${#locale.language == 'en'}">
+                    <li>
+                        <a class="dropdown-item" href="?lang=es"><img src="https://flagcdn.com/w40/es.png" class="flag-icon" alt="ES"> Español</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="?lang=ru"><img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="RU"> Русский</a>
+                    </li>
+                </th:block>
+                <th:block th:if="${#locale.language == 'es'}">
+                    <li>
+                        <a class="dropdown-item" href="?lang=en"><img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="EN"> English</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="?lang=ru"><img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="RU"> Русский</a>
+                    </li>
+                </th:block>
+                <th:block th:if="${#locale.language == 'ru'}">
+                    <li>
+                        <a class="dropdown-item" href="?lang=es"><img src="https://flagcdn.com/w40/es.png" class="flag-icon" alt="ES"> Español</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="?lang=en"><img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="EN"> English</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+
+        <!--form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
             <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
-        </form>
+        </form-->
 
         <th:block th:if="${user == null}">
             <a href="/req/login" title="Login" style="margin-right:10px;" >Login</a> |
             <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
         </th:block>
         <th:block th:if="${user != null}">
-            <div class="dropdown text-end">
+            <div class="dropdown text-end" style="margin-right:10px;">
                 <a href="/profile">
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
             </div>
-            <a href="/req/logout">Cerrar sesión</a> <br/><br/>
+            <a href="/req/logout" th:text="#{exit}" >Cerrar sesión</a> <br/><br/>
         </th:block>
     </div>
 
