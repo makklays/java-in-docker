@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/awesome6/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/div.css" />
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+    <script src="http://localhost:8080/js/bootstrap.bundle.min.js"></script>
 </head>
 <body style="background-color:#e7e7e7; background-image:url('/images/fons/fon_site_12.png');">
 
@@ -77,8 +78,8 @@
         </form-->
 
         <th:block th:if="${user == null}">
-            <a href="/req/login" title="Login" style="margin-right:10px;" >Login</a> |
-            <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+            <a href="/req/login" title="Login" style="margin-right:10px;" ><span th:text="#{login}">Login</span></a> |
+            <a href="/req/signup" title="SignUp" style="margin-left:10px;" ><span th:text="#{sign_up}">SignUp</span></a>
         </th:block>
         <th:block th:if="${user != null}">
             <div class="dropdown text-end" style="margin-right:10px;">
@@ -93,34 +94,36 @@
     <!-- Content -->
     <div class="row" style="margin-top:20px;">
         <div class="col-md-12">
-            <h1><i class="fa-solid fa-timeline"></i> La historia "Pacto 5 estrellas"</h1>
-            <div>¿Por qué tu estás por aqui? Puedes leer la historia y tu saberás</div>
+            <h1><i class="fa-solid fa-timeline"></i> <span th:text="#{history.title}">La historia "Pacto 5 estrellas"</span></h1>
+            <div><span th:text="#{history.breadcrumb}">¿Por qué tu estás por aqui? Puedes leer la historia y tu saberás</span></div>
             <br/></br>
         </div>
 
         <div class="col-md-12">
-            <h4>Ahora 2118 año</h4>
+            <h4><span th:text="#{history.title_1}">Ahora 2118 año</span></h4>
             </br>
             <div class="row">
                 <div class="col-md-12">
                     <img src="/images/personajes/capitan.jpg" class="img img-fluid" style="float:left; margin-right:20px; margin-bottom:20px;" alt="Alice" title="Alice" />
-                    Ahora <b>2118</b>. Tu eres — el Capitán de la colonia de la misión <b>"Pacto 5 estrellas"</b>, de la civilización
-                    humana sobreviviente de España, desarrollar la vida en la Luna, basada en un código espiritual y
-                    moral — El Pacto de la humanidad y la memoria de los antepasados del tercer planeta del Sol en
-                    la constelación de la "Vía Láctea".
+                    <span th:utext="#{history.paragraf_1}">
+                        Ahora <b>2118</b>. Tu eres — el Capitán de la colonia de la misión <b>"Pacto 5 estrellas"</b>, de la civilización
+                        humana sobreviviente de España, desarrollar la vida en la Luna, basada en un código espiritual y
+                        moral — El Pacto de la humanidad y la memoria de los antepasados del tercer planeta del Sol en
+                        la constelación de la "Vía Láctea".
+                    </span>
                 </div>
             </div>
             <br/>
 
-            <h4>Breves antecedentes</h4>
+            <h4><span th:text="#{history.title_2}">Breves antecedentes</span></h4>
             </br>
-            <p>
+            <p th:utext="#{history.paragraf_2}">
                 Después de huir de la Tierra moribunda, destruyendo todas las principales ciudades terrenales, se le da la oportunidad de
                 misión <b>"Pacto 5 estrellas"</b> — La última esperanza de supervivencia de la humanidad. La misión partió desde Madrid
                 en España con la esperanza de una descendencia masculina y su continuación, con la esperanza de un heredero.
                 Aunque ahora están lejos de la Tierra, pero la Tierra todavía envía señales y palabras que se escuchan en el espacio.
             </p>
-            <p>
+            <p th:utext="#{history.paragraf_3}">
                 Usted es el fundador de una colonia en la superficie de la luna cerca del cráter Copérnico. Aquí es
                 donde la poderosa energía anomalía y posible extracción de los recursos básicos necesarios para la
                 construcción y desarrollo de la colonia.</br>
@@ -128,7 +131,7 @@
                 Empezaste desde cero - bajo la bandera del Pacto de España: Justicia, memoria, libertad y fe en el futuro.
                 Es desde aquí que las mejores mentes son enviadas - y tú las mandas.
             </p>
-            <p>
+            <p th:utext="#{history.paragraf_4}">
                 En 2118, exploradores Gromozek y Alice registrados señales desconocidas desde el lado oscuro de la luna - desde el cráter
                 Weber-9, durante mucho tiempo se pensó que era una zona muerta. Después de la fundación de la colonia,
                 de sus profundidades vino una raza de alienígenas Sarim Nuclear Power Plants - una civilización alienígena,
@@ -137,9 +140,9 @@
             </p>
             <br/>
 
-            <h4>Origen del Sarim Nuclear alienígena</h4>
+            <h4><span th:text="#{history.title_3}">Origen del Sarim Nuclear alienígena</span></h4>
             </br>
-            <p>
+            <p th:utext="#{history.paragraf_5}">
                 No vinieron de otra estrella del espacio - siempre estuvieron aquí, en las profundidades del lado oscuro
                 de la luna, después de su antiguo desastre. Son alimentadas por las raras oscilaciones del campo
                 gravitatorio de la Tierra y el Sol. No sabían de los humanos hasta que la construcción de una colonia
@@ -148,15 +151,15 @@
                 verde y con una gran cabeza. Ahora consideran a la gente como una amenaza para la estabilidad planetaria y
                 Ofrecen una cosa: retirarse - o desaparecer.
             </p>
-            <p>
+            <p th:utext="#{history.paragraf_6}">
                 La gente lleva el Pacto, alma, sentimientos, amor.</br>
                 Sarim Power Plants - matemáticas puras de supervivencia en la eficiencia a largo plazo.
             </p>
             <br/>
 
-            <h4>Tu misión</h4>
+            <h4><span th:text="#{history.title_4}">Tu misión</h4>
             </br>
-            <p>
+            <p th:utext="#{history.paragraf_7}">
                 Usted es el capitán de una nueva colonia de la misión <b>"Pacto 5 estrellas"</b>. Su objetivo y misión es
                 construir una nueva una próspera colonia para la supervivencia y continuación de la raza humana en el
                 espacio con un heredero.</br>
@@ -167,51 +170,63 @@
             </p>
             <br/>
 
-            <h4>Misión de equipo</h4>
+            <h4><span th:text="#{history.title_5}">Misión de equipo</span></h4>
             </br>
-            <p>
+            <p th:utext="#{history.paragraf_8}">
                 Descubre el secreto de la luna y el espacio. <br/>
                 El misterio del origen de la humanidad y las razas cósmicas de otros planetas.<br/>
                 Revelar el secreto de la aparición del espacio y la vida en él.
             </p>
             <br/>
 
-            <h4>Los personajes principales:</h4>
+            <h4><span th:text="#{history.title_6}">Los personajes principales:</span></h4>
             </br>
 
             <div class="row">
                 <div class="col-md-6">
-                    <img src="/images/personajes/alice.jpg" class="img img-fluid" style="width:150px; float:left; margin-right:20px; margin-bottom:20px;" alt="Alice" title="Alice" />
-                    <b>Alice</b> — Especialista en xenobiología y navegación cultural. Fue la primera en entrar
-                    en contacto con Sarim centrales nucleares y advierte que tienen inmunidad cultural contra los seres
-                    humanos - no perdonan errores.</br>
-                    Alice tiene un Milophone, que le permite escuchar los pensamientos de todos los seres cósmicos.</br></br>
+                    <img src="/images/personajes/alisa.jpg" class="img img-fluid" style="width:150px; float:left; margin-right:20px; margin-bottom:20px;" alt="Alice" title="Alice" />
+                    <span th:utext="#{history.personaje_1}">
+                        <b>Alice</b> — Especialista en xenobiología y navegación cultural. Fue la primera en entrar
+                        en contacto con Sarim centrales nucleares y advierte que tienen inmunidad cultural contra los seres
+                        humanos - no perdonan errores.</br>
+                        Alice tiene un Milophone, que le permite escuchar los pensamientos de todos los seres cósmicos.
+                    </span>
+                    </br></br>
                 </div>
                 <div class="col-md-6">
                     <img src="/images/personajes/capitan-verde.jpg" class="img img-fluid" style="width:150px; float:left; margin-right:20px; margin-bottom:20px;" alt="Alice" title="Alice" />
-                    <b>Capitán Verde</b> — Ex miembro de la Fuerza Expedicionaria Unida. Veterano de guerra,
-                    Directo, listo para defender la colonia a toda costa. Su opinión: "Primero construimos, luego resolvemos."</br></br>
+                    <span th:utext="#{history.personaje_2}">
+                        <b>Capitán Verde</b> — Ex miembro de la Fuerza Expedicionaria Unida. Veterano de guerra,
+                        Directo, listo para defender la colonia a toda costa. Su opinión: "Primero construimos, luego resolvemos."
+                    </span>
+                    </br></br>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <img src="/images/personajes/gromozeka.jpg" class="img img-fluid" style="width:150px; float:left; margin-right:20px; margin-bottom:20px;" alt="Alice" title="Alice" />
-                    <b>Gromozeka</b> — ingeniero mecánico y arqueólogo xenólogo. Especialista en estructuras antiguas de
-                    la central nuclear de Sarim. Dice: "Estas ruinas son silenciosas, pero lo dirán todo - si sabes escuchar."</br>
-                    Grosozeka es también profundamente religioso, considera la Luna "el lugar del Testamento de todas
-                    las civilizaciones, que ha visto toda vida en la tierra".<br/><br/>
+                    <span th:utext="#{history.personaje_3}">
+                        <b>Gromozeka</b> — ingeniero mecánico y arqueólogo xenólogo. Especialista en estructuras antiguas de
+                        la central nuclear de Sarim. Dice: "Estas ruinas son silenciosas, pero lo dirán todo - si sabes escuchar."</br>
+                        Grosozeka es también profundamente religioso, considera la Luna "el lugar del Testamento de todas
+                        las civilizaciones, que ha visto toda vida en la tierra".
+                    </span>
+                    <br/><br/>
                 </div>
                 <div class="col-md-6">
                     <img src="/images/personajes/kt-9.jpg" class="img img-fluid" style="width:150px; float:left; margin-right:20px; margin-bottom:20px;" alt="Alice" title="Alice" />
-                    <b>KT-9 Android</b> — Robot Android KT-9.<br/><br/>
+                    <span th:utext="#{history.personaje_4}">
+                        <b>KT-9 Android</b> — Robot Android KT-9.
+                    </span>
+                    <br/><br/>
                 </div>
             </div>
             <br/>
 
-            <h4>Conflicto clave</h4>
+            <h4><span th:text="#{history.title_7}">Conflicto clave</span></h4>
             </br>
-            <p>
+            <p th:utext="#{history.paragraf_9}">
                 Las centrales nucleares de Sarim están pidiendo que se detenga la construcción: según sus historias,
                 la gente construye sobre las cenizas de sus antepasados muertos, y eso es un sacrilegio.
                 Verde se ofrece a atacar y devolver el enemigo. Alice - encontrar un compromiso.
@@ -227,10 +242,10 @@
                 <footer class="py-5">
                     <div class="row">
                         <div class="col-6 col-md-2 mb-3">
-                            <h5>Sobre nosotros</h5>
+                            <h5><span th:text="#{footer.about}">Sobre nosotros</span></h5>
                             <ul class="nav flex-column">
-                                <li class="nav-item mb-2"><a href="/la-historia" class="nav-link p-0 text-muted">La historia</a></li>
-                                <li class="nav-item mb-2"><a href="/sobre-nosotros" class="nav-link p-0 text-muted">La empresa</a></li>
+                                <li class="nav-item mb-2"><a href="/la-historia" class="nav-link p-0 text-muted"><span th:text="#{menu.la_historia}">La historia</span></a></li>
+                                <li class="nav-item mb-2"><a href="/sobre-nosotros" class="nav-link p-0 text-muted"><span th:text="#{menu.la_empresa}">La empresa</span></a></li>
                             </ul>
                         </div>
 
@@ -271,11 +286,6 @@
 
                     <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
                         <p>&copy; 2021 <a href="http://techmatrix18.com" target="_blank">TechMatrix18</a>, Inc. Todos los derechos reservados.</p>
-                        <ul class="list-unstyled d-flex">
-                            <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
-                            <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
-                            <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
-                        </ul>
                     </div>
                 </footer>
             </div>

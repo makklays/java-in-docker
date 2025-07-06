@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -132,6 +133,9 @@ public class SecurityConfiguration {
                     .permitAll()
                     //.defaultSuccessUrl("/welcome", true) // После успешного входа перенаправляем на главную
                 )*/
+                .exceptionHandling(exception -> exception // так как удалили .formLogin(), то всех неавторизованных отправляем на тсраницу авторизации кастомную (!)
+                    .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/req/login"))
+                )
                 .logout(logout -> logout
                         .logoutUrl("/req/logout")
                         .logoutSuccessUrl("/req/login?logout")

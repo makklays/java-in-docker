@@ -10,6 +10,7 @@
 
         <script src="http://localhost:8080/js/bootstrap.min.js"></script>
         <script src="http://localhost:8080/js/signup.js"></script>
+        <script src="http://localhost:8080/js/bootstrap.bundle.min.js"></script>
     </head>
     <body style="background-color:#e7e7e7; background-image:url('/images/fons/fon_site_12.png');">
 
@@ -22,9 +23,9 @@
                 </a>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <th:block th:if="${user != null}">
-                        <li><a href="/map" class="nav-link px-2 link-dark"><i class="fa-solid fa-map-location-dot"></i> Mi mundo</a></li>
+                        <li><a href="/map" class="nav-link px-2 link-dark"><i class="fa-solid fa-map-location-dot"></i> <span th:text="#{menu.mi_mundo}">Mi mundo</span></a></li>
                     </th:block>
-                    <li><a href="/la-historia" class="nav-link px-2 link-dark"><i class="fa-solid fa-timeline"></i> La historia</a></li>
+                    <li><a href="/la-historia" class="nav-link px-2 link-my-active"><i class="fa-solid fa-timeline"></i> <span th:text="#{menu.la_historia}">La historia</span></a></li>
                     <li><a href="/info" class="nav-link px-2 link-dark"><i class="fa-solid fa-circle-info"></i> Información</a></li>
                     <li><a href="/users" class="nav-link px-2 link-dark"><i class="fa-solid fa-users"></i> Usuarios</a></li>
                     <li><a href="/rating" class="nav-link px-2 link-dark"><i class="fa-solid fa-ranking-star"></i> Rating</a></li>
@@ -32,37 +33,78 @@
                     <li><a href="/contact" class="nav-link px-2 link-dark"><i class="fa-solid fa-file-signature"></i> Contactos</a></li>
                 </ul>
 
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <!-- langs -->
+                <div class="dropdown ms-auto" style="margin-right:20px;">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <th:block th:if="${#locale.language == 'en'}">
+                            <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="EN"> English
+                        </th:block>
+                        <th:block th:if="${#locale.language == 'es'}">
+                            <img src="https://flagcdn.com/w40/es.png" class="flag-icon" alt="ES"> Español
+                        </th:block>
+                        <th:block th:if="${#locale.language == 'ru'}">
+                            <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="RU"> Русский
+                        </th:block>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <th:block th:if="${#locale.language == 'en'}">
+                            <li>
+                                <a class="dropdown-item" href="?lang=es"><img src="https://flagcdn.com/w40/es.png" class="flag-icon" alt="ES"> Español</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="?lang=ru"><img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="RU"> Русский</a>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${#locale.language == 'es'}">
+                            <li>
+                                <a class="dropdown-item" href="?lang=en"><img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="EN"> English</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="?lang=ru"><img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="RU"> Русский</a>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${#locale.language == 'ru'}">
+                            <li>
+                                <a class="dropdown-item" href="?lang=es"><img src="https://flagcdn.com/w40/es.png" class="flag-icon" alt="ES"> Español</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="?lang=en"><img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="EN"> English</a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+
+                <!--form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                     <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
-                </form>
+                </form-->
 
                 <th:block th:if="${user == null}">
-                    <a href="/req/login" title="Login" class="link-my-active" style="margin-right:10px;" >Login</a> |
-                    <a href="/req/signup" title="SignUp" style="margin-left:10px;" >SignUp</a>
+                    <a href="/req/login" title="Login" class="link-my-active" style="margin-right:10px;" ><span th:text="#{login}">Login</span></a> |
+                    <a href="/req/signup" title="SignUp" style="margin-left:10px;" ><span th:text="#{sign_up}">SignUp</span></a>
                 </th:block>
-                <th:block th:if="${user != null}">
+                <th:block th:if="${user != null}" style="margin-right:10px;">
                     <div class="dropdown text-end">
                         <a href="/profile">
                             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                     </div>
-                    <a href="/req/logout">Cerrar sesión</a> <br/><br/>
+                    <a href="/req/logout" th:text="#{exit}" >Cerrar sesión</a> <br/><br/>
                 </th:block>
             </div>
 
             <!-- Content -->
             <div class="row">
                 <div class="col-md-3">
-                    <h1>LOGIN</h1>
+                    <h1><span th:text="#{login}">LOGIN</span></h1>
                     <section>
                         <form action="/req/login" th:object="${userDto}" method="post" >
                             <div class="mb-3">
-                                <label for="id_login" class="form-label">Login</label>
+                                <label for="id_login" class="form-label"><span th:text="#{login}">Login</span></label>
                                 <input type="text" name="username" class="form-control" id="id_login" />
                                 <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red;">Username Error</div>
                             </div>
                             <div class="mb-3">
-                                <label for="id_password" class="form-label">Password</label>
+                                <label for="id_password" class="form-label"><span th:text="#{password}">Password</span></label>
                                 <input type="password" name="password" class="form-control" id="id_password">
                                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red;">Username Error</div>
                             </div>
@@ -70,16 +112,69 @@
                             <div>
                                 <p th:if="${loginError}" style="color:red">Неверный логин или пароль</p>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary"><span th:text="#{login}">Login</span></button>
 
                             <br/><br/>
-                            Yet have not an account? <a href="/req/signup">Sign Up</a>
+                            <span th:text="#{text_login}">Yet have not an account?</span> <a href="/req/signup"><span th:text="#{sign_up}">Sign Up</span></a>
                         </form>
                     </section>
                 </div>
             </div>
 
-            <footer class="pt-3 mt-4 text-muted border-top">© 2021</footer>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- footer -->
+                    <footer class="py-5">
+                        <div class="row">
+                            <div class="col-6 col-md-2 mb-3">
+                                <h5><span th:text="#{footer.about}">Sobre nosotros</span></h5>
+                                <ul class="nav flex-column">
+                                    <li class="nav-item mb-2"><a href="/la-historia" class="nav-link p-0 text-muted"><span th:text="#{menu.la_historia}">La historia</span></a></li>
+                                    <li class="nav-item mb-2"><a href="/sobre-nosotros" class="nav-link p-0 text-muted"><span th:text="#{menu.la_empresa}">La empresa</span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-6 col-md-2 mb-3">
+                                <h5>Section</h5>
+                                <ul class="nav flex-column">
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-6 col-md-2 mb-3">
+                                <h5>Section</h5>
+                                <ul class="nav flex-column">
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-5 offset-md-1 mb-3">
+                                <form>
+                                    <h5>Suscríbete a nuestro boletín</h5>
+                                    <p>Resumen mensual de nuestras novedades y novedades más interesantes.</p>
+                                    <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                                        <label for="newsletter1" class="visually-hidden">Correo electronico</label>
+                                        <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+                                        <button class="btn btn-primary" type="button">Suscribir</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                            <p>&copy; 2021 <a href="http://techmatrix18.com" target="_blank">TechMatrix18</a>, Inc. Todos los derechos reservados.</p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
 
         </div>
 
