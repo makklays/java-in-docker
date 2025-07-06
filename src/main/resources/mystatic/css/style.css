@@ -66,3 +66,10 @@ a, a:hover {
     color: #82910e;
 }
 
+.flag-icon {
+    width: 20px;
+    height: 15px;
+    margin-right: 5px;
+    object-fit: cover;
+}
+

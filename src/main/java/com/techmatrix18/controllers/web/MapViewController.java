@@ -2,19 +2,22 @@ package com.techmatrix18.controllers.web;
 
 import com.techmatrix18.model.*;
 import com.techmatrix18.services.*;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -123,6 +126,19 @@ public class MapViewController {
     //
     @GetMapping("/map")
     public String getDiv(Model model, HttpSession session) {
+
+        /*// lang
+        if (lang != null) {
+            Cookie cookie = new Cookie("lang", lang);
+            cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
+            cookie.setPath("/");
+            model.addAttribute("lang", lang);
+
+            //Locale locale = new Locale("es");
+            //LocaleContextHolder.setLocale(locale);
+        } else {
+            model.addAttribute("lang", langCookie);
+        }*/
 
         // get session
         Long userId = (Long) session.getAttribute("userId");
