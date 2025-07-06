@@ -19,7 +19,7 @@ CREATE TABLE card_operations
     # fee - комиссия банка
 
     #amount           DOUBLE null, # для скорости, но не точности
-    amount            DECIMAL(19, 2) NULL # для точности и работы с деньгами
+    amount            DECIMAL(19, 2) NULL, # для точности и работы с деньгами
 
     currency          VARCHAR(3) null, # например, USD, EUR
     description       text null,
