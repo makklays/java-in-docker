@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
+
+<section layout:fragment="custom-content">
+
+    <h2><i class="fa-solid fa-skull"></i> Autobattle</h2>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/autobattles/">Autobattle</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="'Ver el autobattle - ' + ${autobattle.title}">Ver el autobattle</li>
+        </ol>
+    </nav>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-12" style="text-align:right;" >
+            <a th:href="@{'/admin/autobattles/edit/' + ${autobattle.id}}" class="btn btn-primary">Editar el autobattle</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card" >
+                <div class="card-body" style="background-color:#FFF;">
+
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th width="400">ID</th>
+                            <td th:text="${autobattle.Id}"></td>
+                        </tr>
+                        <tr>
+                            <th>Titulo</th>
+                            <td th:text="${autobattle.title}"></td>
+                        </tr>
+
+                        <!-- required params -->
+                        <tr>
+                            <th>Required Level</th>
+                            <td th:text="${autobattle.reqBuildingLevel}"></td>
+                        </tr>
+                        <tr>
+                            <th>Required Units</th>
+                            <td th:text="${autobattle.reqUnitsCount}"></td>
+                        </tr>
+                        <tr>
+                            <th>Required Iron</th>
+                            <td th:text="${autobattle.reqResIron}"></td>
+                        </tr>
+
+                        <!-- for attack -->
+                        <tr>
+                            <th>HP</th>
+                            <td th:text="${autobattle.hp}"></td>
+                        </tr>
+                        <tr>
+                            <th>Attack</th>
+                            <td th:text="${autobattle.attack}"></td>
+                        </tr>
+                        <tr>
+                            <th>Armor</th>
+                            <td th:text="${autobattle.armor}"></td>
+                        </tr>
+
+                        <!-- rewards -->
+                        <tr>
+                            <th>Reward Res Agua</th>
+                            <td th:text="${autobattle.rewardResAgua}"></td>
+                        </tr>
+                        <tr>
+                            <th>Reward Res Plastic</th>
+                            <td th:text="${autobattle.rewardResPlastic}"></td>
+                        </tr>
+                        <tr>
+                            <th>Reward Res Food</th>
+                            <td th:text="${autobattle.rewardResFood}"></td>
+                        </tr>
+                        <tr>
+                            <th>Reward Res Iron</th>
+                            <td th:text="${autobattle.rewardResIron}"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Created</th>
+                            <td th:text="${autobattle.createdAt} ? ${#dates.format(autobattle.createdAt, 'dd.MM.yyyy HH:mm')} : '-'"></td>
+                        </tr>
+                        <tr>
+                            <th>Updated</th>
+                            <td th:text="${autobattle.updatedAt} ? ${#dates.format(autobattle.updatedAt, 'dd.MM.yyyy HH:mm')} : '-'"></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/><br/>
+
+    <a href="#" th:href="'/admin/autobattles/'" class="btn btn-secondary" style="margin-top:20px;"> Back</a>
+
+    <br/><br/><br/><br/><br/>
+
+</section>
+
+</html>
+

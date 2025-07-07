@@ -1,6 +1,8 @@
 package com.techmatrix18.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
@@ -20,66 +22,78 @@ public class Autobattle {
     /**
      * Title of an autobattle
      */
+    @NotNull(message = "Title requerido")
+    @NotBlank(message = "Title requerido")
     @Column(name = "title")
     private String title;
 
     /**
      * Required building level TI-Centro of Map of Space
      */
+    @NotNull(message = "Required nivel requerido")
     @Column(name = "req_building_level")
     private Integer reqBuildingLevel;
 
     /**
      * Required count of units of Space
      */
+    @NotNull(message = "Required units requerido")
     @Column(name = "req_units_count")
     private Integer reqUnitsCount;
 
     /**
      * Required resources of Iron of Space
      */
+    @NotNull(message = "Required iron requerido")
     @Column(name = "req_res_iron")
     private Integer reqResIron;
 
     /**
      * Health Point of attack
      */
+    @NotNull(message = "HP requerido")
     @Column(name = "hp")
     private Integer hp;
 
     /**
      * Attack point of attack
      */
+    @NotNull(message = "Attack requerido")
     @Column(name = "attack")
     private Integer attack;
 
     /**
      * Armor point of attack
      */
+    @NotNull(message = "Armor requerido")
     @Column(name = "armor")
     private Integer armor;
 
     /**
      * Reward resource Agua
      */
+    @NotNull(message = "Reward res agua requerido")
     @Column(name = "reward_res_agua")
     private Integer rewardResAgua;
 
     /**
      * Reward resource Plastic
      */
+    @NotNull(message = "Reward res plastico requerido")
     @Column(name = "reward_res_plastic")
     private Integer rewardResPlastic;
 
     /**
      * Reward resource Food
      */
+    @NotNull(message = "Reward res food requerido")
     @Column(name = "reward_res_food")
     private Integer rewardResFood;
 
     /**
      * Reward resource Iron
      */
+    @NotNull(message = "Reward res hierro requerido")
     @Column(name = "reward_res_iron")
     private Integer rewardResIron;
 
