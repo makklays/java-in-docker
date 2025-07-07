@@ -11,42 +11,17 @@ import java.util.Objects;
 public class Autobattle {
 
     /**
-     * Unique user identifier (primary key).
+     * Unique autobattle identifier (primary key).
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * Space Id
+     * Title of an autobattle
      */
-    @Column(name = "space_id", nullable = false)
-    private Long spaceId;
-
-    /**
-     * Start Time of auto battle
-     */
-    @Column(name = "start_time", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Instant startTime;
-
-    /**
-     * End Time of auto battle
-     */
-    @Column(name = "end_time", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Instant endTime;
-
-    /**
-     * Status of auto battle
-     */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 20, nullable = false)
-    private BattleStatus status = BattleStatus.WAITING; // by default WAITING
-
-    public enum BattleStatus {
-        WAITING, IN_PROGRESS, FINISHED
-    }
+    @Column(name = "title")
+    private String title;
 
     /**
      * Required building level TI-Centro of Map of Space
@@ -109,23 +84,6 @@ public class Autobattle {
     private Integer rewardResIron;
 
     /**
-     * Result of auto battle
-     */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "result", length = 12, nullable = false)
-    private BattleResult result = BattleResult.DRAW; // by default DRAW
-
-    public enum BattleResult {
-        WIN, LOSE, DRAW
-    }
-
-    /**
-     * Logs of message
-     */
-    @Column(name = "logs")
-    private String logs;
-
-    /**
      * Date and time of auto battle creation
      */
     @CreationTimestamp
@@ -151,37 +109,9 @@ public class Autobattle {
         this.id = id;
     }
 
-    public Long getSpaceId() {
-        return spaceId;
-    }
+    public String getTitle() { return title; }
 
-    public void setSpaceId(Long spaceId) {
-        this.spaceId = spaceId;
-    }
-
-    public Instant getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public Instant getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
-    }
-
-    public BattleStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(BattleStatus status) {
-        this.status = status;
-    }
+    public void setTitle(String title) { this.title = title; }
 
     public Integer getReqBuildingLevel() {
         return reqBuildingLevel;
@@ -263,22 +193,6 @@ public class Autobattle {
         this.rewardResIron = rewardResIron;
     }
 
-    public BattleResult getResult() {
-        return result;
-    }
-
-    public void setResult(BattleResult result) {
-        this.result = result;
-    }
-
-    public String getLogs() {
-        return logs;
-    }
-
-    public void setLogs(String logs) {
-        this.logs = logs;
-    }
-
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -299,22 +213,18 @@ public class Autobattle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Autobattle that)) return false;
-        return getId().equals(that.getId()) && getSpaceId().equals(that.getSpaceId()) && getStartTime().equals(that.getStartTime()) && getEndTime().equals(that.getEndTime()) && getStatus() == that.getStatus() && getReqBuildingLevel().equals(that.getReqBuildingLevel()) && getReqUnitsCount().equals(that.getReqUnitsCount()) && getReqResIron().equals(that.getReqResIron()) && getHp().equals(that.getHp()) && getAttack().equals(that.getAttack()) && getArmor().equals(that.getArmor()) && getRewardResAgua().equals(that.getRewardResAgua()) && getRewardResPlastic().equals(that.getRewardResPlastic()) && getRewardResFood().equals(that.getRewardResFood()) && getRewardResIron().equals(that.getRewardResIron()) && getResult() == that.getResult() && getLogs().equals(that.getLogs()) && getCreatedAt().equals(that.getCreatedAt()) && getUpdatedAt().equals(that.getUpdatedAt());
+        return getId().equals(that.getId()) && getTitle().equals(that.getTitle()) && getReqBuildingLevel().equals(that.getReqBuildingLevel()) && getReqUnitsCount().equals(that.getReqUnitsCount()) && getReqResIron().equals(that.getReqResIron()) && getHp().equals(that.getHp()) && getAttack().equals(that.getAttack()) && getArmor().equals(that.getArmor()) && getRewardResAgua().equals(that.getRewardResAgua()) && getRewardResPlastic().equals(that.getRewardResPlastic()) && getRewardResFood().equals(that.getRewardResFood()) && getRewardResIron().equals(that.getRewardResIron()) && getCreatedAt().equals(that.getCreatedAt()) && getUpdatedAt().equals(that.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getSpaceId(), getStartTime(), getEndTime(), getStatus(), getReqBuildingLevel(), getReqUnitsCount(), getReqResIron(), getHp(), getAttack(), getArmor(), getRewardResAgua(), getRewardResPlastic(), getRewardResFood(), getRewardResIron(), getResult(), getLogs(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getId(), getTitle(), getReqBuildingLevel(), getReqUnitsCount(), getReqResIron(), getHp(), getAttack(), getArmor(), getRewardResAgua(), getRewardResPlastic(), getRewardResFood(), getRewardResIron(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
     public String toString() {
         return "Autobattle{" +
                 "id=" + id +
-                ", spaceId=" + spaceId +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", status=" + status +
                 ", reqBuildingLevel=" + reqBuildingLevel +
                 ", reqUnitsCount=" + reqUnitsCount +
                 ", reqResIron=" + reqResIron +
@@ -325,8 +235,6 @@ public class Autobattle {
                 ", rewardResPlastic=" + rewardResPlastic +
                 ", rewardResFood=" + rewardResFood +
                 ", rewardResIron=" + rewardResIron +
-                ", result=" + result +
-                ", logs='" + logs + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

@@ -7,11 +7,11 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "autobattle_steps")
-public class AutobattleStep {
+@Table(name = "space_autobattle_steps")
+public class SpaceAutobattleStep {
 
     /**
-     * Unique user identifier (primary key).
+     * Unique space autobattle steps identifier (primary key).
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,8 @@ public class AutobattleStep {
     /**
      * Autobattle Id
      */
-    @Column(name = "autobattle_id", nullable = false)
-    private Long autobattleId;
+    @Column(name = "space_autobattle_id", nullable = false)
+    private Long spaceAutobattleId;
 
     /**
      * Step of auto battle
@@ -103,13 +103,9 @@ public class AutobattleStep {
         this.id = id;
     }
 
-    public Long getAutobattleId() {
-        return autobattleId;
-    }
+    public Long getSpaceAutobattleId() { return spaceAutobattleId; }
 
-    public void setAutobattleId(Long autobattleId) {
-        this.autobattleId = autobattleId;
-    }
+    public void setSpaceAutobattleId(Long spaceAutobattleId) { this.spaceAutobattleId = spaceAutobattleId; }
 
     public Integer getStep() {
         return step;
@@ -202,20 +198,20 @@ public class AutobattleStep {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AutobattleStep that)) return false;
-        return getId().equals(that.getId()) && getAutobattleId().equals(that.getAutobattleId()) && getStep().equals(that.getStep()) && getAttackerName().equals(that.getAttackerName()) && getDefenderName().equals(that.getDefenderName()) && getAttackValue().equals(that.getAttackValue()) && getArmorValue().equals(that.getArmorValue()) && getDamageValue().equals(that.getDamageValue()) && getDefenderHpAfterHit().equals(that.getDefenderHpAfterHit()) && isCritical.equals(that.isCritical) && getLogMessage().equals(that.getLogMessage()) && getCreatedAt().equals(that.getCreatedAt()) && getUpdatedAt().equals(that.getUpdatedAt());
+        if (!(o instanceof SpaceAutobattleStep that)) return false;
+        return getId().equals(that.getId()) && getSpaceAutobattleId().equals(that.getSpaceAutobattleId()) && getStep().equals(that.getStep()) && getAttackerName().equals(that.getAttackerName()) && getDefenderName().equals(that.getDefenderName()) && getAttackValue().equals(that.getAttackValue()) && getArmorValue().equals(that.getArmorValue()) && getDamageValue().equals(that.getDamageValue()) && getDefenderHpAfterHit().equals(that.getDefenderHpAfterHit()) && isCritical.equals(that.isCritical) && getLogMessage().equals(that.getLogMessage()) && getCreatedAt().equals(that.getCreatedAt()) && getUpdatedAt().equals(that.getUpdatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getAutobattleId(), getStep(), getAttackerName(), getDefenderName(), getAttackValue(), getArmorValue(), getDamageValue(), getDefenderHpAfterHit(), isCritical, getLogMessage(), getCreatedAt(), getUpdatedAt());
+        return Objects.hash(getId(), getSpaceAutobattleId(), getStep(), getAttackerName(), getDefenderName(), getAttackValue(), getArmorValue(), getDamageValue(), getDefenderHpAfterHit(), isCritical, getLogMessage(), getCreatedAt(), getUpdatedAt());
     }
 
     @Override
     public String toString() {
-        return "AutobattleStep{" +
+        return "SpaceAutobattleStep{" +
                 "id=" + id +
-                ", autobattleId=" + autobattleId +
+                ", spaceAutobattleId=" + spaceAutobattleId +
                 ", step=" + step +
                 ", attackerName='" + attackerName + '\'' +
                 ", defenderName='" + defenderName + '\'' +
