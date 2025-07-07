@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layouts/base11.html}">
+
+<section layout:fragment="custom-content">
+
+    <h2><i class="fa-solid fa-skull"></i> Autobattles</h2>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/autobattles/">Autobattles</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="'Editar el autobattle - ' + ${autobattle.title}">Editar el autobattle</li>
+        </ol>
+    </nav>
+
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col-md-12" style="text-align:right;" ></div>
+    </div>
+
+    <div class="card" >
+        <div class="card-body" style="background-color:#FFF;">
+
+            <form th:action="@{/admin/autobattles/edit/{autobattleId}(autobattleId=${autobattle.id})}" th:object="${autobattle}" method="post">
+
+                <input type="hidden" name="id" th:value="${autobattle.id}" />
+
+                <!-- Titulo -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="id_title" class="form-label required">Titulo</label>
+                            <input id="id_title" th:field="*{title}" type="text" class="form-control" placeholder="" />
+                            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;">Titulo errore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Required params -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_req_building_level" class="form-label required">Required Nivel</label>
+                            <input id="id_req_building_level" th:field="*{reqBuildingLevel}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('reqBuildingLevel')}" th:errors="*{reqBuildingLevel}" style="color:red;">req building level errore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_req_units_count" class="form-label required">Required Units</label>
+                            <input id="id_req_units_count" th:field="*{reqUnitsCount}" type="number" class="form-control" placeholder="100" />
+                            <div th:if="${#fields.hasErrors('reqUnitsCount')}" th:errors="*{reqUnitsCount}" style="color:red;">req units count errore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_req_res_iron" class="form-label required">Required Iron</label>
+                            <input id="id_req_res_iron" th:field="*{reqResIron}" type="number" class="form-control" placeholder="100" />
+                            <div th:if="${#fields.hasErrors('reqResIron')}" th:errors="*{reqResIron}" style="color:red;">req res iron errore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_hp" class="form-label required">HP</label>
+                            <input id="id_hp" th:field="*{hp}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('hp')}" th:errors="*{hp}" style="color:red;">hp errore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_attack" class="form-label required">Attack</label>
+                            <input id="id_attack" th:field="*{attack}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('attack')}" th:errors="*{attack}" style="color:red;">attack errore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_armor" class="form-label required">Armor</label>
+                            <input id="id_armor" th:field="*{armor}" type="number" class="form-control" placeholder="10" />
+                            <div th:if="${#fields.hasErrors('armor')}" th:errors="*{armor}" style="color:red;">armor errore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rewards -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_reward_res_agua" class="form-label required">Reward Res Agua</label>
+                            <input id="id_reward_res_agua" th:field="*{rewardResAgua}" type="number" class="form-control" placeholder="110" />
+                            <div th:if="${#fields.hasErrors('rewardResAgua')}" th:errors="*{rewardResAgua}" style="color:red;">reward res agua errore</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_reward_res_plastic" class="form-label required">Reward Res Plastic</label>
+                            <input id="id_reward_res_plastic" th:field="*{rewardResPlastic}" type="number" class="form-control" placeholder="21" />
+                            <div th:if="${#fields.hasErrors('rewardResPlastic')}" th:errors="*{rewardResPlastic}" style="color:red;">reward res plastic errore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_reward_res_food" class="form-label required">Reward Res Food</label>
+                            <input id="id_reward_res_food" th:field="*{rewardResFood}" type="number" class="form-control" placeholder="110" />
+                            <div th:if="${#fields.hasErrors('rewardResFood')}" th:errors="*{rewardResFood}" style="color:red;">reward res food errore</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="id_reward_res_iron" class="form-label required">Reward Res Iron</label>
+                            <input id="id_reward_res_iron" th:field="*{rewardResIron}" type="number" class="form-control" placeholder="21" />
+                            <div th:if="${#fields.hasErrors('rewardResIron')}" th:errors="*{rewardResIron}" style="color:red;">reward res iron errore</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="#" th:href="@{/admin/autobattles/}" class="btn btn-secondary" style="margin-left:20px;"> Detras</a>
+            </form>
+
+        </div>
+    </div>
+
+</section>
+
+</html>
+
