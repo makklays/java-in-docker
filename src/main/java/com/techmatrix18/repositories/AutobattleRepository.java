@@ -23,7 +23,7 @@ public interface AutobattleRepository extends JpaRepository<Autobattle, Long> {
      */
     //List<Autobattle> findAllByOrderBySpaceIdAsc();
 
-    List<Autobattle> findBySpaceId(Long id);
+    //List<Autobattle> findBySpaceId(Long id);
     //List<Autobattle> findByAutobattleIdOrderByAutobattleAsc(Long id);
 
     /*@Query("SELECT COUNT(bl) FROM Autobattle bl WHERE bl.autobattle.id = :AutobattleId")
