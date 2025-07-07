@@ -6,6 +6,8 @@
 CREATE TABLE cards
 (
     id                bigint auto_increment primary key,
+    user_id           bigint not null,
+
     card_number       VARCHAR(19) null,
     cardholder_name   VARCHAR(255) null,
     expiration_date   DATE null,
@@ -27,6 +29,12 @@ CREATE TABLE cards
     updated_at        datetime(6)  null
 );
 
+-- Adding index for fast searching by user_id
+CREATE INDEX idx_cards_card_user_id ON cards(user_id);
+
 -- Adding index for fast searching by card_number
 CREATE INDEX idx_cards_card_number ON cards(card_number);
+
+-- Adding index for fast searching by status
+CREATE INDEX idx_cards_card_status ON cards(status);
 
