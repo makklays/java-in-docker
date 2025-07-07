@@ -39,8 +39,8 @@ public class AutobattleService {
         return autobattleRepository.findAll();
     }
 
-    public List<Autobattle> getAllBySpaceId(Long spaceId) {
+    /*public List<Autobattle> getAllBySpaceId(Long spaceId) {
         return autobattleRepository.findBySpaceId(spaceId);
-    }
+    }*/
 }
 

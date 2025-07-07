@@ -4,7 +4,7 @@
 
 <section layout:fragment="custom-content">
 
-    <h2><i class="fa-solid fa-warehouse"></i> Auto-battles</h2>
+    <h2><i class="fa-solid fa-skull"></i> Auto-battles</h2>
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -32,22 +32,30 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th class="text-center" style="width:50px;">ID</th>
-                        <th>Titulo</th>
-                        <th class="text-center">Nivel</th>
-                        <th class="text-center">Acciones</th>
+                        <th class="text-center align-middle" style="width:50px;">ID</th>
+                        <th class="text-center align-middle">Titulo</th>
+                        <th class="text-center align-middle">Required Nivel</th>
+                        <th class="text-center align-middle">Required Units</th>
+                        <th class="text-center align-middle">Required Iron</th>
+                        <th class="text-center align-middle">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="autobattle : ${autobattles}">
-                        <td class="text-center" style="width:30px;" th:text="${autobattle.Id}">Id</td>
-                        <td>
+                        <td class="text-center align-middle" style="width:30px;" th:text="${autobattle.Id}">Id</td>
+                        <td class="text-center align-middle">
                             <a href="#" th:href="@{'/admin/auto-battles/view/' + ${autobattle.id}}" th:text="${autobattle.title}">Title</a>
                         </td>
-                        <td class="text-center">
-                            <a th:href="@{'/admin/auto-battles/' + ${autobattle.id}}">0</a>
+                        <td class="text-center align-middle">
+                            <span th:text="${autobattle.req_building_level}">0</span>
                         </td>
-                        <td class="text-center" style="width:250px;">
+                        <td class="text-center align-middle">
+                            <span th:text="${autobattle.req_units_count}">0</span>
+                        </td>
+                        <td class="text-center align-middle">
+                            <span th:text="${autobattle.req_res_iron}">0</span>
+                        </td>
+                        <td class="text-center align-middle" style="width:250px;">
                             <a href="#" th:href="@{'/admin/auto-battles/view/' + ${autobattle.id}}">vista</a> |
                             <a href="#" th:href="@{'/admin/auto-battles/edit/' + ${autobattle.id}}">editar</a> |
                             <a href="#" th:href="@{'/admin/auto-battles/delete/' + ${autobattle.id}}">borrar</a>
@@ -59,8 +67,6 @@
 
         </div>
     </div>
-
 </section>
-
 </html>
 
