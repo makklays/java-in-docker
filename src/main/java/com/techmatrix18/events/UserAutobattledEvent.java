@@ -8,7 +8,7 @@ import com.techmatrix18.model.Autobattle;
  * By this event - sending an email to user
  * EDA - Event-Driven Architecture
  *
- * @author Alexander Kuziv
+ * @author Alexander Kuziv - makklays@gmail.com
  * @since 08-07-2025
  * @version 0.0.1
  */
