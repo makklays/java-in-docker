@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import java.util.Optional;
 import java.util.NoSuchElementException;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -49,10 +51,11 @@ public class BaseServiceTest {
         // when & then
         NoSuchElementException exception = assertThrows(
                 NoSuchElementException.class,
-                () -> baseService.findBaseByTitle("Unknown Book")
+                () -> baseService.findBaseByTitle("Unknown Base")
         );
 
-        assertEquals("Base titled 'Unknown Base' not found", exception.getMessage());
+        //assertEquals("Base titled 'Unknown Base' not found", exception.getMessage());
+        assertEquals("Base with the title 'Unknown Base' not found", exception.getMessage());
     }
 }
 

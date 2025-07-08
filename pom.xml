@@ -22,6 +22,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakarta.xml.bind.version>4.0.2</jakarta.xml.bind.version>
+        <protobuf.version>3.25.1</protobuf.version>
     </properties>
 
     <!--repositories>
@@ -205,6 +206,13 @@
         </dependency>
         <!-- END Kafka -->
 
+        <!-- Зависимость для работы с protobuf-сообщениями -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -263,6 +271,36 @@
                         <version>2.0.0</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <!-- Protobuf plugin для генерации Java-кода -->
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.6.1</version>
+                <configuration>
+                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Определяет ОС для выбора правильного бинарника protoc -->
+            <plugin>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.7.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>detect</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

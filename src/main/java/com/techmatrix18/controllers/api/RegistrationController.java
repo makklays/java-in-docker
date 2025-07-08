@@ -6,10 +6,11 @@ import com.techmatrix18.repositories.UserRepository;
 import com.techmatrix18.services.RabbitEventPublisherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.techmatrix18.protobuf.UserProto;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -96,6 +97,36 @@ public class RegistrationController {
         } else {
             return "Не заполнено обязательное поле";
         }
+    }
+
+    /**
+     * Get user on proto
+     *
+     * @return
+     */
+    @GetMapping(value = "/api/v1/users/proto", produces = "application/x-protobuf")
+    public byte[] getUserProto() {
+        UserProto.User user = UserProto.User.newBuilder()
+                .setId(1)
+                .setName("Alex")
+                .setEmail("alex@example.com")
+                .build();
+
+        return user.toByteArray(); // бинарный ответ
+    }
+
+    /**
+     * Add user from other system on proto
+     *
+     * @param data
+     * @return
+     * @throws IOException
+     */
+    @PostMapping(value = "/api/v1/users/proto", consumes = "application/x-protobuf")
+    public ResponseEntity<String> receiveUser(@RequestBody byte[] data) throws IOException {
+        UserProto.User user = UserProto.User.parseFrom(data);
+        System.out.println("User: " + user.getName());
+        return ResponseEntity.ok("Received");
     }
 }
 
