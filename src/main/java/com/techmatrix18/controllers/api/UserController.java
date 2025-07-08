@@ -139,7 +139,7 @@ public class UserController {
      * @param userId
      * @return
      */
-    @GetMapping(value = "/api/v1/users/protobuf-grpc-google/{userId}", produces = "application/x-protobuf")
+    @GetMapping(value = "/api/v1/users/protobuf-grpc-google-user-id/{userId}", produces = "application/x-protobuf")
     public ResponseEntity<UserProto.User> getUserById(@PathVariable Integer userId) {
         User entity = userService.getById(userId.longValue());
         if (entity == null) {
@@ -154,12 +154,12 @@ public class UserController {
     }
 
     /**
-     * Get user by query
+     * Get users by query
      *
      * @param query
      * @return
      */
-    @GetMapping(value = "/api/v1/users/protobuf-grpc-google/{query}", produces = "application/x-protobuf")
+    @GetMapping(value = "/api/v1/users/protobuf-grpc-google-query/{query}", produces = "application/x-protobuf")
     public ResponseEntity<UserProto.GetUsersResponse> getUsersByQuery(@PathVariable String query) {
         List<User> users = userService.getUsersByPartUsername(query);
         if (users == null || users.isEmpty()) {
