@@ -37,6 +37,7 @@ public class UserService implements UserDetailsService {
     private final ApplicationEventPublisher applicationEventPublisher;
     private final UserRepository userRepository;
 
+    @Autowired
     public UserService(UserRepository userRepository, ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
         this.userRepository = userRepository;

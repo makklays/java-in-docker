@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.example.protobuf;
+
+option java_package = "com.techmatrix18.protobuf";
+option java_outer_classname = "UserProto";
+
+message User {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
