@@ -1,6 +1,7 @@
 package com.techmatrix18.services;
 
 import com.techmatrix18.controllers.web.UserViewController;
+import com.techmatrix18.events.UserRegisteredEvent;
 import com.techmatrix18.model.Base;
 import com.techmatrix18.model.User;
 import com.techmatrix18.repositories.UserRepository;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.User;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,8 +34,13 @@ import java.util.logging.Logger;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository, ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -139,6 +146,9 @@ public class UserService implements UserDetailsService {
     public boolean addUser(User user) {
         User b = userRepository.save(user);
         if (!b.getUsername().isEmpty()) {
+
+            applicationEventPublisher.publishEvent(new UserRegisteredEvent(user.getEmail()));
+
             return true;
         } else {
             return false;
