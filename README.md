@@ -25,6 +25,7 @@ Varios pantillas del proyecto bajo
 
 ### En Postman
 <img src="./src/main/resources/mystatic/eschemas/photo_2025-04-28_22-05-56.jpg" />
+<img src="./src/main/resources/mystatic/eschemas/photo_2025-07-08_19-56-55.jpg" />
 
 Pronto será más... 
 

@@ -4,6 +4,7 @@ import com.techmatrix18.config.RabbitMQConfig;
 import com.techmatrix18.model.User;
 import com.techmatrix18.repositories.UserRepository;
 import com.techmatrix18.services.RabbitEventPublisherService;
+import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
@@ -104,12 +105,12 @@ public class RegistrationController {
      *
      * @return
      */
-    @GetMapping(value = "/api/v1/users/proto", produces = "application/x-protobuf")
+    @GetMapping(value = "/api/v1/users/protobuf-grpc-google", produces = "application/x-protobuf")
     public byte[] getUserProto() {
         UserProto.User user = UserProto.User.newBuilder()
                 .setId(1)
                 .setName("Alex")
-                .setEmail("alex@example.com")
+                .setEmail("alex@techmatrix18.com")
                 .build();
 
         return user.toByteArray(); // бинарный ответ
@@ -122,7 +123,7 @@ public class RegistrationController {
      * @return
      * @throws IOException
      */
-    @PostMapping(value = "/api/v1/users/proto", consumes = "application/x-protobuf")
+    @PostMapping(value = "/api/v1/users/protobuf-grpc-google", consumes = "application/x-protobuf")
     public ResponseEntity<String> receiveUser(@RequestBody byte[] data) throws IOException {
         UserProto.User user = UserProto.User.parseFrom(data);
         System.out.println("User: " + user.getName());
