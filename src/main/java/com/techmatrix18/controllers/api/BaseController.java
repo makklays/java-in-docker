@@ -1,14 +1,10 @@
 package com.techmatrix18.controllers.api;
 
-import com.techmatrix18.config.RabbitMQConfig;
 import com.techmatrix18.model.Base;
-import com.techmatrix18.model.User;
 import com.techmatrix18.services.BaseService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -16,7 +12,7 @@ import java.util.logging.Logger;
 @RequestMapping("/api/v1/bases")
 public class BaseController {
 
-    Logger log = Logger.getLogger(RegistrationController.class.getName());
+    Logger log = Logger.getLogger(UserController.class.getName());
 
     private final BaseService baseService;
 

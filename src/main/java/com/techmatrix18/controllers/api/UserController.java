@@ -4,7 +4,7 @@ import com.techmatrix18.config.RabbitMQConfig;
 import com.techmatrix18.model.User;
 import com.techmatrix18.repositories.UserRepository;
 import com.techmatrix18.services.RabbitEventPublisherService;
-import jakarta.annotation.security.PermitAll;
+import com.techmatrix18.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.techmatrix18.protobuf.UserProto;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -24,23 +25,23 @@ import java.util.logging.Logger;
  */
 
 @RestController
-public class RegistrationController {
+public class UserController {
 
-    Logger log = Logger.getLogger(RegistrationController.class.getName());
+    Logger log = Logger.getLogger(UserController.class.getName());
 
     private RabbitEventPublisherService rabbitPublisherService;
-    private UserRepository userRepository;
+    private UserService userService;
     private PasswordEncoder passwordEncoder;
 
     /**
      * Controller constructor with user service dependency injection.
      *
-     * @param userRepository
+     * @param userService
      * @param passwordEncoder
      * @param rabbitPublisherService
      */
-    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder, RabbitEventPublisherService rabbitPublisherService) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, RabbitEventPublisherService rabbitPublisherService) {
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.rabbitPublisherService = rabbitPublisherService;
     }
@@ -65,7 +66,9 @@ public class RegistrationController {
 
         log.info("[x] Log message to rabbitMQ:" + user.toString());
 
-        return userRepository.save(user);
+        userService.addUser(user);
+
+        return user;
     }
 
     /**
@@ -91,7 +94,7 @@ public class RegistrationController {
             user.setGender(gender);
             user.setAge(age);
             user.setPassword(password);
-            userRepository.save(user);
+            userService.addUser(user);
 
             return "Успешно зарегистрировался!";
 
@@ -128,6 +131,52 @@ public class RegistrationController {
         UserProto.User user = UserProto.User.parseFrom(data);
         System.out.println("User: " + user.getName());
         return ResponseEntity.ok("Received");
+    }
+
+    /**
+     * Get user by UserID
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping(value = "/api/v1/users/protobuf-grpc-google/{userId}", produces = "application/x-protobuf")
+    public ResponseEntity<UserProto.User> getUserById(@PathVariable Integer userId) {
+        User entity = userService.getById(userId.longValue());
+        if (entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        UserProto.User userProto = UserProto.User.newBuilder()
+                .setId(entity.getId().intValue())
+                .setName(entity.getUsername())
+                .setEmail(entity.getEmail())
+                .build();
+        return ResponseEntity.ok(userProto);
+    }
+
+    /**
+     * Get user by query
+     *
+     * @param query
+     * @return
+     */
+    @GetMapping(value = "/api/v1/users/protobuf-grpc-google/{query}", produces = "application/x-protobuf")
+    public ResponseEntity<UserProto.GetUsersResponse> getUsersByQuery(@PathVariable String query) {
+        List<User> users = userService.getUsersByPartUsername(query);
+        if (users == null || users.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        UserProto.GetUsersResponse.Builder responseBuilder = UserProto.GetUsersResponse.newBuilder();
+        for (User user : users) {
+            UserProto.User userProto = UserProto.User.newBuilder()
+                    .setId(user.getId().intValue())
+                    .setName(user.getUsername())
+                    .setEmail(user.getEmail())
+                    .build();
+            responseBuilder.addUsers(userProto);
+        }
+
+        return ResponseEntity.ok(responseBuilder.build());
     }
 }
 

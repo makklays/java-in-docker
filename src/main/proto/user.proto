@@ -1,13 +1,47 @@
 syntax = "proto3";
 
-package com.example.protobuf;
+package com.techmatrix18.protobuf;
 
 option java_package = "com.techmatrix18.protobuf";
 option java_outer_classname = "UserProto";
 
+// Сообщение о пользователе
 message User {
   int32 id = 1;
   string name = 2;
   string email = 3;
 }
+
+// Запрос на получение пользователя по ID
+message GetUserRequest {
+  int32 user_id = 1;
+}
+
+// Ответ с одним пользователем
+message GetUserResponse {
+  User user = 1;
+}
+
+// Запрос на получение списка пользователей (можно добавить фильтры)
+message GetUsersRequest {
+  string query = 1; // например, часть имени
+}
+
+// Ответ с несколькими пользователями
+message GetUsersResponse {
+  repeated User users = 1;
+}
+
+// gRPC-сервис
+service UserService {
+  // Метод получения одного пользователя по ID
+  rpc GetUser (GetUserRequest) returns (GetUserResponse);
+
+  // Метод получения списка пользователей
+  rpc GetUsers (GetUsersRequest) returns (GetUsersResponse);
+}
+
+// Что реализовано?
+// 1. GetUser: принимает user_id, возвращает одного User.
+// 2. GetUsers: принимает текстовый query, возвращает список пользователей.
 

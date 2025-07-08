@@ -1,12 +1,9 @@
 package com.techmatrix18.services;
 
-import com.techmatrix18.controllers.web.UserViewController;
 import com.techmatrix18.events.UserRegisteredEvent;
-import com.techmatrix18.model.Base;
 import com.techmatrix18.model.User;
 import com.techmatrix18.repositories.UserRepository;
 import lombok.AllArgsConstructor;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.User;
 import org.springframework.context.ApplicationEventPublisher;
@@ -15,11 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * Service for managing users.
@@ -74,6 +69,15 @@ public class UserService implements UserDetailsService {
      */
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    /**
+     * Finds users by part username
+     *
+     * @return found users
+     */
+    public List<User> getUsersByPartUsername(String username) {
+        return userRepository.findByPartUsername(username);
     }
 
     /**
@@ -148,6 +152,7 @@ public class UserService implements UserDetailsService {
         User b = userRepository.save(user);
         if (!b.getUsername().isEmpty()) {
 
+            // add event to publisher
             applicationEventPublisher.publishEvent(new UserRegisteredEvent(user.getEmail()));
 
             return true;
