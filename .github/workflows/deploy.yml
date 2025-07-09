@@ -1,0 +1,52 @@
+name: Spring Boot CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout репозиторий
+        uses: actions/checkout@v3
+
+      - name: ☕ Установка JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin' # ← указывает, что ставим Temurin JDK
+
+      - name: 🧪 Сборка и тестирование Maven
+        run: mvn clean verify
+
+      - name: 📦 Сборка JAR-файла
+        run: mvn package -DskipTests
+
+      - name: 📤 Сохранить JAR как артефакт
+        uses: actions/upload-artifact@v3
+        with:
+          name: spring-boot-app
+          path: target/*.jar
+
+      - name: 🚀 Деплой на сервер (по SSH)
+        if: success()
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "target/*.jar"
+          target: "/home/youruser/app"
+
+      - name: 🔁 Перезапуск Spring Boot на сервере
+        if: success()
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            pkill -f 'java.*app.jar' || true
+            nohup java -jar /home/youruser/app/*.jar > log.txt 2>&1 &
