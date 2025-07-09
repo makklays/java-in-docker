@@ -212,6 +212,15 @@
             <artifactId>protobuf-java</artifactId>
             <version>${protobuf.version}</version>
         </dependency>
+        <!-- END protobuf -->
+
+        <!-- Blockchain Ethereum -->
+        <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+            <version>4.8.7</version>
+        </dependency>
+        <!-- END Blockchain Ethereum -->
 
     </dependencies>
 
