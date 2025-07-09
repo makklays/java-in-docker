@@ -4,13 +4,15 @@ Yo como Arquitectador =) pinté esta eschema UML para mejor entender el proyecto
 
 en base de datos. 
 
-<img src="./src/main/resources/mystatic/eschemas/photo_2025-07-07_17-10-13.jpg" title="Eschema las tablas con relaciones" />
+<img src="./src/main/resources/mystatic/eschemas/photo_2025-07-09_23-05-17.jpg" title="Eschema las tablas con relaciones" />
 
 Varios pantillas del proyecto bajo
 
 <a href="/makklays/java-in-docker/blob/main/src/main/resources/mystatic/images/fons/fon11.png">
     <img src="./src/main/resources/mystatic/images/fons/fon11.png" />
 </a>
+
+Tu puedes pagar y comprar nuevos artifactos desde tu tarjeta o USDT (Tether)... Para este en mi proyecto yo utilizo Web3J...
 
 <p align="left">
     <img src="./src/main/resources/mystatic/images/bases_for_upload/comida_1.png" width="170" />
