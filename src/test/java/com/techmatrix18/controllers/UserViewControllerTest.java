@@ -1,6 +1,8 @@
 package com.techmatrix18.controllers;
 
 import com.techmatrix18.controllers.web.UserViewController;
+import com.techmatrix18.export.ExcelExportService;
+import com.techmatrix18.export.PdfExportService;
 import com.techmatrix18.services.ContactService;
 import com.techmatrix18.services.UserService;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,10 @@ public class UserViewControllerTest {
     private UserService userService;
     @MockBean
     private AuthenticationManager authenticationManager;
+    @MockBean
+    private ExcelExportService excelExportService;
+    @MockBean
+    private PdfExportService pdfExportService;
 
     @Test
     //@WithMockUser(username = "rio", roles = {"USER"}) // <-- для авторизованной страницы в spring security используем определенного пользователя
