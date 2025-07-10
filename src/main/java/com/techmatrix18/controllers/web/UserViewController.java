@@ -1,6 +1,8 @@
 package com.techmatrix18.controllers.web;
 
 import com.techmatrix18.dto.UserDto;
+import com.techmatrix18.export.ExcelExportService;
+import com.techmatrix18.export.PdfExportService;
 import com.techmatrix18.model.User;
 import com.techmatrix18.model.Contact;
 import com.techmatrix18.services.ContactService;
@@ -8,6 +10,9 @@ import com.techmatrix18.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +26,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -40,11 +48,20 @@ public class UserViewController {
     private final ContactService contactService;
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final ExcelExportService excelExportService;
+    private final PdfExportService pdfExportService;
 
-    public UserViewController(ContactService contactService, UserService userService, AuthenticationManager authenticationManager) {
+    public UserViewController(ContactService contactService,
+                              UserService userService,
+                              AuthenticationManager authenticationManager,
+                              ExcelExportService excelExportService,
+                              PdfExportService pdfExportService) {
+
         this.contactService = contactService;
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.excelExportService = excelExportService;
+        this.pdfExportService = pdfExportService;
     }
 
     @GetMapping("/welcome")
@@ -264,6 +281,35 @@ public class UserViewController {
         log.info("Users: " + users.toString());
 
         return "admin/users/index";
+    }
+
+    @GetMapping("/admin/users/export/excel")
+    public ResponseEntity<byte[]> exportClientsExcel() throws IOException {
+        List<User> users = userService.getAll();
+
+        ByteArrayInputStream in = excelExportService.exportUsersToExcel(users);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=users.xlsx");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(in.readAllBytes());
+    }
+
+    @GetMapping("/admin/users/export/pdf")
+    public ResponseEntity<byte[]> exportUsersPdf() {
+        List<User> users = userService.getAll();
+        ByteArrayInputStream in = pdfExportService.exportUsersToPdf(users);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=users.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(in.readAllBytes());
     }
 
     @GetMapping("/admin/home/")

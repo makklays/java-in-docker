@@ -3,6 +3,14 @@ package com.techmatrix18.dto;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * BaseLevelEditDTO
+ *
+ * @author Alexander Kuziv
+ * @since 10-07-2025
+ * @version 0.0.1
+ */
+
 public class BaseLevelEditDto {
 
     @NotNull(message = "ID requerido")

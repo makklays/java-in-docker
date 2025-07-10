@@ -6,8 +6,13 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 /**
+ * UserDTO
  *
+ * @author Alexander Kuziv
+ * @since 10-07-2025
+ * @version 0.0.1
  */
+
 public class UserDto {
 
     @NotBlank(message = "Nombre del usuario requerido")
@@ -17,6 +22,13 @@ public class UserDto {
     @Size(max = 10, message = "La contraseña no debe ser más 10 letras")
     @Size(min = 6, message = "La contraseña no debe ser menos 6 letras")
     private String password;
+
+    public UserDto() {}
+
+    public UserDto(String username, String passwordHash) {
+        this.username = username;
+        this.password = passwordHash;
+    }
 
     //---- getters and settters ----
 

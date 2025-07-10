@@ -222,6 +222,27 @@
         </dependency>
         <!-- END Blockchain Ethereum -->
 
+        <!-- Export to Excel with Apache POI -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.13.0</version> <!-- минимум 2.6 -->
+        </dependency>
+        <!-- END export Excel -->
+
+        <!-- Export to PDF with iText -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.3</version>
+        </dependency>
+        <!-- END export PDF -->
+
     </dependencies>
 
     <build>
