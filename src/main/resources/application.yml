@@ -5,9 +5,10 @@ spring:
     name: java-in-docker
   datasource:
     generate-unique-name: false
-    url: jdbc:mysql://localhost:3306/aton
-    username: admin
-    password: admin
+    #url: jdbc:mysql://localhost:3306/aton # <-- for localhost app
+    #url: jdbc:mysql://mysql:3306/aton # <-- for Kubernetes for Pod
+    #username: root
+    #password: rootpass
     driver-class-name: com.mysql.cj.jdbc.Driver
   web:
     resources:
@@ -30,10 +31,19 @@ spring:
     locations: classpath:db/migration
     baselineOnMigrate: true
     validateOnMigrate: true
-    url: jdbc:mysql://localhost:3306/aton
-    user: admin
-    password: admin
+    url: jdbc:mysql://mysql:3306/aton
+    user: root
+    password: rootpass
     out-of-order: true
+  #flyway:
+  #  enabled: true
+  #  locations: classpath:db/migration
+  #  baselineOnMigrate: true
+  #  validateOnMigrate: true
+  #  url: jdbc:mysql://localhost:3306/aton
+  #  user: admin
+  #  password: admin
+  #  out-of-order: true
   thymeleaf:
     check-template-location: true
     prefix: classpath:/templates/  #this is the main

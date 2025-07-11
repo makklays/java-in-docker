@@ -96,3 +96,39 @@ Postman Вкладка raw -> XML
   </soapenv:Body>
 </soapenv:Envelope>
 
+----------------------------------------------------------------------------------------------------------------------
+Напоминание по командам Kubernetes:
+myapp.jar - назване твоего jar файла
+app.jar - название файла в Dockerfile (!:)))
+
+# Подключиться к Docker Minikube
+eval $(minikube docker-env)
+
+# После этого проверь:
+docker info | grep "Name:"
+✅ Должно быть:
+Name: minikube
+
+# Собрать образ
+docker build -t myapp:1.0 .
+
+# Применить манифесты
+kubectl apply -f myapp-k8s-deployment.yaml
+kubectl apply -f myapp-k8s-service.yaml
+
+# Проверить поды и сервисы
+kubectl get pods
+kubectl get svc
+
+# Открыть приложение в браузере
+minikube service myapp-service
+
+Dockerfile (тот же) для Kubernetes:
+
+FROM eclipse-temurin:17-jdk
+ARG JAR_FILE=target/JavaInDocker-1.0-SNAPSHOT.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+----------------------------------------------------------------------------------------------------------------------
+

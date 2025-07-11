@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels:
+    app: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      initContainers:
+        - name: wait-for-mysql
+          image: mysql:8
+          command:
+            - sh
+            - -c
+            - |
+              until mysqladmin ping -h mysql --silent; do
+                echo "waiting for mysql..."
+                sleep 2
+              done
+      containers:
+        - name: myapp
+          image: javaindocker:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql:3306/aton"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "rootpass"
+            - name: SPRING_FLYWAY_ENABLED
+              value: "true"
