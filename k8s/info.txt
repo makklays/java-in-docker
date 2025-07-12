@@ -13,6 +13,14 @@ kubectl apply -f k8s/mysql-service.yaml
 kubectl apply -f k8s/myapp-k8s-deployment.yaml
 kubectl apply -f k8s/myapp-k8s-service.yaml
 
+# Перезапустить под, чтобы он взял новые переменные окружения:
+kubectl rollout restart deployment myapp
+
 # Проверить что Pod-ы обновились
-kubectl rollout status deployment/java-app
+kubectl rollout status deployment/myapp
 kubectl get pods
+
+# Проверить статус пода и логи:
+kubectl get pods
+kubectl logs -f <имя_pod_с_myapp>
+
