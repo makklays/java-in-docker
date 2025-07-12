@@ -34,7 +34,7 @@ spec:
           env:
             - name: SPRING_DATASOURCE_URL
               #value: "jdbc:mysql://mysql:3306/aton"
-              value: "jdbc:mysql.default.svc.cluster.local:3306/aton"
+              value: "jdbc:mysql://mysql.default.svc.cluster.local:3306/aton"
             - name: SPRING_DATASOURCE_USERNAME
               value: "root"
             - name: SPRING_DATASOURCE_PASSWORD
