@@ -1,0 +1,18 @@
+
+# Собрать jar файл
+mvn clean package -DskipTests
+
+# Обновить/отправить jar файл в kubernetes
+docker build -t javaindocker/java-app:1.1 .
+docker push javaindocker/java-app:1.1
+
+# Применить обновления
+kubectl apply -f k8s/mysql-deployment.yaml
+kubectl apply -f k8s/mysql-service.yaml
+
+kubectl apply -f k8s/myapp-k8s-deployment.yaml
+kubectl apply -f k8s/myapp-k8s-service.yaml
+
+# Проверить что Pod-ы обновились
+kubectl rollout status deployment/java-app
+kubectl get pods
