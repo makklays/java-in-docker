@@ -27,17 +27,23 @@ spec:
               done
       containers:
         - name: myapp
-          image: javaindocker:1.0
+          image: javaindocker:2.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              #value: "jdbc:mysql://mysql:3306/aton"
-              value: "jdbc:mysql://mysql.default.svc.cluster.local:3306/aton"
+              value: "jdbc:mysql://mysql:3306/aton"
+              #value: "jdbc:mysql://mysql.default.svc.cluster.local:3306/aton"
             - name: SPRING_DATASOURCE_USERNAME
               value: "root"
             - name: SPRING_DATASOURCE_PASSWORD
               value: "rootpass"
             - name: SPRING_FLYWAY_ENABLED
               value: "true"
+            - name: SPRING_FLYWAY_URL
+              value: "jdbc:mysql://mysql:3306/aton"
+            - name: SPRING_FLYWAY_USER
+              value: "root"
+            - name: SPRING_FLYWAY_PASSWORD
+              value: "rootpass"

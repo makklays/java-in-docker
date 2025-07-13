@@ -17,5 +17,6 @@
 # for Kubernetes
 FROM openjdk:17
 COPY target/JavaInDocker-1.0-SNAPSHOT.jar app.jar
+COPY /home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/ /resources/mystatic/
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 

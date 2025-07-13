@@ -1,10 +1,16 @@
 
+#
+minikube start --driver=docker
+eval $(minikube docker-env)
+eval $(minikube -p minikube docker-env) // это запускать
+
 # Собрать jar файл
 mvn clean package -DskipTests
+mvn clean install -DskipTests // более надежный
 
 # Обновить/отправить jar файл в kubernetes
-docker build -t javaindocker/java-app:1.1 .
-docker push javaindocker/java-app:1.1
+docker build -t javaindocker:1.0 .
+docker push javaindocker:1.0
 
 # Применить обновления
 kubectl apply -f k8s/mysql-deployment.yaml
