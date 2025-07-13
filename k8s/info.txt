@@ -10,7 +10,6 @@ mvn clean install -DskipTests // более надежный
 
 # Обновить/отправить jar файл в kubernetes
 docker build -t javaindocker:1.0 .
-docker push javaindocker:1.0
 
 # Применить обновления
 kubectl apply -f k8s/mysql-deployment.yaml
@@ -18,6 +17,13 @@ kubectl apply -f k8s/mysql-service.yaml
 
 kubectl apply -f k8s/myapp-k8s-deployment.yaml
 kubectl apply -f k8s/myapp-k8s-service.yaml
+
+kubectl apply -f k8s/zookeeper-deployment.yaml
+kubectl apply -f k8s/rabit-deployment.yaml
+kubectl apply -f k8s/kafka-deployment.yaml // кафка не станет без zookeper
+
+# удалить старый pod myapp
+kubectl delete pod myapp-848fffc9ff-npxrn
 
 # Перезапустить под, чтобы он взял новые переменные окружения:
 kubectl rollout restart deployment myapp
@@ -29,4 +35,18 @@ kubectl get pods
 # Проверить статус пода и логи:
 kubectl get pods
 kubectl logs -f <имя_pod_с_myapp>
+
+#
+minikube service java-app-service
+
+minikube service myapp-service
+|-----------|---------------|-------------|---------------------------|
+| NAMESPACE |     NAME      | TARGET PORT |            URL            |
+|-----------|---------------|-------------|---------------------------|
+| default   | myapp-service |          80 | http://192.168.49.2:30080 |
+|-----------|---------------|-------------|---------------------------|
+🎉  Opening service default/myapp-service in default browser...
+
+#
+kubectl  port-forward service/myapp-service 8080:80
 
