@@ -50,3 +50,18 @@ minikube service myapp-service
 #
 kubectl  port-forward service/myapp-service 8080:80
 
+
+#########################################
+# Если обновили java файлы:
+💡 Итог (пошагово):
+    mvn clean install -DskipTests
+
+    docker build -t java-in-docker:1.0 . (или с новым тегом 1.1)
+    или
+    eval $(minikube -p minikube docker-env)  (-p - это профиль minikube. Он может работать с несколькими)
+    eval $(minikube docker-env) (не забываем что должны быть внутри minikube)
+    docker build -t java-in-docker:1.0 .
+
+    kubectl rollout restart deployment myapp (или apply -f)
+    kubectl get pods и kubectl logs
+
