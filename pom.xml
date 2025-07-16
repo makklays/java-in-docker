@@ -243,6 +243,14 @@
         </dependency>
         <!-- END export PDF -->
 
+        <!-- Open API -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <!-- END Open API -->
+
     </dependencies>
 
     <build>

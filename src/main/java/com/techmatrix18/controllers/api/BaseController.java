@@ -2,6 +2,7 @@ package com.techmatrix18.controllers.api;
 
 import com.techmatrix18.model.Base;
 import com.techmatrix18.services.BaseService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
+@Tag(name = "Bases", description = "Base management API")
 @RequestMapping("/api/v1/bases")
 public class BaseController {
 

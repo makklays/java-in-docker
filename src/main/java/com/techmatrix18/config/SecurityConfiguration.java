@@ -71,6 +71,14 @@ public class SecurityConfiguration {
                 // Setting up access to endpoints
                 //.securityMatcher("/ws", "/ws/**") // - conflict with /req/logout and /req/login
                 .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/v3/api-docs",
+                            "/swagger-resources/**",
+                            "/webjars/**"
+                    ).permitAll()
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/req/logout").permitAll()
                     .requestMatchers("/mystatic/uploads/base-levels/**").permitAll()

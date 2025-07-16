@@ -1,5 +1,6 @@
 package com.techmatrix18.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,74 +12,89 @@ import org.springframework.web.multipart.MultipartFile;
  * @version 0.0.1
  */
 
+@Schema(name = "UnitEditDto", description = "DTO para la edición de unidad")
 public class UnitEditDto {
 
     @NotBlank(message = "Titulo requerido")
+    @Schema(description = "Titulo del unit", example = "Dron")
     private String title;
 
     @Size(max = 3000, message = "La descripcion no debe ser más 3000 letras")
+    @Schema(description = "Descripcion del unit", example = "Eso es muy interesante Dron")
     private String description;
 
     @NotBlank(message = "Seleccione un typo")
+    @Schema(description = "Typo del unit, donde crear el unit 'hangar' o 'biolab'", example = "hangar")
     private String type;
 
     // res
     @NotNull(message = "Agua requerido")
     @Min(value = 0, message = "Min Agua — 0")
     @Max(value = 999999, message = "Max Agua — 999999")
+    @Schema(description = "La cantidad necesaria de agua para crear uno unit", example = "11")
     private Integer resAgua;
 
     @NotNull(message = "Plastico requerido")
     @Min(value = 0, message = "Min Plastico — 0")
     @Max(value = 999999, message = "Max Plastico — 999999")
+    @Schema(description = "La cantidad necesaria de plástico para crear uno unit", example = "11")
     private Integer resPlastic;
 
     @NotNull(message = "Food requerido")
     @Min(value = 0, message = "Min Food — 0")
     @Max(value = 999999, message = "Max Food — 999999")
+    @Schema(description = "La cantidad necesaria de comida para crear uno unit", example = "11")
     private Integer resFood;
 
     @NotNull(message = "Iron requerido")
     @Min(value = 0, message = "Min Iron — 0")
     @Max(value = 999999, message = "Max Iron — 999999")
+    @Schema(description = "La cantidad necesaria de hierro para crear uno unit", example = "11")
     private Integer resIron;
 
     // nivel
     @NotNull(message = "Nivel requerido")
     @Min(value = 0, message = "Min Iron — 0")
     @Max(value = 999999, message = "Max Iron — 999999")
+    @Schema(description = "El nivel necesaria para crear uno unit", example = "11")
     private Integer level;
 
     // hp armor attack range speed
     @NotNull(message = "HP requerido")
     @Min(value = 0, message = "Min Iron — 0")
     @Max(value = 999999, message = "Max Iron — 999999")
+    @Schema(description = "La salud del unit", example = "11")
     private Integer hp;
 
     @NotNull(message = "Armor requerido")
     @Min(value = 0, message = "Min Iron — 0")
     @Max(value = 999999, message = "Max Iron — 999999")
+    @Schema(description = "La armadura del unit", example = "11")
     private Integer armor;
 
     @NotNull(message = "Attack requerido")
     @Min(value = 0, message = "Min Iron — 0")
     @Max(value = 999999, message = "Max Iron — 999999")
+    @Schema(description = "El ataque del unit", example = "11")
     private Integer attack;
 
     @NotNull(message = "Range requerido")
     @Min(value = 0, message = "Min Iron — 0")
     @Max(value = 999999, message = "Max Iron — 999999")
+    @Schema(description = "El alcance del unit", example = "11")
     private Integer range;
 
     @NotNull(message = "Speed requerido")
     @Min(value = 0, message = "Min Iron — 0")
     @Max(value = 999999, message = "Max Iron — 999999")
+    @Schema(description = "La velocidad del unit", example = "11")
     private Integer speed;
 
     // seconds
     @NotNull(message = "Training (secundos) requerido")
     @Min(value = 0, message = "Min secundos — 0")
     @Max(value = 99999999, message = "Max secundos — 999999999")
+    @Schema(description = "Entrenamiento (segundos) del unit", example = "360")
     private Integer trainingSeconds;
 
     //@NotNull(message = "El archivo requerido")

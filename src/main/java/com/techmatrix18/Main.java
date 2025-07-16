@@ -1,5 +1,8 @@
 package com.techmatrix18;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +19,16 @@ import java.util.logging.Logger;
  */
 
 @SpringBootApplication
+@OpenAPIDefinition(
+    info = @Info(
+        title = "REST API",
+        version = "1.0.0",
+        description = "API REST para aplicaciones móviles e integraciones con servicios y sitios externos. " +
+                "Proporciona acceso a las principales funciones y datos del negocio, soporta interacción escalable " +
+                "y expansión de funcionalidades mediante integraciones de terceros.",
+        contact = @Contact(name = "Alexander Kuziv", email = "makklays@gmail.com")
+    )
+)
 public class Main {
 
     public static void main(String[] args) {

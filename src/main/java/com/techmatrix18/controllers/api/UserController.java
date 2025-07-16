@@ -5,6 +5,8 @@ import com.techmatrix18.model.User;
 import com.techmatrix18.repositories.UserRepository;
 import com.techmatrix18.services.RabbitEventPublisherService;
 import com.techmatrix18.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import java.util.logging.Logger;
  */
 
 @RestController
+@Tag(name = "Users", description = "User management API")
 public class UserController {
 
     Logger log = Logger.getLogger(UserController.class.getName());
@@ -52,6 +55,7 @@ public class UserController {
      * @param user MyUser with user data
      * @return MyUser response with registered user
      */
+    @Operation(summary = "Create user", description = "Create User by parameters")
     @PostMapping(value = "/req/signup", consumes = "application/json")
     public User createUser(@RequestBody User user, HttpServletRequest request) {
         System.out.println(user.toString());
@@ -77,6 +81,7 @@ public class UserController {
      * @param request
      * @return
      */
+    @Operation(summary = "Add User", description="Create User from JSON")
     @PostMapping(value = "/api/v1/mob-app-registr", consumes = "application/json")
     public String registrUser(HttpServletRequest request) {
         String username = request.getParameter("username");
@@ -108,6 +113,7 @@ public class UserController {
      *
      * @return
      */
+    @Operation(summary = "Get one user", description = "Get one user by protocol protobuf")
     @GetMapping(value = "/api/v1/users/protobuf-grpc-google", produces = "application/x-protobuf")
     public byte[] getUserProto() {
         UserProto.User user = UserProto.User.newBuilder()
@@ -126,6 +132,7 @@ public class UserController {
      * @return
      * @throws IOException
      */
+    @Operation(summary = "Get list of users", description = "Get list of users by protocol protobuf")
     @PostMapping(value = "/api/v1/users/protobuf-grpc-google", consumes = "application/x-protobuf")
     public ResponseEntity<String> receiveUser(@RequestBody byte[] data) throws IOException {
         UserProto.User user = UserProto.User.parseFrom(data);
@@ -139,6 +146,7 @@ public class UserController {
      * @param userId
      * @return
      */
+    @Operation(summary = "Get user by ID", description = "Get user by ID by protocol protobuf")
     @GetMapping(value = "/api/v1/users/protobuf-grpc-google-user-id/{userId}", produces = "application/x-protobuf")
     public ResponseEntity<UserProto.User> getUserById(@PathVariable Integer userId) {
         User entity = userService.getById(userId.longValue());
@@ -159,6 +167,7 @@ public class UserController {
      * @param query
      * @return
      */
+    @Operation(summary = "Get user by query", description = "Get user by query by protocol protobuf")
     @GetMapping(value = "/api/v1/users/protobuf-grpc-google-query/{query}", produces = "application/x-protobuf")
     public ResponseEntity<UserProto.GetUsersResponse> getUsersByQuery(@PathVariable String query) {
         List<User> users = userService.getUsersByPartUsername(query);
