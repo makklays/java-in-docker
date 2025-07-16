@@ -1,5 +1,6 @@
 package com.techmatrix18.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
+@Schema(description = "Entity representing a user")
 public class User implements Serializable {
 
     /**
@@ -29,6 +31,7 @@ public class User implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //(strategy = GenerationType.AUTO)
+    @Schema(description = "Unique identifier of the user", example = "1")
     private Long id;
 
     /**
@@ -36,6 +39,7 @@ public class User implements Serializable {
      */
     @NotNull
     @Size(min=2, max=30)
+    @Schema(description = "Nombre del usuario", example = "42")
     private String username;
 
     /**
@@ -43,6 +47,7 @@ public class User implements Serializable {
      */
     @NotNull
     @Email(message = "{Email.MyUser.email}") // in src/main/resources/ValidationMessages.properties
+    @Schema(description = "Correo del usuario", example = "42")
     private String email;
 
     /**
@@ -50,24 +55,28 @@ public class User implements Serializable {
      */
     @NotNull
     @Column(name = "mob")
+    @Schema(description = "Móvil del usuario", example = "+34 612 345 67")
     private String mob;
 
     /**
      * User gender.
      */
     @Column(name = "gender")
+    @Schema(description = "Género del usuario", example = "male")
     private String gender;
 
     /**
      * User age.
      */
     @Column(name = "age")
+    @Schema(description = "Edad del usuario", example = "23")
     private String age;
 
     /**
      * User avatar.
      */
     @Column(name = "avatar")
+    @Schema(description = "Avatar del usuario", example = "avatar.png")
     private String avatar;
 
     /**
@@ -75,6 +84,7 @@ public class User implements Serializable {
      */
     @NotNull
     @Column(name = "password", nullable = false)
+    @Schema(description = "Password del usuario", example = "qwerty")
     private String password;
 
     /**
@@ -83,6 +93,7 @@ public class User implements Serializable {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", updatable = false, nullable = false)
+    @Schema(description = "Fecha de creación del usuario", example = "19-02-2025 00:00:00")
     private Instant createdAt;
 
     /**
@@ -91,6 +102,7 @@ public class User implements Serializable {
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
+    @Schema(description = "Fecha de actualización del usuario", example = "19-02-2025 00:00:00")
     private Instant updatedAt;
 
     // Getters, setters and constructors

@@ -1,5 +1,7 @@
 package com.techmatrix18.controllers.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.layers.DenseLayer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "NeuralNetwork", description = "NeuralNetwork management API")
 public class NeuralNetworkController {
 
     private static MultiLayerNetwork createModel() {
@@ -49,6 +52,7 @@ public class NeuralNetworkController {
      *
      * @return String
      */
+    @Operation(summary = "Link to train", description = "One link to the train")
     @GetMapping("/train")
     public String trainModel() {
         MultiLayerNetwork model = createModel();
@@ -85,6 +89,7 @@ public class NeuralNetworkController {
      * @param x2 double
      * @return String
      */
+    @Operation(summary = "Predict", description = "Link to the predict")
     @GetMapping("/predict")
     public String predict(@RequestParam double x1, @RequestParam double x2) {
 

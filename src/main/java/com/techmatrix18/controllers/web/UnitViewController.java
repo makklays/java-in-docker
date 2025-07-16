@@ -2,18 +2,26 @@ package com.techmatrix18.controllers.web;
 
 import com.techmatrix18.dto.UnitDto;
 import com.techmatrix18.dto.UnitEditDto;
+import com.techmatrix18.export.ExcelExportService;
+import com.techmatrix18.export.PdfExportService;
 import com.techmatrix18.model.Unit;
+import com.techmatrix18.model.User;
 import com.techmatrix18.services.UnitService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,11 +37,18 @@ public class UnitViewController {
     Logger logger = Logger.getLogger(BaseViewController.class.getName());
 
     private final UnitService unitService;
+    private final ExcelExportService excelExportService;
+    private final PdfExportService pdfExportService;
 
     private final List<String> niveles = List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11");
 
-    public UnitViewController(UnitService unitService) {
+    public UnitViewController(UnitService unitService,
+                              ExcelExportService excelExportService,
+                              PdfExportService pdfExportService) {
+
         this.unitService = unitService;
+        this.excelExportService = excelExportService;
+        this.pdfExportService = pdfExportService;
     }
 
     @GetMapping("/admin/units/")
@@ -42,6 +57,35 @@ public class UnitViewController {
         model.addAttribute("units", units);
 
         return "admin/units/index";
+    }
+
+    @GetMapping("/admin/units/export/excel")
+    public ResponseEntity<byte[]> exportClientsExcel() throws IOException {
+        List<Unit> units = unitService.getAll();
+
+        ByteArrayInputStream in = excelExportService.exportUnitsToExcel(units);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=units.xlsx");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(in.readAllBytes());
+    }
+
+    @GetMapping("/admin/units/export/pdf")
+    public ResponseEntity<byte[]> exportUsersPdf() {
+        List<Unit> units = unitService.getAll();
+        ByteArrayInputStream in = pdfExportService.exportUnitsToPdf(units);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=units.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(in.readAllBytes());
     }
 
     @GetMapping("/admin/units/add")

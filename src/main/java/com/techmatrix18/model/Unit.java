@@ -1,5 +1,6 @@
 package com.techmatrix18.model;
 
+import com.itextpdf.text.pdf.PdfPCell;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;

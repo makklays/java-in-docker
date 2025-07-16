@@ -1,5 +1,4 @@
 
-
 spring:
   application:
     name: java-in-docker
@@ -91,6 +90,20 @@ server:
     whitelabel:
       enabled: false
 
+springdoc:
+  info:
+    title: Neural Network API
+    version: 1.0
+    description: API para la gestión de redes neuronales
+  api-docs:
+    enabled: true        # Включить /v3/api-docs
+    path: /v3/api-docs   # Путь (по умолчанию /v3/api-docs)
+  swagger-ui:
+    enabled: true        # Включить Swagger UI
+    path: /swagger-ui.html  # Путь, куда перенаправлять (но по факту UI — это /swagger-ui/index.html)
+    try-it-out-enabled: true  # Кнопка "Try it out"
+
 #logging:
 #  level:
-#    org.thymeleaf: DEBUG
+#    root: DEBUG
+#    #org.thymeleaf: DEBUG
