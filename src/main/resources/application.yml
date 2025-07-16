@@ -94,7 +94,7 @@ springdoc:
   info:
     title: Neural Network API
     version: 1.0
-    description: API para la gestión de redes neuronales
+    description: API for Neural Network Management
   api-docs:
     enabled: true        # Включить /v3/api-docs
     path: /v3/api-docs   # Путь (по умолчанию /v3/api-docs)
@@ -103,7 +103,7 @@ springdoc:
     path: /swagger-ui.html  # Путь, куда перенаправлять (но по факту UI — это /swagger-ui/index.html)
     try-it-out-enabled: true  # Кнопка "Try it out"
 
-#logging:
-#  level:
-#    root: DEBUG
+logging:
+  level:
+    root: DEBUG
 #    #org.thymeleaf: DEBUG
