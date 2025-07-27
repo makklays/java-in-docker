@@ -26,8 +26,16 @@ Tu puedes pagar y comprar nuevos artifactos desde tu tarjeta o USDT (Tether)... 
 </p>
 
 ### En Postman
+
 <img src="./src/main/resources/mystatic/eschemas/photo_2025-04-28_22-05-56.jpg" />
 <img src="./src/main/resources/mystatic/eschemas/photo_2025-07-08_19-56-55.jpg" />
+<br/>
+<img src="./src/main/resources/mystatic/images/protobuf/1000000109.png" width="170" />
+<!--img src="./src/main/resources/mystatic/images/protobuf/1000000106.png" width="170" /-->
+
+### Swagger - OpenApi - REST API 
+
+<img src="./src/main/resources/mystatic/images/protobuf/swagger-mob.png" width="800" />
 
 Pronto será más... 
 
