@@ -25,3 +25,9 @@ por ejemplo:
 http://localhost:8080/map/12/bases/1/base1
 http://localhost:8080/map/12/bases/1/banco
 
+----------------------------------------------
+Swagger UI - OpenAPI
+URL:
+http://localhost:8080/swagger-ui/index.html
+----------------------------------------------
+

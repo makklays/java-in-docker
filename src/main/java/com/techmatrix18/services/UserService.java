@@ -72,6 +72,36 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Find user by username
+     *
+     * @param username
+     * @return
+     */
+    public User getByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.get().getId() != null) {
+            return user.get();
+        } else {
+            throw(new NoSuchElementException("User with the username '" + username + "' not found"));
+        }
+    }
+
+    /**
+     * Find user by token
+     *
+     * @param token
+     * @return
+     */
+    public User getByToken(String token) {
+        Optional<User> user = userRepository.findByUsername(token);
+        if (user.get().getId() != null) {
+            return user.get();
+        } else {
+            throw(new NoSuchElementException("User with the token '" + token + "' not found"));
+        }
+    }
+
+    /**
      * Finds users by part username
      *
      * @return found users
