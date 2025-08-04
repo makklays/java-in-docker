@@ -27,7 +27,7 @@ Tu puedes pagar y comprar nuevos artifactos desde tu tarjeta o USDT (Tether)... 
 
 ### En Postman
 
-<img src="./src/main/resources/mystatic/eschemas/photo_2025-04-28_22-05-56.jpg" />
+<img src="./src/main/resources/mystatic/eschemas/04-07-2025-23-28.png" />
 <img src="./src/main/resources/mystatic/eschemas/photo_2025-07-08_19-56-55.jpg" />
 <br/>
 <img src="./src/main/resources/mystatic/images/protobuf/1000000109.png" width="170" />

@@ -149,6 +149,7 @@ public class BaseLevel {
     /**
      *
      */
+    @JsonIgnore
     @OneToOne(mappedBy = "baseLevel")
     private Map map;
 

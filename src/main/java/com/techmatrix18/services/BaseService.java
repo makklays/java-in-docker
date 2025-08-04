@@ -3,6 +3,8 @@ package com.techmatrix18.services;
 import com.techmatrix18.model.Base;
 import com.techmatrix18.repositories.BaseRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,6 +38,28 @@ public class BaseService {
      */
     public List<Base> getAll() {
         return baseRepository.findAll();
+    }
+
+    /**
+     * Find bases by pageable (with data of page)
+     *
+     * @param pageable
+     * @return found page of bases
+     */
+    public Page<Base> getAllBasesOnPage(Pageable pageable) {
+        // Этот вызов делает SQL-запрос с LIMIT и OFFSET автоматически
+        return baseRepository.findAll(pageable);
+    }
+
+    /**
+     * Find bases by pageable (without data of page)
+     *
+     * @param pageable
+     * @return found page of bases
+     */
+    public List<Base> getAllBases(Pageable pageable) {
+        // Этот вызов делает SQL-запрос с LIMIT и OFFSET автоматически
+        return baseRepository.findAll(pageable).getContent();
     }
 
     /**
