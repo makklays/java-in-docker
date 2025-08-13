@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,9 @@ import java.util.logging.Logger;
  */
 
 @SpringBootApplication
+@EnableMongoRepositories(
+        basePackages = "com.techmatrix18.repositories.mongo" // сюда помещаем только MongoDB репозитории
+)
 @OpenAPIDefinition(
     info = @Info(
         title = "REST API",

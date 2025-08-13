@@ -1,5 +1,10 @@
 
+
 spring:
+  devtools:
+    restart:
+      exclude:
+        - "**/bytedeco/**"
   application:
     name: java-in-docker
   datasource:
@@ -10,6 +15,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   web:
     resources:
+      media-types:
+        wav: audio/wav
       static-locations: file:/home/alexander/IdeaProjects/JavaInDocker/src/main/resources/mystatic/
   jpa:
     show-sql: true
@@ -84,6 +91,9 @@ spring:
     path: /Service
 
 server:
+  tomcat:
+    use-relative-redirects: true
+    apr-enabled: false
   error:
     include-message: always
     include-binding-errors: always
@@ -105,5 +115,14 @@ springdoc:
 
 logging:
   level:
-    root: DEBUG
+    org.springframework.boot.devtools: WARN
+    org.apache.kafka.clients: WARN
+    org.apache.kafka.common: WARN
+    org.springframework.kafka: INFO
+    org.apache.tomcat: INFO
+    org.hibernate: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type: WARN
+    com.techmatrix18: DEBUG
+    root: INFO
 #    #org.thymeleaf: DEBUG
