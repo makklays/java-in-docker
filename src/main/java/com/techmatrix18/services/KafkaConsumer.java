@@ -2,7 +2,6 @@ package com.techmatrix18.services;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-
 import java.util.logging.Logger;
 
 /**
@@ -21,7 +20,12 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "test-topic", groupId = "my-group")
     public void listen(String message) {
-        log.info("Received message in group 'my-group': " + message);
+        log.info("====> Received message in group 'my-group': " + message);
+    }
+
+    @KafkaListener(topics = "topic.orders.new", groupId = "group-orders")
+    public void listenOrders(String message) {
+        log.info("====> Kafka message: " + message);
     }
 }
 

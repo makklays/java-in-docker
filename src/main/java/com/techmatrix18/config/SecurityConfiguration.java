@@ -79,6 +79,7 @@ public class SecurityConfiguration {
                             "/swagger-resources/**",
                             "/webjars/**"
                     ).permitAll()
+                    .requestMatchers("/audio/**").permitAll()
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/req/logout").permitAll()
                     .requestMatchers("/mystatic/uploads/base-levels/**").permitAll()
@@ -93,6 +94,8 @@ public class SecurityConfiguration {
                     .requestMatchers("/req/signup").permitAll()
                     .requestMatchers("/uploads/**").permitAll()
                     .requestMatchers("/mystatic/uploads/**").permitAll()
+
+                    .requestMatchers("/kafka**").permitAll()
 
                     .requestMatchers("/api/v1/**").permitAll() // ⬅ открыть доступ
 
