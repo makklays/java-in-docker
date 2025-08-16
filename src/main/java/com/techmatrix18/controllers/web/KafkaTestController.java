@@ -4,6 +4,7 @@ import com.techmatrix18.model.User;
 import com.techmatrix18.services.KafkaProducer;
 import com.techmatrix18.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class KafkaTestController {
     private final UserService userService;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public KafkaTestController(KafkaProducer kafkaProducer, KafkaTemplate kafkaTemplate, UserService userService) {
+    public KafkaTestController(KafkaProducer kafkaProducer, @Qualifier("kafkaStringTemplate") KafkaTemplate kafkaTemplate, UserService userService) {
         this.kafkaProducer = kafkaProducer;
         this.kafkaTemplate = kafkaTemplate;
         this.userService = userService;

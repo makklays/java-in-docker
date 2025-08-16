@@ -1,5 +1,6 @@
 package com.techmatrix18.services;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,8 @@ public class KafkaProducer {
     private final KafkaTemplate<String, String> kafkaStringTemplate;
     private final KafkaTemplate<String, byte[]> kafkaBytesTemplate;
 
-    public KafkaProducer(KafkaTemplate<String, String> kafkaStringTemplate, KafkaTemplate<String, byte[]> kafkaBytesTemplate) {
+    public KafkaProducer(@Qualifier("kafkaStringTemplate") KafkaTemplate<String, String> kafkaStringTemplate,
+                         @Qualifier("kafkaBytesTemplate") KafkaTemplate<String, byte[]> kafkaBytesTemplate) {
         this.kafkaStringTemplate = kafkaStringTemplate;
         this.kafkaBytesTemplate = kafkaBytesTemplate;
     }
