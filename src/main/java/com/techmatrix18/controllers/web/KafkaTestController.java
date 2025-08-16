@@ -24,27 +24,29 @@ public class KafkaTestController {
 
     private final KafkaProducer kafkaProducer;
     private final UserService userService;
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaStringTemplate;
 
-    public KafkaTestController(KafkaProducer kafkaProducer, @Qualifier("kafkaStringTemplate") KafkaTemplate kafkaTemplate, UserService userService) {
+    public KafkaTestController(KafkaProducer kafkaProducer, @Qualifier("kafkaStringTemplate") KafkaTemplate kafkaStringTemplate, UserService userService) {
         this.kafkaProducer = kafkaProducer;
-        this.kafkaTemplate = kafkaTemplate;
+        this.kafkaStringTemplate = kafkaStringTemplate;
         this.userService = userService;
     }
 
-    @PostMapping("/kafkasend")
+    @Operation(summary = "Send message (string)", description = "Send simple message via Kafka (topic)")
+    @PostMapping("/kafka-send")
     public String sendMessage(@RequestParam("message") String message) {
         kafkaProducer.sendMessage(message);
         return "Message sent to Kafka topic";
     }
 
-    @PostMapping("/kafka-order")
+    @Operation(summary = "Send message (string)", description = "Send simple message via Kafka (other topic)")
+    @PostMapping("/kafka-send-order")
     public String sendOrder(@RequestParam("text") String text, @RequestParam("price") String price) {
-        kafkaTemplate.send("topic.orders.new","text: " + text + ", price: " + price);
+        kafkaStringTemplate.send("topic.orders.new","text: " + text + ", price: " + price);
         return "You had added a new order successfully!";
     }
 
-    @Operation(summary = "Send user by ID", description = "Send User-protobuf via Kafka to topic")
+    @Operation(summary = "Send message (proto) by userID", description = "Send User-protobuf via Kafka (topic)")
     @PostMapping("/kafka-send-proto")
     public String sendUserProto(@RequestParam("user_id") String user_id, @RequestParam("money") String money) {
 
@@ -60,6 +62,58 @@ public class KafkaTestController {
             // send proto
             kafkaProducer.sendMessageProto("topic.protos.user", userProto.toByteArray());
             kafkaProducer.sendMessage("topic.user.money", money);
+        }
+
+        return "You had sent money " + money + " successfully!";
+    }
+
+    @Operation(
+            summary = "Send message (proto) via partition 0 by user_id",
+            description = "Send User-protobuf via Kafka (partition and topic)"
+    )
+    @PostMapping("/kafka-partition-send-proto")
+    public String sendPartitionUserProto(@RequestParam("user_id") String user_id, @RequestParam("money") String money) {
+
+        // get proto
+        User entity = userService.getById(Long.valueOf(user_id));
+        if (entity != null) {
+            com.techmatrix18.protobuf.UserProto.User userProto = com.techmatrix18.protobuf.UserProto.User.newBuilder()
+                    .setId(entity.getId().intValue())
+                    .setName(entity.getUsername())
+                    .setEmail(entity.getEmail())
+                    .build();
+
+            // send proto
+            kafkaProducer.sendOnePartitionMessageProto("topic.protos.user", 0, user_id, userProto.toByteArray());
+            kafkaProducer.sendOnePartitionMessageProto("topic.protos.user", 0, user_id, userProto.toByteArray());
+            kafkaProducer.sendOnePartitionMessageProto("topic.protos.user", 0, user_id, userProto.toByteArray());
+        }
+
+        return "You had sent money " + money + " successfully!";
+    }
+
+    @Operation(
+            summary = "Send message (User proto) to 3 partitions Kafka by user_id",
+            description = "Sends a User protobuf message to a Kafka topic with 3 partitions. " +
+                    "The partition is selected automatically based on user_id hash, " +
+                    "so messages from the same user go to the same partition. " +
+                    "Listener(s) can consume from all 3 partitions in parallel."
+    )
+    @PostMapping("/kafka-3-partition-send-proto")
+    public String send3PartitionUserProto(@RequestParam("user_id") String user_id, @RequestParam("money") String money) {
+
+        // get proto
+        User entity = userService.getById(Long.valueOf(user_id));
+        if (entity != null) {
+            com.techmatrix18.protobuf.UserProto.User userProto = com.techmatrix18.protobuf.UserProto.User.newBuilder()
+                    .setId(entity.getId().intValue())
+                    .setName(entity.getUsername())
+                    .setEmail(entity.getEmail())
+                    .build();
+
+            // send proto
+            // every user_id to one of tree partition - and listen automatically from tree partitions
+            kafkaProducer.sendSeveralPartitionMessageProto("topic.3-partition.protos.user", user_id, userProto.toByteArray());
         }
 
         return "You had sent money " + money + " successfully!";

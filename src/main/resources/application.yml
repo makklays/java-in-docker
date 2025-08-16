@@ -1,5 +1,4 @@
 
-
 spring:
   devtools:
     restart:
@@ -55,6 +54,8 @@ spring:
     username: user
     password: password
   kafka:
+    admin:
+      auto-create: true
     bootstrap-servers: localhost:29092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

@@ -37,7 +37,19 @@ public class KafkaProducer {
     // send proto
     public void sendMessageProto(String topic, byte[] data) {
         kafkaBytesTemplate.send(topic, data);
-        System.out.println("Sent proto");
+        System.out.printf("Sent proto to topic=%s ", topic);
+    }
+
+    // send (one partition) Proto (several messages)
+    public void sendOnePartitionMessageProto(String topic, Integer partition, String key, byte[] data) {
+        kafkaBytesTemplate.send(topic, partition, key, data);
+        System.out.printf("Sent proto to topic=%s partition=%d key=%s%n", topic, partition, key);
+    }
+
+    // send (several partition) Proto by key user_id
+    public void sendSeveralPartitionMessageProto(String topic, String userId, byte[] data) {
+        kafkaBytesTemplate.send(topic, userId, data);
+        System.out.printf("Sent proto with key=%s to topic=%s%n", userId, topic);
     }
 }
 
